@@ -292,7 +292,7 @@
 &lt;/div&gt;
 
 &lt;!-- Developer panel --&gt;
-&lt;button class="fab" id="fab" data-act="openDev" hidden=""&gt;⚙ DEV · 9h 47m&lt;/button&gt;
+&lt;button class="fab" id="fab" data-act="openDev" hidden=""&gt;⚙ DEV · 9h 59m&lt;/button&gt;
 &lt;div class="dev" id="dev"&gt;
   &lt;div class="dev-head"&gt;
     &lt;h2&gt;⚙ Developer&lt;/h2&gt;
@@ -610,813 +610,7 @@ const DATA = {
 };
 &lt;/script&gt;
 
-&lt;script&gt;
-/* ===================== Page logic (no need to edit) ===================== */
-const PUBLIC_BUILD = false;   // the "public" download flips this to true: no developer panel, no stored login
-const DRAFT_KEY = "ppz_draft", UNLOCK_KEY = "ppz_unlock_until", SESSION_HOURS = 10;
-const $ = id =&gt; document.getElementById(id);
-const esc = s =&gt; String(s ?? "").replace(/[&amp;&lt;&gt;"']/g, c =&gt; ({'&amp;':'&amp;amp;','&lt;':'&amp;lt;','&gt;':'&amp;gt;','"':'&amp;quot;',"'":'&amp;#39;'}[c]));
-const bold = s =&gt; esc(s).replace(/\*\*(.+?)\*\*/g, "&lt;b&gt;$1&lt;/b&gt;");
-const STATUS = {
-  working:     { cls: "working", label: "working!" },
-  unknown:     { cls: "unknown", label: "???" },
-  unknownlink: { cls: "unknown", label: "Unknown Link?" },
-  blocked:     { cls: "blocked", label: "blocked" }
-};
-const st = s =&gt; STATUS[s] || STATUS.unknown;
 
-// Load draft from this device if one exists
-const BUILD = "2026-11-07-g";   // bump this whenever the page code/data is replaced with a new version
-const normalize = d =&gt; { d._build = BUILD; d.canvas = d.canvas || { height: 520, items: [] }; return d; };
-const EXPORTED_DATA = normalize(JSON.parse(JSON.stringify(DATA)));   // what this file shipped with
-let D = JSON.parse(JSON.stringify(DATA)), hasDraft = false;
-try {
-  const saved = PUBLIC_BUILD ? null : localStorage.getItem(DRAFT_KEY);
-  if (saved) {
-    const d = JSON.parse(saved);
-    if (d._build === BUILD) { D = d; hasDraft = true; }
-    else localStorage.removeItem(DRAFT_KEY);   // leftover draft from an older version: ignore it
-  }
-} catch (e) {}
-normalize(D);
-let undoStack = [];
-let lastState = JSON.stringify(D);
-let lastUndoAt = 0;
-
-const img = key =&gt; (D.images || {})[key] || "";
-
-/* ---------- Public page ---------- */
-let pvIdx = -1; // which usable link the preview is showing
-let tileAnim = true; // cards slide in only on the first draw, not on every search keystroke
-function tile(p, i) {
-  const src = img(p.image);
-  const pic = src
-    ? `&lt;img class="pic ${p.imageFit === "contain" ? "image-fit" : ""}" src="${esc(src)}" alt="${esc(p.name)}" loading="lazy"&gt;`
-    : `&lt;div class="ph"&gt;${esc((p.name || "?").charAt(0))}&lt;/div&gt;`;
-  const dots = (p.links || []).map(l =&gt; `&lt;i class="dot ${st(l.status).cls}"&gt;&lt;/i&gt;`).join("");
-  const enter = tileAnim ? ` enter" style="animation-delay:${Math.min(i, 12) * 70}ms` : "";
-  return `&lt;div class="tile${enter}" tabindex="0" data-i="${i}"&gt;${pic}
-    &lt;div class="info"&gt;&lt;h3&gt;${esc(p.name)}&lt;/h3&gt;&lt;small&gt;click to see more&lt;/small&gt;
-    &lt;div class="mini"&gt;${dots}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`;
-}
-function renderTop() {
-  const list = D.proxies.map((p, i) =&gt; [p, i]).filter(([p]) =&gt; p.top).slice(0, 5);
-  $("top5").innerHTML = list.map(([p, i]) =&gt; tile(p, i)).join("") || `&lt;div class="empty"&gt;No top picks yet.&lt;/div&gt;`;
-}
-function renderAll() {
-  const q = $("search").value.toLowerCase().trim();
-  const list = D.proxies.map((p, i) =&gt; [p, i]).filter(([p]) =&gt;
-    [p.name, p.aka, p.note, ...(p.tags || [])].join(" ").toLowerCase().includes(q));
-  $("all").innerHTML = list.map(([p, i]) =&gt; tile(p, i)).join("") || `&lt;div class="empty"&gt;No proxies match.&lt;/div&gt;`;
-}
-function renderPage() {
-  const S = D.site;
-  $("siteTitle").textContent = S.title;
-  $("siteTagline").textContent = S.tagline;
-  $("siteVersion").textContent = S.version;
-  $("scrollHint").textContent = S.scrollHint;
-  $("topText").textContent = S.topText;
-  $("tips").textContent = S.tips;
-  $("footer").textContent = S.footer;
-  document.title = S.title;
-  $("updatesBox").hidden = !D.updates.length;
-  $("updates").innerHTML = D.updates.map(u =&gt; `&lt;li&gt;${bold(u)}&lt;/li&gt;`).join("");
-  $("rules").innerHTML = D.rules.map(r =&gt; `&lt;li&gt;${bold(r)}&lt;/li&gt;`).join("");
-  $("soonBox").hidden = !D.comingSoon.items.length;
-  $("soonText").textContent = D.comingSoon.text;
-  $("soonItems").innerHTML = D.comingSoon.items.map(i =&gt; `&lt;span class="tag"&gt;${esc(i)}&lt;/span&gt;`).join("");
-  renderTop(); renderAll();
-}
-let renderTimer;
-const queueRender = () =&gt; { clearTimeout(renderTimer); renderTimer = setTimeout(renderPage, 250); };
-
-function openProxy(i) {
-  const p = D.proxies[i]; if (!p) return;
-  pvIdx = -1;
-  const src = img(p.image);
-  $("sheet").innerHTML = `
-    &lt;button class="close" aria-label="Close"&gt;×&lt;/button&gt;
-    ${src ? `&lt;img class="${p.imageFit === "contain" ? "image-fit" : ""}" src="${esc(src)}" alt="${esc(p.name)}"&gt;` : ""}
-    &lt;h2&gt;${esc(p.name)}&lt;/h2&gt;
-    ${p.aka ? `&lt;div class="aka"&gt;${esc(p.aka)}&lt;/div&gt;` : ""}
-    &lt;div class="note"&gt;${esc(p.note)}&lt;/div&gt;
-    &lt;div class="tags"&gt;${(p.tags || []).map(t =&gt; `&lt;span class="tag"&gt;${esc(t)}&lt;/span&gt;`).join("")}&lt;/div&gt;
-    ${p.links?.length ? `
-      &lt;button class="btn preview-btn" data-act="previewSite" data-i="${i}"&gt;◀ Preview site&lt;/button&gt;
-      &lt;div class="preview-box" id="previewBox"&gt;&lt;/div&gt;
-    ` : ""}
-    &lt;div class="links"&gt;${(p.links || []).map((l, n) =&gt; {
-      const s = st(l.status);
-      return `&lt;a class="link ${s.cls}" href="${esc(l.url)}" target="_blank" rel="noopener"&gt;
-        &lt;i class="dot"&gt;&lt;/i&gt;Link ${n + 1}&lt;span class="st"&gt;${s.label}&lt;/span&gt;&lt;/a&gt;`;
-    }).join("")}&lt;/div&gt;`;
-  $("modal").classList.add("open");
-}
-const closeModal = () =&gt; $("modal").classList.remove("open");
-
-/* ---------- Developer panel ---------- */
-const hash = (str, seed = 7) =&gt; {
-  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
-  for (let i = 0, ch; i &lt; str.length; i++) {
-    ch = str.charCodeAt(i);
-    h1 = Math.imul(h1 ^ ch, 2654435761);
-    h2 = Math.imul(h2 ^ ch, 1597334677);
-  }
-  h1 = Math.imul(h1 ^ (h1 &gt;&gt;&gt; 16), 2246822507) ^ Math.imul(h2 ^ (h2 &gt;&gt;&gt; 13), 3266489909);
-  h2 = Math.imul(h2 ^ (h2 &gt;&gt;&gt; 16), 2246822507) ^ Math.imul(h1 ^ (h1 &gt;&gt;&gt; 13), 3266489909);
-  return (4294967296 * (2097151 &amp; h2) + (h1 &gt;&gt;&gt; 0)).toString(36);
-};
-async function hashStr(s) {
-  const salted = "ppz|" + s;
-  if (window.crypto &amp;&amp; crypto.subtle) {
-    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(salted));
-    return "s:" + [...new Uint8Array(buf)].map(b =&gt; b.toString(16).padStart(2, "0")).join("");
-  }
-  return "h:" + hash(salted);
-}
-const getPath = (o, p) =&gt; p.split(".").reduce((a, k) =&gt; a?.[k], o);
-const setPath = (o, p, v) =&gt; {
-  const k = p.split("."); let t = o;
-  for (let i = 0; i &lt; k.length - 1; i++) t = t[k[i]];
-  t[k[k.length - 1]] = v;
-};
-const isUnlocked = () =&gt; +localStorage.getItem(UNLOCK_KEY) &gt; Date.now();
-const unlock = () =&gt; localStorage.setItem(UNLOCK_KEY, Date.now() + SESSION_HOURS * 3600000);
-
-let tab = "proxies";
-const openSet = new Set();
-
-function toast(msg) {
-  const t = $("toast"); t.textContent = msg; t.classList.add("show");
-  clearTimeout(t._h); t._h = setTimeout(() =&gt; t.classList.remove("show"), 2200);
-}
-function save() {
-  const current = JSON.stringify(D);
-  if (current !== lastState) {
-    // Group rapid typing into one undo step.
-    if (Date.now() - lastUndoAt &gt; 700) {
-      undoStack.push(lastState);
-      if (undoStack.length &gt; 50) undoStack.shift();
-      lastUndoAt = Date.now();
-    }
-    lastState = current;
-  }
-  try {
-    localStorage.setItem(DRAFT_KEY, current);
-    hasDraft = true;
-  } catch (e) {
-    toast("⚠ Could not save on this device. Download your file.");
-  }
-  queueRender();
-}
-function updateFab() {
-  if (PUBLIC_BUILD) return;
-  const fab = $("fab");
-  if (!isUnlocked()) { fab.hidden = true; return; }
-  const ms = +localStorage.getItem(UNLOCK_KEY) - Date.now();
-  const h = Math.floor(ms / 3600000), m = Math.floor((ms % 3600000) / 60000);
-  fab.textContent = `⚙ DEV · ${h}h ${m}m`;
-  fab.hidden = $("dev").classList.contains("open");
-}
-setInterval(updateFab, 30000);
-
-function tryOpenDev() {
-  if (PUBLIC_BUILD) return;
-  if (isUnlocked()) { openDev(); return; }
-  const first = !D.devHash;
-  $("sheet").innerHTML = `
-    &lt;button class="close" aria-label="Close"&gt;×&lt;/button&gt;
-    &lt;h2&gt;${first ? "🔧 Set up login" : "🔒 Developer login"}&lt;/h2&gt;
-    &lt;p class="sub"&gt;${first ? "Choose your username and password. You only do this once." : "Enter your username and password."}&lt;/p&gt;
-    &lt;input id="userIn" placeholder="Username" autocapitalize="off" autocorrect="off" autocomplete="username" style="margin-bottom:10px"&gt;
-    &lt;input type="password" id="passIn" placeholder="Password" autocomplete="current-password" style="margin-bottom:8px"&gt;
-    &lt;label class="check"&gt;&lt;input type="checkbox" onchange="$('passIn').type = this.checked ? 'text' : 'password'"&gt; Show password&lt;/label&gt;
-    &lt;button class="btn pri full" data-act="checkPass"&gt;${first ? "Save &amp;amp; unlock" : "Unlock"}&lt;/button&gt;`;
-  $("modal").classList.add("open");
-  setTimeout(() =&gt; $("userIn")?.focus(), 50);
-}
-function openDev() {
-  closeModal();
-  $("dev").classList.add("open");
-  document.body.style.overflow = "hidden";
-  renderDev(); updateFab();
-}
-function closeDev() {
-  $("dev").classList.remove("open");
-  document.body.style.overflow = "";
-  if (location.hash === "#dev") history.replaceState(null, "", location.pathname + location.search);
-  updateFab();
-}
-
-const opts = (list, cur) =&gt; list.map(([v, label]) =&gt;
-  `&lt;option value="${esc(v)}" ${v === cur ? "selected" : ""}&gt;${esc(label)}&lt;/option&gt;`).join("");
-const field = (label, path, val, area) =&gt; `&lt;label class="field"&gt;&lt;span&gt;${label}&lt;/span&gt;${
-  area ? `&lt;textarea data-path="${path}"&gt;${esc(val)}&lt;/textarea&gt;`
-       : `&lt;input data-path="${path}" value="${esc(val)}"&gt;`}&lt;/label&gt;`;
-
-const TABS = {
-  proxies() {
-    const imgOpts = [["", "(no picture)"], ...Object.keys(D.images).map(k =&gt; [k, k])];
-    const stOpts = Object.entries(STATUS).map(([k, v]) =&gt; [k, v.label]);
-    return `&lt;button class="btn pri full" data-act="addProxy"&gt;+ Add proxy&lt;/button&gt;` +
-      D.proxies.map((p, i) =&gt; `
-      &lt;details class="card" data-i="${i}" ${openSet.has(i) ? "open" : ""}&gt;
-        &lt;summary&gt;${p.top ? "⭐ " : ""}${esc(p.name || "(no name)")}
-          &lt;span style="color:var(--muted);font-weight:400;font-size:.8rem"&gt;${p.links.length} link(s)&lt;/span&gt;&lt;/summary&gt;
-        &lt;div class="in"&gt;
-          ${field("Name", `proxies.${i}.name`, p.name)}
-          ${field("Old name / aka", `proxies.${i}.aka`, p.aka)}
-          ${field("Your note", `proxies.${i}.note`, p.note, true)}
-          &lt;label class="field"&gt;&lt;span&gt;Tags (separate with commas)&lt;/span&gt;
-            &lt;input data-path="proxies.${i}.tags" data-type="csv" value="${esc((p.tags || []).join(", "))}"&gt;&lt;/label&gt;
-          &lt;label class="field"&gt;&lt;span&gt;Picture&lt;/span&gt;
-            &lt;select data-path="proxies.${i}.image"&gt;${opts(imgOpts, p.image)}&lt;/select&gt;&lt;/label&gt;
-          &lt;button class="btn full" data-act="toggleFit" data-i="${i}"&gt;
-            Image display: ${p.imageFit === "contain" ? "Fit (no crop)" : "Fill (may crop)"}
-          &lt;/button&gt;
-          &lt;label class="check"&gt;&lt;input type="checkbox" data-path="proxies.${i}.top" ${p.top ? "checked" : ""}&gt; Show in Top 5&lt;/label&gt;
-          &lt;h3&gt;Links&lt;/h3&gt;
-          ${p.links.map((l, j) =&gt; `
-            &lt;div class="linkrow"&gt;
-              &lt;input data-path="proxies.${i}.links.${j}.url" value="${esc(l.url)}" placeholder="https://..." style="margin-bottom:8px" inputmode="url"&gt;
-              &lt;div class="row"&gt;
-                &lt;select data-path="proxies.${i}.links.${j}.status"&gt;${opts(stOpts, l.status)}&lt;/select&gt;
-                &lt;button class="btn sm danger" data-act="delLink" data-i="${i}" data-j="${j}"&gt;Delete&lt;/button&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;`).join("")}
-          &lt;button class="btn full" data-act="addLink" data-i="${i}"&gt;+ Add link&lt;/button&gt;
-          &lt;div class="row"&gt;
-            &lt;button class="btn sm" data-act="moveProxy" data-i="${i}" data-d="-1"&gt;↑ Up&lt;/button&gt;
-            &lt;button class="btn sm" data-act="moveProxy" data-i="${i}" data-d="1"&gt;↓ Down&lt;/button&gt;
-            &lt;button class="btn sm danger" data-act="delProxy" data-i="${i}" style="margin-left:auto"&gt;Delete proxy&lt;/button&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/details&gt;`).join("");
-  },
-  text() {
-    const S = "site";
-    return field("Title", `${S}.title`, D.site.title) +
-      field("Tagline", `${S}.tagline`, D.site.tagline) +
-      field("Version badge", `${S}.version`, D.site.version) +
-      field("Scroll hint", `${S}.scrollHint`, D.site.scrollHint) +
-      field("Top 5 description", `${S}.topText`, D.site.topText, true) +
-      field("Tips note", `${S}.tips`, D.site.tips, true) +
-      field("Footer", `${S}.footer`, D.site.footer);
-  },
-  look() {
-    const acc = D.site.accent || "#a66bff";
-    return `&lt;h3&gt;🎨 Colors &amp;amp; motion&lt;/h3&gt;
-      &lt;label class="field"&gt;&lt;span&gt;Main accent color&lt;/span&gt;
-        &lt;input type="color" data-path="site.accent" value="${esc(acc)}" style="height:48px;padding:4px"&gt;&lt;/label&gt;
-      &lt;label class="check"&gt;&lt;input type="checkbox" data-path="site.anim" ${D.site.anim !== false ? "checked" : ""}&gt; Animations on&lt;/label&gt;
-      &lt;p class="sub"&gt;Turn animations off if the page feels slow on an older phone. Your phone's "reduce motion" setting also turns them off.&lt;/p&gt;`;
-  },
-  canvas() {
-    return `&lt;p class="sub"&gt;Free-form shapes, text and buttons you can drag around, like the old builder.&lt;/p&gt;
-      &lt;button class="btn pri full" data-act="editCanvas"&gt;✏ Enter edit mode&lt;/button&gt;` +
-      field("Canvas height (px)", "canvas.height", D.canvas.height) +
-      `&lt;p class="sub"&gt;${D.canvas.items.length} item(s) on the canvas.&lt;/p&gt;
-      &lt;h3&gt;🖌 Guest canvas&lt;/h3&gt;
-      &lt;label class="check"&gt;&lt;input type="checkbox" data-path="site.guest" ${D.site.guest !== false ? "checked" : ""}&gt; Show the guest canvas to visitors&lt;/label&gt;
-      &lt;p class="sub"&gt;Paste a code a visitor sent you. It is checked (shapes and text only, no links or pictures) and added to your canvas, where you can edit it.&lt;/p&gt;
-      &lt;textarea id="gImport" placeholder="Paste guest code here" style="min-height:90px;margin-bottom:8px"&gt;&lt;/textarea&gt;
-      &lt;button class="btn full" data-act="importGuest"&gt;Add to my canvas&lt;/button&gt;`;
-  },
-  lists() {
-    const list = (title, path) =&gt; `&lt;h3&gt;${title}&lt;/h3&gt;` +
-      getPath(D, path).map((s, j) =&gt; `
-        &lt;div class="row"&gt;
-          &lt;textarea data-path="${path}.${j}" style="min-height:50px"&gt;${esc(s)}&lt;/textarea&gt;
-          &lt;button class="btn sm danger" data-act="delStr" data-list="${path}" data-j="${j}"&gt;✕&lt;/button&gt;
-        &lt;/div&gt;`).join("") +
-      `&lt;button class="btn full" data-act="addStr" data-list="${path}"&gt;+ Add&lt;/button&gt;`;
-    return `&lt;p class="sub"&gt;Tip: put text between **double stars** to make it bold.&lt;/p&gt;` +
-      list("📢 Updates", "updates") +
-      list("📜 Rules", "rules") +
-      `&lt;h3&gt;🚧 Coming Soon&lt;/h3&gt;` + field("Heading", "comingSoon.text", D.comingSoon.text) +
-      list("Coming soon items", "comingSoon.items");
-  },
-  images() {
-    const keys = Object.keys(D.images);
-    return `&lt;p class="sub"&gt;Each picture is stored once. Pick it on any proxy from the Proxies tab.&lt;/p&gt;
-      &lt;button class="btn pri full" data-act="addImage"&gt;+ New picture&lt;/button&gt;` +
-      keys.map(k =&gt; {
-        const v = D.images[k], kb = Math.round(v.length * 0.75 / 1024);
-        return `&lt;div class="imgrow"&gt;
-          ${v ? `&lt;img class="thumb" src="${esc(v)}" alt=""&gt;` : `&lt;div class="thumb"&gt;none&lt;/div&gt;`}
-          &lt;div class="meta"&gt;&lt;b&gt;${esc(k)}&lt;/b&gt;
-            &lt;small&gt;${!v ? "empty" : v.startsWith("data:") ? `uploaded · ~${kb} KB` : "web link"}&lt;/small&gt;&lt;/div&gt;
-          &lt;div class="row" style="width:100%;margin:0"&gt;
-            &lt;span class="btn sm upl"&gt;Upload&lt;input type="file" accept="image/*" data-key="${esc(k)}"&gt;&lt;/span&gt;
-            &lt;button class="btn sm" data-act="linkImage" data-key="${esc(k)}"&gt;Use link&lt;/button&gt;
-            &lt;button class="btn sm danger" data-act="delImage" data-key="${esc(k)}" style="margin-left:auto"&gt;Delete&lt;/button&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;`;
-      }).join("");
-  },
-  save() {
-    const kb = Math.round(buildHTML().length / 1024);
-    const dirty = JSON.stringify(D) !== JSON.stringify(EXPORTED_DATA);
-    return (dirty
-      ? `&lt;div class="warn"&gt;🟡 &lt;b&gt;Unpublished edits.&lt;/b&gt; They are saved on this device only. Your live site does not change until you download the updated file and upload it to your site.&lt;/div&gt;`
-      : `&lt;div class="warn" style="color:var(--good);border-color:var(--good);background:rgba(61,220,132,.1)"&gt;🟢 &lt;b&gt;Up to date.&lt;/b&gt; This matches the file you loaded. Edits save on this device automatically; to publish new ones, download the file and upload it.&lt;/div&gt;`) +
-      `&lt;p class="sub"&gt;Updated file size: about &lt;b&gt;${kb} KB&lt;/b&gt; · Page version: &lt;b&gt;${BUILD}&lt;/b&gt;&lt;/p&gt;
-      &lt;button class="btn full" data-act="undo"&gt;↶ Undo last change&lt;/button&gt;
-      &lt;button class="btn pri full" data-act="downloadPublic"&gt;⬇ Download PUBLIC version (upload this to your site)&lt;/button&gt;
-      &lt;p class="sub"&gt;The public copy has no developer panel and no stored login, so visitors can't open it.&lt;/p&gt;
-      &lt;button class="btn full" data-act="download"&gt;⬇ Download editable copy (keep this for yourself)&lt;/button&gt;
-      &lt;button class="btn full" data-act="copyHTML"&gt;📋 Copy full code instead&lt;/button&gt;
-      &lt;h3&gt;🔒 Login&lt;/h3&gt;
-      &lt;p class="sub"&gt;${D.devHash ? "A login is set. Fill these in only if you want to change it." : "No login set yet."}&lt;/p&gt;
-      &lt;input id="newUser" placeholder="New username" autocapitalize="off" autocorrect="off" style="margin-bottom:8px"&gt;
-      &lt;input type="password" id="newPass" placeholder="New password" style="margin-bottom:8px"&gt;
-      &lt;button class="btn full" data-act="setPass"&gt;Save new login&lt;/button&gt;
-      &lt;button class="btn full" data-act="lock"&gt;Lock now&lt;/button&gt;
-      &lt;h3&gt;⚠ Danger zone&lt;/h3&gt;
-      &lt;button class="btn full danger" data-act="discard"&gt;Discard device edits&lt;/button&gt;`;
-  }
-};
-
-function renderDev() {
-  [...$("devTabs").children].forEach(b =&gt; b.classList.toggle("on", b.dataset.tab === tab));
-  $("devBody").innerHTML = TABS[tab]();
-}
-
-function buildHTML(pub = false) {
-  const c = document.documentElement.cloneNode(true);
-  c.querySelectorAll("style").forEach(x =&gt; { if (x.textContent.includes(".__cwhr-sel")) x.remove(); });   // leftover from the Claude preview
-  c.querySelectorAll("script").forEach(x =&gt; { if (x.textContent.includes("__cowork_html_review_ready__")) x.remove(); });
-  c.querySelectorAll("[data-dyn]").forEach(e =&gt; { e.innerHTML = ""; e.className = e.className.replace(/\bshow\b/, "").trim(); });
-  c.querySelector("#modal").classList.remove("open");
-  c.querySelector("#dev").classList.remove("open");
-  c.querySelector("#fab").hidden = true;
-  c.querySelector("body").classList.remove("editing");
-  c.querySelector("#edit").hidden = true;
-  c.querySelector("body").removeAttribute("style");
-  const out = pub ? { ...D, devHash: "" } : D;          // public copy never carries the login
-  const json = JSON.stringify(out, null, 2).replace(/&lt;\/script/gi, "&lt;\\/script");
-  c.querySelector("#settings").textContent = `\nconst DATA = ${json};\n`;
-  if (pub) {
-    c.querySelector("#dev").replaceChildren();           // developer panel removed
-    c.querySelector("#fab").remove();
-    c.querySelectorAll("script").forEach(sc =&gt; {
-      if (sc.id !== "settings") sc.textContent = sc.textContent.replace(/^const PUBLIC_BUILD = false;/m, "const PUBLIC_BUILD = true;");
-    });
-  }
-  return "&lt;!DOCTYPE html&gt;\n" + c.outerHTML;
-}
-
-const ACT = {
-  openDev: tryOpenDev,
-  downloadPublic() {
-    const blob = new Blob([buildHTML(true)], { type: "text/html" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "ProxyPathz-public.html";
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() =&gt; URL.revokeObjectURL(a.href), 5000);
-    toast("Downloading public version…");
-  },
-  gAdd(el) {
-    if (G.length &gt;= GMAX) return toast("Limit reached: " + GMAX + " items");
-    const t = el.dataset.t, tx = t === "text";
-    const it = cleanItem({ type: t, x: 30, y: 30, w: tx ? 40 : 25, h: tx ? 12 : 18, text: tx ? "Hello" : "", fill: gNew, color: "#ffffff", size: 18 });
-    G.push(it); gSel = it.id; gSave(); renderGuest();
-  },
-  gDel() { G = G.filter(i =&gt; i.id !== gSel); gSel = null; gSave(); renderGuest(); },
-  gClear() { if (!confirm("Clear your whole guest canvas?")) return; G = []; gSel = null; gSave(); renderGuest(); },
-  gCopy() {
-    navigator.clipboard.writeText(JSON.stringify({ ppz: 1, items: G.map(({ id, ...r }) =&gt; r) }))
-      .then(() =&gt; toast("Copied! Send this code to the owner.")).catch(() =&gt; toast("Copy failed"));
-  },
-  importGuest() {
-    let data; try { data = JSON.parse($("gImport").value); } catch { return toast("That isn't a valid guest code"); }
-    const items = (Array.isArray(data?.items) ? data.items : []).slice(0, GMAX).map(cleanItem).filter(Boolean);
-    if (!items.length) return toast("No usable items in that code");
-    D.canvas.items.push(...items); save(); renderCanvas(); renderDev();
-    toast("Added " + items.length + " item(s) to your canvas");
-  },
-  undo() {
-    if (!undoStack.length) return toast("Nothing to undo yet");
-    D = JSON.parse(undoStack.pop());
-    lastState = JSON.stringify(D);
-    try { localStorage.setItem(DRAFT_KEY, lastState); hasDraft = true; } catch (e) {}
-    if (!sel()) selId = null;
-    renderPage(); renderDev(); renderEd();
-    toast("Undid the last change");
-  },
-  discard() {
-    if (!confirm("Discard device-saved edits and restore this file's original settings?")) return;
-    D = JSON.parse(JSON.stringify(EXPORTED_DATA));
-    undoStack = [];
-    lastState = JSON.stringify(D);
-    localStorage.removeItem(DRAFT_KEY);
-    hasDraft = false;
-    selId = null;
-    renderPage(); renderDev(); renderEd();
-    toast("Device edits discarded");
-  },
-  editCanvas() { closeDev(); document.body.classList.add("editing"); renderCanvas(); renderEd(); $("canvasBox").scrollIntoView({ behavior: "smooth" }); },
-  edDone() { document.body.classList.remove("editing"); selId = null; renderCanvas(); renderEd(); openDev(); },
-  edAdd(el) {
-    const t = el.dataset.t, tx = t === "text";
-    const it = { id: "e" + Date.now().toString(36), type: t, x: 30, y: 30, w: tx ? 40 : 25, h: tx ? 12 : 18,
-      text: tx ? "New text" : t === "button" ? "Button" : "", size: 18, color: "#ffffff", fill: newColor,
-      fillA: tx ? 0 : 100, op: 0, radius: t === "button" ? 10 : 0, image: "", font: "Default", link: "" };
-    D.canvas.items.push(it); selId = it.id; save(); renderCanvas(); renderEd();
-  },
-  edFwd() { edMove(1); },
-  edBack() { edMove(-1); },
-  edDel() {
-    if (!confirm("Delete this item?")) return;
-    D.canvas.items = D.canvas.items.filter(i =&gt; i.id !== selId); selId = null; save(); renderCanvas(); renderEd();
-  },
-  toggleFit(el) {
-    const p = D.proxies[+el.dataset.i];
-    p.imageFit = p.imageFit === "contain" ? "cover" : "contain";
-    save();
-    renderDev();
-  },
-  previewSite(el) {
-    const p = D.proxies[+el.dataset.i];
-    const box = $("previewBox");
-    if (!p || !box) return;
-    // Only real web links that aren't marked blocked
-    const usable = [];
-    (p.links || []).forEach((l, n) =&gt; {
-      if (l.status === "blocked") return;
-      try {
-        const u = new URL(l.url);
-        if (["https:", "http:"].includes(u.protocol)) usable.push({ n, href: u.href });
-      } catch {}
-    });
-    if (!usable.length) return toast("No usable links to preview");
-
-    pvIdx = (pvIdx + 1) % usable.length;   // every tap moves to the next link
-    const cur = usable[pvIdx];
-
-    const cap = document.createElement("div");
-    cap.className = "preview-cap";
-    cap.textContent = `Showing link ${cur.n + 1} (${pvIdx + 1} of ${usable.length})` +
-      (usable.length &gt; 1 ? " · blank? tap again for the next one" : "");
-
-    const frame = document.createElement("iframe");
-    frame.src = cur.href;
-    frame.title = `Preview of ${p.name}, link ${cur.n + 1}`;
-    frame.referrerPolicy = "no-referrer";
-    frame.setAttribute("sandbox", "allow-scripts allow-forms");
-
-    const hide = document.createElement("button");
-    hide.className = "btn sm";
-    hide.dataset.act = "hidePreview";
-    hide.textContent = "Hide preview";
-
-    box.replaceChildren(cap, frame, hide);
-    box.classList.add("open");
-    el.textContent = usable.length &gt; 1 ? "↻ Try next link" : "↻ Reload";
-  },
-  hidePreview() {
-    const box = $("previewBox");
-    if (!box) return;
-    box.classList.remove("open");
-    box.replaceChildren();
-    pvIdx = -1;
-    const b = document.querySelector(".preview-btn");
-    if (b) b.textContent = "◀ Preview site";
-  },
-  closeDev,
-  tab: el =&gt; { tab = el.dataset.tab; renderDev(); $("devBody").scrollTop = 0; },
-  async checkPass() {
-    const u = $("userIn").value.trim(), p = $("passIn").value;
-    if (!u || !p) return toast("Enter both username and password");
-    const h = await hashStr(u + "\n" + p);
-    if (!D.devHash) {
-      D.devHash = h; save(); unlock(); openDev();
-      toast("Login saved. Download the file to keep it.");
-    } else if (h === D.devHash) {
-      unlock(); openDev();
-    } else {
-      toast("Wrong username or password");
-    }
-  },
-  addProxy() {
-    D.proxies.push({ name: "New proxy", aka: "", image: "", top: false, note: "", tags: [],
-      links: [{ url: "https://", status: "unknown" }] });
-    openSet.add(D.proxies.length - 1); save(); renderDev();
-  },
-  delProxy(el) {
-    const i = +el.dataset.i;
-    if (!confirm(`Delete "${D.proxies[i].name}"?`)) return;
-    D.proxies.splice(i, 1); openSet.clear(); save(); renderDev();
-  },
-  moveProxy(el) {
-    const i = +el.dataset.i, j = i + +el.dataset.d;
-    if (j &lt; 0 || j &gt;= D.proxies.length) return;
-    [D.proxies[i], D.proxies[j]] = [D.proxies[j], D.proxies[i]];
-    openSet.clear(); openSet.add(j); save(); renderDev();
-  },
-  addLink(el) { D.proxies[+el.dataset.i].links.push({ url: "https://", status: "unknown" }); save(); renderDev(); },
-  delLink(el) { D.proxies[+el.dataset.i].links.splice(+el.dataset.j, 1); save(); renderDev(); },
-  addStr(el) { getPath(D, el.dataset.list).push(""); save(); renderDev(); },
-  delStr(el) { getPath(D, el.dataset.list).splice(+el.dataset.j, 1); save(); renderDev(); },
-  addImage() {
-    const name = (prompt("Name for this picture (letters/numbers, no spaces):") || "").trim().replace(/[^\w-]/g, "");
-    if (!name) return;
-    if (name in D.images) return toast("That name already exists");
-    D.images[name] = ""; save(); renderDev();
-  },
-  linkImage(el) {
-    const url = prompt("Paste the picture's web link:", D.images[el.dataset.key].startsWith("data:") ? "" : D.images[el.dataset.key]);
-    if (url === null) return;
-    D.images[el.dataset.key] = url.trim(); save(); renderDev();
-  },
-  delImage(el) {
-    const k = el.dataset.key;
-    if (!confirm(`Delete picture "${k}"?`)) return;
-    delete D.images[k];
-    D.proxies.forEach(p =&gt; { if (p.image === k) p.image = ""; });
-    save(); renderDev();
-  },
-  download() {
-    const blob = new Blob([buildHTML()], { type: "text/html" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "ProxyPathz.html";
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() =&gt; URL.revokeObjectURL(a.href), 5000);
-    toast("Downloading…");
-  },
-  copyHTML() {
-    navigator.clipboard.writeText(buildHTML())
-      .then(() =&gt; toast("Copied! Paste it into your file."))
-      .catch(() =&gt; toast("Copy failed, use Download instead"));
-  },
-  async setPass() {
-    const u = $("newUser").value.trim(), p = $("newPass").value;
-    if (!u || !p) return toast("Enter a username and a password");
-    D.devHash = await hashStr(u + "\n" + p);
-    save(); renderDev();
-    toast("Login saved. Download the file to keep it.");
-  },
-  lock() { localStorage.removeItem(UNLOCK_KEY); closeDev(); toast("Locked"); },
-  reset() {
-    if (!confirm("Throw away all changes saved on this device?")) return;
-    localStorage.removeItem(DRAFT_KEY); location.reload();
-  }
-};
-
-/* ---------- Events ---------- */
-document.addEventListener("click", e =&gt; {
-  const a = e.target.closest("[data-act]");
-  if (a) { e.preventDefault(); ACT[a.dataset.act]?.(a); return; }
-  const t = e.target.closest(".tile");
-  if (t) return openProxy(+t.dataset.i);
-  if (e.target.id === "modal" || e.target.classList.contains("close")) closeModal();
-});
-
-function onEdit(e) {
-  const el = e.target;
-  if (!el.dataset.path || !el.closest("#dev")) return;
-  let v = el.type === "checkbox" ? el.checked : el.value;
-  if (el.dataset.type === "csv") v = v.split(",").map(s =&gt; s.trim()).filter(Boolean);
-  setPath(D, el.dataset.path, v);
-  save();
-}
-document.addEventListener("input", onEdit);
-document.addEventListener("change", e =&gt; {
-  onEdit(e);
-  const el = e.target;
-  if (el.type === "file" &amp;&amp; el.dataset.key &amp;&amp; el.files[0]) {
-    const f = el.files[0];
-    if (f.size &gt; 400 * 1024 &amp;&amp; !confirm(`This picture is ${Math.round(f.size / 1024)} KB, which will make your file bigger. Use it anyway?`)) return;
-    const r = new FileReader();
-    r.onload = () =&gt; { D.images[el.dataset.key] = r.result; save(); renderDev(); toast("Picture added"); };
-    r.readAsDataURL(f);
-  }
-});
-document.addEventListener("toggle", e =&gt; {
-  if (!e.target.matches?.("details.card")) return;
-  const i = +e.target.dataset.i;
-  e.target.open ? openSet.add(i) : openSet.delete(i);
-}, true);
-
-let keyBuf = "";
-document.addEventListener("keydown", e =&gt; {
-  if (e.key === "Escape") { closeModal(); if ($("dev").classList.contains("open")) closeDev(); }
-  if (e.key === "Enter" &amp;&amp; e.target.id === "passIn") ACT.checkPass();
-  if (e.key === "Enter" &amp;&amp; e.target.classList.contains("tile")) openProxy(+e.target.dataset.i);
-  if (e.key.length === 1 &amp;&amp; !e.target.matches("input,textarea")) {
-    keyBuf = (keyBuf + e.key.toLowerCase()).slice(-7);
-    if (keyBuf === "devmode") tryOpenDev();
-  }
-});
-
-// Secret: tap the title 5 times fast
-let taps = 0, tapTimer;
-$("siteTitle").addEventListener("click", () =&gt; {
-  taps++; clearTimeout(tapTimer);
-  tapTimer = setTimeout(() =&gt; taps = 0, 1500);
-  if (taps &gt;= 5) { taps = 0; tryOpenDev(); }
-});
-// Secret: add #dev to the URL
-const checkHash = () =&gt; { if (location.hash === "#dev") tryOpenDev(); };
-window.addEventListener("hashchange", checkHash);
-
-$("search").addEventListener("input", renderAll);
-
-/* ---------- Canvas ---------- */
-let selId = null, snap = true, newColor = "#a66bff";
-const FONTS = [["Default","inherit"],["Poppins","'Poppins',sans-serif"],["Orbitron","'Orbitron',sans-serif"],
-  ["Russo One","'Russo One',sans-serif"],["Space Grotesk","'Space Grotesk',sans-serif"],["JetBrains Mono","'JetBrains Mono',monospace"]];
-const hex = (h, a) =&gt; { h = /^#[0-9a-f]{6}$/i.test(h) ? h : "#a66bff";
-  return `rgba(${parseInt(h.slice(1,3),16)},${parseInt(h.slice(3,5),16)},${parseInt(h.slice(5,7),16)},${a})`; };
-const editing = () =&gt; document.body.classList.contains("editing");
-const safeUrl = u =&gt; { try { const x = new URL(u); return ["http:","https:"].includes(x.protocol) ? x.href : ""; } catch { return ""; } };
-const sel = () =&gt; D.canvas.items.find(i =&gt; i.id === selId);
-
-function renderCanvas() {
-  const C = D.canvas, cv = $("cv");
-  $("canvasBox").hidden = !(editing() || C.items.length);
-  cv.style.height = (parseInt(C.height) || 520) + "px";
-  cv.replaceChildren();
-  C.items.forEach(it =&gt; {
-    const el = document.createElement("div"), s = el.style;
-    el.className = "ci" + (it.id === selId &amp;&amp; editing() ? " sel" : "");
-    el.dataset.id = it.id;
-    s.left = it.x + "%"; s.top = it.y + "%"; s.width = it.w + "%"; s.height = it.h + "%";
-    s.borderRadius = it.type === "circle" ? "50%" : (+it.radius || 0) + "px";
-    s.opacity = (100 - (+it.op || 0)) / 100;
-    s.background = hex(it.fill, (it.fillA ?? 100) / 100);
-    s.color = /^#[0-9a-f]{6}$/i.test(it.color) ? it.color : "#ffffff";
-    s.fontSize = (+it.size || 18) + "px";
-    s.fontFamily = (FONTS.find(f =&gt; f[0] === it.font) || FONTS[0])[1];
-    const src = img(it.image); if (src) s.backgroundImage = `url("${src.replace(/"/g, "%22")}")`;
-    if (it.link) s.cursor = "pointer";
-    el.textContent = it.text || "";
-    const rh = document.createElement("i"); rh.className = "rh"; el.appendChild(rh);
-    cv.appendChild(el);
-  });
-}
-
-function renderEd() {
-  const p = $("edit"); p.hidden = !editing(); if (p.hidden) return;
-  const it = sel();
-  const rng = (k, label) =&gt; `&lt;label class="field"&gt;&lt;span&gt;${label}&lt;/span&gt;&lt;input type="range" min="0" max="100" data-k="${k}" value="${it[k] ?? 0}"&gt;&lt;/label&gt;`;
-  const num = (k, label) =&gt; `&lt;label class="field"&gt;&lt;span&gt;${label}&lt;/span&gt;&lt;input type="number" data-k="${k}" value="${it[k] ?? 0}"&gt;&lt;/label&gt;`;
-  const col = (k, label) =&gt; `&lt;label class="field"&gt;&lt;span&gt;${label}&lt;/span&gt;&lt;input type="color" data-k="${k}" value="${esc(it[k])}"&gt;&lt;/label&gt;`;
-  p.innerHTML = `
-    &lt;div class="row"&gt;
-      &lt;button class="btn sm" data-act="edAdd" data-t="rect"&gt;+ Rectangle&lt;/button&gt;
-      &lt;button class="btn sm" data-act="edAdd" data-t="circle"&gt;+ Circle&lt;/button&gt;
-      &lt;button class="btn sm" data-act="edAdd" data-t="text"&gt;+ Text&lt;/button&gt;
-      &lt;button class="btn sm" data-act="edAdd" data-t="button"&gt;+ Button&lt;/button&gt;
-    &lt;/div&gt;
-    &lt;div class="row"&gt;
-      &lt;input type="color" id="newColor" value="${newColor}" style="width:56px;flex:0 0 56px;height:44px;padding:2px"&gt;
-      &lt;label class="check" style="margin:0;flex:1"&gt;&lt;input type="checkbox" id="snapT" ${snap ? "checked" : ""}&gt; Grid snap&lt;/label&gt;
-      &lt;button class="btn sm" data-act="undo"&gt;↶ Undo&lt;/button&gt;
-      &lt;button class="btn sm pri" data-act="edDone"&gt;Done&lt;/button&gt;
-    &lt;/div&gt;` + (!it ? `&lt;p class="sub"&gt;Tap an item to edit it. Drag to move it, drag the corner square to resize.&lt;/p&gt;` : `
-    &lt;label class="field"&gt;&lt;span&gt;Text&lt;/span&gt;&lt;textarea data-k="text"&gt;${esc(it.text)}&lt;/textarea&gt;&lt;/label&gt;
-    ${num("size", "Font size")}${col("color", "Text color")}
-    &lt;label class="field"&gt;&lt;span&gt;Font&lt;/span&gt;&lt;select data-k="font"&gt;${FONTS.map(f =&gt; `&lt;option ${f[0] === it.font ? "selected" : ""}&gt;${f[0]}&lt;/option&gt;`).join("")}&lt;/select&gt;&lt;/label&gt;
-    ${col("fill", "Fill color")}${rng("fillA", "Background opacity")}${rng("op", "Transparency")}${num("radius", "Corner radius (px)")}
-    &lt;label class="field"&gt;&lt;span&gt;Picture&lt;/span&gt;&lt;select data-k="image"&gt;&lt;option value=""&gt;(none)&lt;/option&gt;${Object.keys(D.images).map(k =&gt; `&lt;option value="${esc(k)}" ${k === it.image ? "selected" : ""}&gt;${esc(k)}&lt;/option&gt;`).join("")}&lt;/select&gt;&lt;/label&gt;
-    &lt;label class="field"&gt;&lt;span&gt;Link (opens when tapped on the live page)&lt;/span&gt;&lt;input data-k="link" value="${esc(it.link)}" placeholder="https://..." inputmode="url"&gt;&lt;/label&gt;
-    &lt;div class="row"&gt;&lt;button class="btn sm" data-act="edFwd"&gt;↑ Forward&lt;/button&gt;&lt;button class="btn sm" data-act="edBack"&gt;↓ Backward&lt;/button&gt;
-      &lt;button class="btn sm danger" data-act="edDel" style="margin-left:auto"&gt;Delete&lt;/button&gt;&lt;/div&gt;`);
-}
-function edMove(d) {
-  const a = D.canvas.items, i = a.findIndex(x =&gt; x.id === selId), j = i + d;
-  if (i &lt; 0 || j &lt; 0 || j &gt;= a.length) return;
-  [a[i], a[j]] = [a[j], a[i]]; save(); renderCanvas();
-}
-$("edit").addEventListener("input", e =&gt; {
-  const el = e.target;
-  if (el.id === "newColor") { newColor = el.value; return; }
-  if (el.id === "snapT") { snap = el.checked; return; }
-  const it = sel(); if (!it || !el.dataset.k) return;
-  it[el.dataset.k] = (el.type === "range" || el.type === "number") ? +el.value : el.value;
-  save();
-});
-
-let drag = null;
-$("cv").addEventListener("pointerdown", e =&gt; { if (drag) return;
-  if (!editing()) return;
-  const el = e.target.closest(".ci"), it = el &amp;&amp; D.canvas.items.find(i =&gt; i.id === el.dataset.id);
-  if (!it) return;
-  e.preventDefault();
-  const changed = selId !== it.id; selId = it.id;
-  $("cv").querySelectorAll(".ci.sel").forEach(x =&gt; x.classList.remove("sel")); el.classList.add("sel");
-  drag = { id: e.pointerId, moved: false, it, el, rs: e.target.classList.contains("rh"), x: e.clientX, y: e.clientY,
-    ox: it.x, oy: it.y, ow: it.w, oh: it.h, r: $("cv").getBoundingClientRect() };
-  el.setPointerCapture(e.pointerId);
-  if (changed) renderEd();
-});
-document.addEventListener("pointermove", e =&gt; {
-  if (!drag || e.pointerId !== drag.id) return; drag.moved = true;
-  const dx = (e.clientX - drag.x) / drag.r.width * 100, dy = (e.clientY - drag.y) / drag.r.height * 100;
-  const q = v =&gt; snap ? Math.round(v / 5) * 5 : Math.round(v * 10) / 10, { it, el } = drag;
-  if (drag.rs) { it.w = Math.max(5, Math.min(100 - it.x, q(drag.ow + dx))); it.h = Math.max(5, Math.min(100 - it.y, q(drag.oh + dy))); }
-  else { it.x = Math.max(0, Math.min(100 - it.w, q(drag.ox + dx))); it.y = Math.max(0, Math.min(100 - it.h, q(drag.oy + dy))); }
-  el.style.left = it.x + "%"; el.style.top = it.y + "%"; el.style.width = it.w + "%"; el.style.height = it.h + "%";
-});
-const endDrag = e =&gt; { if (!drag || e.pointerId !== drag.id) return; const m = drag.moved; drag = null; if (m) save(); };
-document.addEventListener("pointerup", endDrag);
-document.addEventListener("pointercancel", endDrag);
-$("cv").addEventListener("click", e =&gt; {
-  if (editing()) return;
-  const el = e.target.closest(".ci"), it = el &amp;&amp; D.canvas.items.find(i =&gt; i.id === el.dataset.id), u = it &amp;&amp; safeUrl(it.link);
-  if (u) window.open(u, "_blank", "noopener");
-});
-
-/* ---------- Guest canvas: shapes + text only, locked inside a 540px box, saved per device ---------- */
-const GKEY = "ppz_guest", GMAX = 30;
-const clamp = (v, a, b) =&gt; Math.max(a, Math.min(b, +v || 0));
-const hexOk = (h, d) =&gt; /^#[0-9a-f]{6}$/i.test(h) ? h : d;
-function cleanItem(it) {   // used for guest drawings and for codes the owner imports
-  if (!it || !["rect", "circle", "text"].includes(it.type)) return null;
-  const w = clamp(it.w, 5, 100), h = clamp(it.h, 5, 100);
-  return { id: "g" + Math.random().toString(36).slice(2, 9), type: it.type,
-    x: clamp(it.x, 0, 100 - w), y: clamp(it.y, 0, 100 - h), w, h,
-    text: String(it.text || "").slice(0, 60), size: clamp(it.size || 18, 10, 48),
-    color: hexOk(it.color, "#ffffff"), fill: hexOk(it.fill, "#a66bff"),
-    fillA: it.type === "text" ? 0 : 100, op: 0, radius: 0, image: "", font: "Default", link: "" };
-}
-let G = [], gSel = null, gNew = "#a66bff", gDrag = null;
-try { G = (JSON.parse(localStorage.getItem(GKEY)) || []).slice(0, GMAX).map(cleanItem).filter(Boolean); } catch (e) {}
-const gSave = () =&gt; { try { localStorage.setItem(GKEY, JSON.stringify(G)); } catch (e) {} };
-
-function paintGuest() {
-  const gv = $("gv"); gv.replaceChildren();
-  G.forEach(it =&gt; {
-    const el = document.createElement("div"), st2 = el.style;
-    el.className = "ci" + (it.id === gSel ? " sel" : ""); el.dataset.id = it.id;
-    st2.left = it.x + "%"; st2.top = it.y + "%"; st2.width = it.w + "%"; st2.height = it.h + "%";
-    st2.borderRadius = it.type === "circle" ? "50%" : "0";
-    st2.background = hex(it.fill, it.fillA / 100); st2.color = it.color; st2.fontSize = it.size + "px";
-    el.textContent = it.text;
-    const rh = document.createElement("i"); rh.className = "rh"; el.appendChild(rh); gv.appendChild(el);
-  });
-}
-function toolsGuest() {
-  const it = G.find(i =&gt; i.id === gSel);
-  $("gtools").innerHTML = `&lt;div class="row" style="margin-top:12px;flex-wrap:wrap"&gt;
-      &lt;button class="btn sm" data-act="gAdd" data-t="rect"&gt;+ Rectangle&lt;/button&gt;
-      &lt;button class="btn sm" data-act="gAdd" data-t="circle"&gt;+ Circle&lt;/button&gt;
-      &lt;button class="btn sm" data-act="gAdd" data-t="text"&gt;+ Text&lt;/button&gt;
-      &lt;input type="color" id="gNew" value="${gNew}" style="width:56px;flex:0 0 56px;height:44px;padding:2px"&gt;&lt;/div&gt;` +
-    (it ? `&lt;label class="field"&gt;&lt;span&gt;Text (max 60 letters)&lt;/span&gt;&lt;input data-g="text" maxlength="60" value="${esc(it.text)}"&gt;&lt;/label&gt;
-      &lt;label class="field"&gt;&lt;span&gt;Font size&lt;/span&gt;&lt;input type="range" min="10" max="48" data-g="size" value="${it.size}"&gt;&lt;/label&gt;
-      &lt;div class="row"&gt;&lt;label class="field" style="flex:1"&gt;&lt;span&gt;Fill&lt;/span&gt;&lt;input type="color" data-g="fill" value="${esc(it.fill)}"&gt;&lt;/label&gt;
-        &lt;label class="field" style="flex:1"&gt;&lt;span&gt;Text color&lt;/span&gt;&lt;input type="color" data-g="color" value="${esc(it.color)}"&gt;&lt;/label&gt;&lt;/div&gt;
-      &lt;button class="btn sm danger" data-act="gDel"&gt;Delete item&lt;/button&gt;`
-    : `&lt;p class="sub"&gt;Tap an item to edit it. Drag to move it, drag the corner square to resize.&lt;/p&gt;`) +
-    `&lt;div class="row" style="margin-top:8px"&gt;&lt;button class="btn sm" data-act="gCopy"&gt;📋 Copy my canvas&lt;/button&gt;
-      &lt;button class="btn sm danger" data-act="gClear" style="margin-left:auto"&gt;Clear all&lt;/button&gt;&lt;/div&gt;`;
-}
-function renderGuest() { paintGuest(); toolsGuest(); }
-$("gtools").addEventListener("input", e =&gt; {
-  const el = e.target;
-  if (el.id === "gNew") { gNew = hexOk(el.value, gNew); return; }
-  const it = G.find(i =&gt; i.id === gSel), k = el.dataset.g; if (!it || !k) return;
-  it[k] = k === "text" ? el.value.slice(0, 60) : k === "size" ? clamp(el.value, 10, 48) : hexOk(el.value, it[k]);
-  gSave(); paintGuest();
-});
-$("gv").addEventListener("pointerdown", e =&gt; { if (gDrag) return;
-  const el = e.target.closest(".ci"), it = el &amp;&amp; G.find(i =&gt; i.id === el.dataset.id); if (!it) return;
-  e.preventDefault();
-  const changed = gSel !== it.id; gSel = it.id;
-  $("gv").querySelectorAll(".ci.sel").forEach(x =&gt; x.classList.remove("sel")); el.classList.add("sel");
-  gDrag = { id: e.pointerId, it, el, rs: e.target.classList.contains("rh"), x: e.clientX, y: e.clientY,
-    ox: it.x, oy: it.y, ow: it.w, oh: it.h, r: $("gv").getBoundingClientRect() };
-  el.setPointerCapture(e.pointerId);
-  if (changed) toolsGuest();
-});
-document.addEventListener("pointermove", e =&gt; {
-  if (!gDrag || e.pointerId !== gDrag.id) return;
-  const d = gDrag, it = d.it, dx = (e.clientX - d.x) / d.r.width * 100, dy = (e.clientY - d.y) / d.r.height * 100;
-  if (d.rs) { it.w = clamp(d.ow + dx, 5, 100 - it.x); it.h = clamp(d.oh + dy, 5, 100 - it.y); }
-  else { it.x = clamp(d.ox + dx, 0, 100 - it.w); it.y = clamp(d.oy + dy, 0, 100 - it.h); }
-  const q = d.el.style; q.left = it.x + "%"; q.top = it.y + "%"; q.width = it.w + "%"; q.height = it.h + "%";
-});
-const gEnd = e =&gt; { if (gDrag &amp;&amp; e.pointerId === gDrag.id) { gDrag = null; gSave(); } };
-document.addEventListener("pointerup", gEnd);
-document.addEventListener("pointercancel", gEnd);
-renderGuest();
-
-// Applies the Look settings whenever the page re-renders
-function applyLook() {
-  document.documentElement.style.setProperty("--accent", D.site.accent || "#a66bff");
-  document.body.classList.toggle("noanim", D.site.anim === false);
-}
-const basePage = renderPage;
-renderPage = function () { basePage(); applyLook(); renderCanvas(); $("guestBox").hidden = D.site.guest === false; tileAnim = false; };
-
-renderPage();
-updateFab();
-checkHash();
-&lt;/script&gt;
 
 
 &lt;script id="ppz-addon-visitor"&gt;
@@ -2090,6 +1284,223 @@ body { animation-duration:calc(20s / var(--spd, 1)); }
   document.addEventListener("change", onCapEdit);
 
   renderPage();
+  if ($("dev").classList.contains("open")) renderDev();
+})();
+&lt;/script&gt;
+&lt;script id="ppz-addon-publish"&gt;
+/* ===== ProxyPathz add-on: Publish to GitHub ===== */
+(() =&gt; {
+  if (window.__ppzPub) return; window.__ppzPub = true;
+  if (typeof PUBLIC_BUILD !== "undefined" &amp;&amp; PUBLIC_BUILD) return;
+
+  const CKEY = "proxypathz_v15_pub", TKEY = "proxypathz_v15_pubtoken";
+  let C = { owner: "notreallygoodatcoding", repo: "Proxy-Path", branch: "main", path: "index.html", sv: true, remember: false, last: 0 };
+  try { C = Object.assign(C, JSON.parse(localStorage.getItem(CKEY)) || {}); } catch (e) {}
+  const saveC = () =&gt; { try { localStorage.setItem(CKEY, JSON.stringify(C)); } catch (e) {} };
+  const getToken = () =&gt; sessionStorage.getItem(TKEY) || localStorage.getItem(TKEY) || "";
+  function setToken(t, remember) {
+    sessionStorage.removeItem(TKEY); localStorage.removeItem(TKEY);
+    if (t) (remember ? localStorage : sessionStorage).setItem(TKEY, t);
+  }
+
+  /* ---------- GitHub API (uses XHR so leftover preview code can't block it) ---------- */
+  function gh(method, url, body) {
+    return new Promise((res, rej) =&gt; {
+      const x = new XMLHttpRequest();
+      x.open(method, "https://api.github.com" + url);
+      x.setRequestHeader("Accept", "application/vnd.github+json");
+      x.setRequestHeader("Authorization", "Bearer " + getToken());
+      x.setRequestHeader("X-GitHub-Api-Version", "2022-11-28");
+      if (body) x.setRequestHeader("Content-Type", "application/json");
+      x.onload = () =&gt; { let j = null; try { j = JSON.parse(x.responseText); } catch (e) {} res({ status: x.status, json: j }); };
+      x.onerror = () =&gt; rej(new Error("Network error. Check your internet."));
+      x.send(body ? JSON.stringify(body) : null);
+    });
+  }
+  const repoUrl = () =&gt; `/repos/${encodeURIComponent(C.owner)}/${encodeURIComponent(C.repo)}`;
+  const fileUrl = p =&gt; `${repoUrl()}/contents/${p.split("/").map(encodeURIComponent).join("/")}`;
+  function errText(s) {
+    if (s === 401) return "Token is wrong or expired. Make a new one.";
+    if (s === 403) return "Token can't write to this repo. Check Contents: Read and write.";
+    if (s === 404) return "Repo, branch or file not found. Check the spelling.";
+    if (s === 409 || s === 422) return "The file changed on GitHub at the same moment. Try again.";
+    return "GitHub said error " + s + ".";
+  }
+  function toB64(str) {
+    const bytes = new TextEncoder().encode(str);
+    let bin = "";
+    for (let i = 0; i &lt; bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+  function fromB64(b) {
+    try { return new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g, "")), c =&gt; c.charCodeAt(0))); }
+    catch (e) { return ""; }
+  }
+  async function getSha(path) {
+    const r = await gh("GET", fileUrl(path) + "?ref=" + encodeURIComponent(C.branch) + "&amp;t=" + Date.now());
+    if (r.status === 200) return { sha: r.json.sha, text: r.json.content ? fromB64(r.json.content) : "" };
+    if (r.status === 404) return { sha: null, text: "" };
+    throw new Error(errText(r.status));
+  }
+  async function putB64(path, b64, msg) {
+    for (let tryNo = 0; tryNo &lt; 2; tryNo++) {
+      const cur = await getSha(path);
+      const body = { message: msg, content: b64, branch: C.branch };
+      if (cur.sha) body.sha = cur.sha;
+      const r = await gh("PUT", fileUrl(path), body);
+      if (r.status === 200 || r.status === 201) return;
+      if ((r.status === 409 || r.status === 422) &amp;&amp; tryNo === 0) continue;
+      throw new Error(errText(r.status));
+    }
+  }
+  const putFile = (path, text, msg) =&gt; putB64(path, toB64(text), msg);
+
+  /* ---------- Build the file ---------- */
+  const MARKS = ["real" + "Parent", "__cowork" + "HtmlReviewGuest", "window." + "claude"];
+  function cleanHTML(html) {
+    return html
+      .replace(/&lt;script\b[^&gt;]*&gt;[\s\S]*?&lt;\/script&gt;/gi, b =&gt; MARKS.some(m =&gt; b.includes(m)) ? "" : b)
+      .replace(new RegExp('&lt;style id="claude-' + 'scrollbar"&gt;[\\s\\S]*?&lt;/' + 'style&gt;', "gi"), "");
+  }
+  const addonIds = html =&gt; [...html.matchAll(/&lt;script id="(ppz-addon-[\w-]+)"/g)].map(m =&gt; m[1]);
+  function sourceView(html) {
+    const e = html.replace(/&amp;/g, "&amp;amp;").replace(/&lt;/g, "&amp;lt;").replace(/&gt;/g, "&amp;gt;");
+    return '&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset="UTF-8"&gt;&lt;title&gt;source&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;' + e + "&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;";
+  }
+
+  /* ---------- Publish ---------- */
+  let busy = false;
+  async function publish() {
+    if (busy) return;
+    const token = getToken();
+    if (!token) { toast("Add your GitHub token first"); openConn(); return; }
+    if (!confirm("Publish your edits to the live website?\n\nThis replaces " + C.path + " on GitHub with what's in this editor.")) return;
+    busy = true; setLog("⏳ Building file…");
+    try {
+      const html = cleanHTML(buildHTML(false));
+      if (html.includes(token)) throw new Error("Stopped: your token ended up inside the page text. Remove it and try again.");
+      setLog("⏳ Checking GitHub…");
+      const remote = await getSha(C.path);
+      if (remote.text) {
+        const mine = addonIds(html), missing = addonIds(remote.text).filter(id =&gt; !mine.includes(id));
+        if (missing.length &amp;&amp; !confirm("GitHub's file has add-ons this page doesn't:\n" + missing.join("\n") +
+          "\n\nPublishing now would REMOVE them. Press Cancel, reload the live site, then publish.\n\nPublish anyway?")) {
+          setLog("Cancelled. Reload the live site and try again."); busy = false; return;
+        }
+      }
+      const msg = "Update from ProxyPathz editor (" + new Date().toLocaleString() + ")";
+      setLog("⏳ Uploading " + C.path + "…");
+      await putFile(C.path, html, msg);
+      if (C.sv) { setLog("⏳ Uploading source-view.html…"); await putFile("source-view.html", sourceView(html), msg); }
+      C.last = Date.now(); saveC();
+      setLog("✅ Published! The live site updates in about a minute.");
+      toast("🚀 Published to GitHub");
+    } catch (e) {
+      setLog("❌ " + e.message);
+    }
+    busy = false;
+  }
+
+  /* ---------- UI in the developer panel ---------- */
+  const escA = s =&gt; String(s).replace(/&amp;/g, "&amp;amp;").replace(/"/g, "&amp;quot;").replace(/&lt;/g, "&amp;lt;");
+  function setLog(t) { const el = $("ppzPubLog"); if (el) el.textContent = t; }
+  function openConn() { const d = $("ppzPubConn"); if (d) d.open = true; }
+  const lastText = () =&gt; C.last ? "Last published: " + new Date(C.last).toLocaleString() : "Not published from this device yet.";
+
+  function addPublish() {
+    const body = $("devBody");
+    if (!body || !body.querySelector('[data-act="discard"]') || body.querySelector("#ppzPub")) return;
+    const has = !!getToken();
+    const sec = document.createElement("div");
+    sec.id = "ppzPub";
+    sec.style.cssText = "border:1px solid var(--accent);border-radius:12px;padding:12px;margin-bottom:16px;background:var(--panel2)";
+    sec.innerHTML = `
+      &lt;h3 style="margin-top:0"&gt;🚀 Publish to GitHub&lt;/h3&gt;
+      &lt;p class="sub"&gt;Puts your edits on the real website for everyone. ${lastText()}&lt;/p&gt;
+      &lt;button type="button" class="btn full" id="ppzPubGo"
+        style="background:var(--accent);color:#12081f;font-weight:700;min-height:48px"&gt;🚀 Publish now&lt;/button&gt;
+      &lt;p class="sub" id="ppzPubLog" style="margin-top:8px"&gt;${has ? "Ready." : "Connect GitHub below first."}&lt;/p&gt;
+      &lt;details id="ppzUpBox" style="margin-top:8px"&gt;
+        &lt;summary style="cursor:pointer;padding:8px 0"&gt;📁 Upload a file to GitHub&lt;/summary&gt;
+        &lt;p class="sub"&gt;Pick a file from your device, like an updated ProxyPathz.html or a picture. To replace the live site, pick the HTML file and keep the name below as index.html.&lt;/p&gt;
+        &lt;input type="file" id="ppzUpFile" style="margin-bottom:8px;width:100%"&gt;
+        &lt;label class="field"&gt;&lt;span&gt;Save it on GitHub as&lt;/span&gt;&lt;input id="ppzUpPath" value="${escA(C.path)}" placeholder="index.html or images/photo.png"&gt;&lt;/label&gt;
+        &lt;button type="button" class="btn full" id="ppzUpGo"&gt;⬆ Upload file&lt;/button&gt;
+      &lt;/details&gt;
+      &lt;details id="ppzPubConn" ${has ? "" : "open"} style="margin-top:8px"&gt;
+        &lt;summary style="cursor:pointer;padding:8px 0"&gt;⚙ GitHub connection ${has ? "✅" : "(not connected)"}&lt;/summary&gt;
+        &lt;label class="field"&gt;&lt;span&gt;Token (starts with github_pat_)&lt;/span&gt;
+          &lt;input type="password" id="ppzPubTok" autocomplete="off" placeholder="${has ? "Saved. Paste a new one to replace it" : "Paste token here"}"&gt;&lt;/label&gt;
+        &lt;label style="display:flex;gap:10px;align-items:center;margin:6px 0 10px"&gt;
+          &lt;input type="checkbox" id="ppzPubRem" ${C.remember ? "checked" : ""} style="width:22px;height:22px"&gt;
+          &lt;span&gt;Remember on this device &lt;small style="color:var(--muted)"&gt;(only on your own device)&lt;/small&gt;&lt;/span&gt;&lt;/label&gt;
+        &lt;div class="row"&gt;
+          &lt;label class="field" style="flex:1"&gt;&lt;span&gt;Username&lt;/span&gt;&lt;input id="ppzPubOwner" value="${escA(C.owner)}"&gt;&lt;/label&gt;
+          &lt;label class="field" style="flex:1"&gt;&lt;span&gt;Repo&lt;/span&gt;&lt;input id="ppzPubRepo" value="${escA(C.repo)}"&gt;&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class="row"&gt;
+          &lt;label class="field" style="flex:1"&gt;&lt;span&gt;Branch&lt;/span&gt;&lt;input id="ppzPubBranch" value="${escA(C.branch)}"&gt;&lt;/label&gt;
+          &lt;label class="field" style="flex:1"&gt;&lt;span&gt;File&lt;/span&gt;&lt;input id="ppzPubPath" value="${escA(C.path)}"&gt;&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;label style="display:flex;gap:10px;align-items:center;margin:6px 0 10px"&gt;
+          &lt;input type="checkbox" id="ppzPubSv" ${C.sv ? "checked" : ""} style="width:22px;height:22px"&gt;
+          &lt;span&gt;Also update source-view.html&lt;/span&gt;&lt;/label&gt;
+        &lt;div class="row"&gt;
+          &lt;button type="button" class="btn sm" id="ppzPubSave"&gt;💾 Save&lt;/button&gt;
+          &lt;button type="button" class="btn sm" id="ppzPubTest"&gt;🔌 Test&lt;/button&gt;
+          &lt;button type="button" class="btn sm danger" id="ppzPubForget"&gt;Forget token&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/details&gt;`;
+    body.prepend(sec);
+
+    const readForm = () =&gt; {
+      C.owner = $("ppzPubOwner").value.trim(); C.repo = $("ppzPubRepo").value.trim();
+      C.branch = $("ppzPubBranch").value.trim() || "main"; C.path = $("ppzPubPath").value.trim() || "index.html";
+      C.sv = $("ppzPubSv").checked; C.remember = $("ppzPubRem").checked;
+      const t = $("ppzPubTok").value.trim();
+      setToken(t || getToken(), C.remember);
+      $("ppzPubTok").value = "";
+      saveC();
+    };
+    $("ppzPubGo").onclick = publish;
+    $("ppzUpFile").onchange = () =&gt; {
+      const f = $("ppzUpFile").files[0]; if (!f) return;
+      $("ppzUpPath").value = /\.html?$/i.test(f.name) ? C.path : "images/" + f.name.replace(/[^\w.\-]/g, "_");
+    };
+    $("ppzUpGo").onclick = async () =&gt; {
+      const f = $("ppzUpFile").files[0], path = $("ppzUpPath").value.trim().replace(/^\/+/, "");
+      if (!getToken()) { toast("Add your GitHub token first"); openConn(); return; }
+      if (!f || !path) return setLog("Choose a file first.");
+      if (f.size &gt; 25 * 1024 * 1024) return setLog("That file is over 25 MB, too big to upload this way.");
+      if (!confirm("Upload " + f.name + " to " + C.owner + "/" + C.repo + " as " + path + "?\n\nIf that file already exists it will be replaced.")) return;
+      setLog("⏳ Reading file…");
+      try {
+        const b64 = await new Promise((res, rej) =&gt; {
+          const r = new FileReader(); r.onerror = rej;
+          r.onload = () =&gt; res(String(r.result).split(",")[1] || ""); r.readAsDataURL(f);
+        });
+        setLog("⏳ Uploading " + path + "…");
+        await putB64(path, b64, "Upload " + path + " from ProxyPathz editor");
+        setLog("✅ Uploaded " + path + ". The live site updates in about a minute.");
+        toast("🚀 File uploaded");
+      } catch (e) { setLog("❌ " + e.message); }
+    };
+    $("ppzPubSave").onclick = () =&gt; { readForm(); toast("Connection saved"); sec.remove(); addPublish(); };
+    $("ppzPubTest").onclick = async () =&gt; {
+      readForm();
+      if (!getToken()) return setLog("Paste your token first.");
+      setLog("⏳ Testing…");
+      try { await getSha(C.path); setLog("✅ Connected! Found " + C.path + " in " + C.owner + "/" + C.repo + "."); }
+      catch (e) { setLog("❌ " + e.message); }
+    };
+    $("ppzPubForget").onclick = () =&gt; {
+      if (!confirm("Forget the GitHub token on this device?")) return;
+      setToken("", false); toast("Token forgotten"); sec.remove(); addPublish();
+    };
+  }
+
+  const baseDev = renderDev;
+  renderDev = function () { baseDev.apply(this, arguments); addPublish(); };
   if ($("dev").classList.contains("open")) renderDev();
 })();
 &lt;/script&gt;
