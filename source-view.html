@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><title>source</title></head><body><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang="en" style="--accent: #a66bff;" class=""&gt;&lt;plasmo-csui&gt;&lt;/plasmo-csui&gt;&lt;head&gt;
+&lt;html lang="en" style="--accent: #a66bff;" class="ppz-bgon"&gt;&lt;head&gt;&lt;/head&gt;&lt;body id="artifacts-component-root-html" class=""&gt;&lt;plasmo-csui&gt;&lt;/plasmo-csui&gt;
       
 &lt;meta charset="UTF-8"&gt;
 &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"&gt;
@@ -224,8 +224,8 @@
   #gtools input[type=range] { width:100%; }
 @media (pointer:coarse) { .ci .rh { width:34px; height:34px; } }
 &lt;/style&gt;
-&lt;/head&gt;
-&lt;body id="artifacts-component-root-html" class=""&gt;
+
+
 &lt;div class="wrap"&gt;
   &lt;header&gt;
     &lt;h1 id="siteTitle" data-dyn="" class=""&gt;&lt;/h1&gt;
@@ -253,7 +253,7 @@
   &lt;/section&gt;&lt;section class="box" id="guestBox" style=""&gt;
     &lt;h2&gt;🖌 GUEST CANVAS&lt;/h2&gt;
     &lt;p class="sub"&gt;Just for fun! Make something with shapes and text. It's locked to a 540px box, and what you make is saved only on your device. Tap "Copy my canvas" and send the code to the owner to get featured.&lt;/p&gt;
-    &lt;div class="cv" id="gv" style="height: 540px; --gs: 0.9972;" data-dyn=""&gt;&lt;/div&gt;
+    &lt;div class="cv" id="gv" style="height: 540px; --gs: 0.5750;" data-dyn=""&gt;&lt;/div&gt;
     &lt;div id="gtools" data-dyn="" class=""&gt;&lt;/div&gt;
   &lt;/section&gt;&lt;section class="box" id="soonBox"&gt;
     &lt;h2&gt;🚧 COMING SOON&lt;/h2&gt;
@@ -291,7 +291,7 @@
 &lt;/div&gt;
 
 &lt;!-- Developer panel --&gt;
-&lt;button class="fab" id="fab" data-act="openDev" hidden=""&gt;⚙ DEV · 9h 52m&lt;/button&gt;
+&lt;button class="fab" id="fab" data-act="openDev" hidden=""&gt;⚙ DEV · 14h 14m&lt;/button&gt;
 &lt;div class="dev" id="dev"&gt;
   &lt;div class="dev-head"&gt;
     &lt;h2&gt;⚙ Developer&lt;/h2&gt;
@@ -321,20 +321,21 @@ const DATA = {
   "site": {
     "title": "ProxyPathz (being honest)",
     "tagline": "hey welcome i guess you can search around and finally it easy to update i guess [question mark",
-    "version": "v2 — redesigned since i hated the old one! Plus it was getting to laggy for my computer to handler and which led to slow update so yeah oof.",
-    "scrollHint": "⬇ scroll down for more stuff unless your not that dumb ⬇",
-    "topText": "My picks that should last a while and are easy to find. I'll add more later, but no useless ones. the only way i can see if it block if it a school computer cry",
-    "tips": "💡 Tip: if a link gets blocked, wait a few day. It usually comes back.",
+    "version": "v1.5 — redesigned since i hated the old one!",
+    "scrollHint": "⬇ scroll down for more ⬇",
+    "topText": "My picks that should last a while and are easy to find. I'll add more later, but no useless ones.",
+    "tips": "💡 Tip: if a link gets blocked, wait a few minutes. It usually comes back.",
     "footer": "Made with 💜 that include all you guy! — ProxyPathz",
-    "capStyle": "default",
-    "capImage": "",
     "pageLayout": {
-      "#updatesBox": {
+      "box2": {
         "x": 0,
-        "y": 2
+        "y": 0
       }
     },
-    "overlay": []
+    "capStyle": "default",
+    "capText": "dark",
+    "capC1": "#000000",
+    "capC2": "#ffffff"
   },
   "images": {
     "daydream": "data:image/webp;base64,UklGRtAFAABXRUJQVlA4IMQFAABwJgCdASreAN8APlEmkkYjoiGhIrMJaHAKCWdu4XPxB5hb4sq51u3h51V4x3Zd5hvnfETvfle8KtJGzqJsAfvnY/fOx++dj987H751LDNGvHtVeLdwfoInP0hG9J+Oq6+pPjzzYSYfBhiquH+HuhVtdgpvCG663tYQxy4oD6oTsfrJwjlBHfnyVePzqC5fjYvmmv/APOZeaaEEidiIraHVEldpTmSGAtesx2jf+iOH0Za16vGD6M7AtpIgncDMgCsGJp9/hZYp/d+MgtN8O68NIzua8imbag5CLhHIE8JeE+4+srP2Pc7Iwxf6Wsec/qN2MUIQei/JI6QxQ4Z8DMwuGdfPH8BbJpO7CzdeXomFV2VLz6X8PrLlbd4vhq3limcVqgtPJ2P3zsfvnY/fOx++dj987H752P3zsegAAP7/dVX9V9tFwAAA2RgDR+y5447r/6kFPEhFmLNSoVxfTtVQAjhTcKFMzmeVfnnrmsVctG0EHcwr6miZSqNeia8976YwT9CSHaty4TNlgQ+u3TdoEFYno0Hqw8g4W7tV6maNYpp1k/a4+HfK3z2yiXWrkH1ypO29WJxu8KXCL+7tC2trzSP06cVGHU1AEr8tNoY9WG1QnTX7vQMtL+YSHn1ZEjlN87SCDfMTIWBFUwJZbZmwr8IrHZuk3Xgse2v/IqFPcGEbheb5XR1vWMk5RgB8RwAAd/m37qgs+hYDyAzl48tRV8IBneLt9q5uOxCeoBjB6yJGlKW9PxKkK3+fL4K2qJMudthbzhfA3J9H9OLKT6ghQqtQBQAsxKSwrdm1OjjwGsR0psTsf3SaVy0Lv/WhiRguwPaigLx6HYPX0qOJsHCZdEmidddftXZIsNVwz0cVKkRpVLbSJJl+ihMaGycGLW2g/vo1QCfTRKm2YfaqEs3EBqpWwTfSjv95d+1a9Swmkk583NvuyOYU5bvnIYLx2vhdjYwLrjJG/yKF7i5lXIziCwOy/dQJwpNgeAiR/SYwwerSsgn+WVPI1eO392ZFJpghOWnHh0+7USkI941x1rAZ0myTojx9YLMU03ubAX9lb73XXxfFzlMliwTDnIpmuRTkuUUyctPyE8EerbQxoAl3MC+yLX26Kra8oJlTgMHu2Drcf6Ip1H7TrZlbsTBy0Hb9Nif4GzsnhQqbjJlYprfAXzXABBEsBmblysH7tvmc/oWavv3c9647aMrJbsSrf2UWfbNkmekd/xdtQMgf04hCcNw0q5P47h2AsYFiYM1gK7lSlKG07bTcRI1Dr495fe7U2BnBlt2v7dl97cP3jGJbPFFEtUmwPi4TSIbij33nLJ7ljKdm9YEN+vnvBTWSwTl1Dn0uZpvaefUsW5qVLb2r5nSRxlaBeFt+8F37tSg5yBKSyZ8MGmEJezAgKj2KntNUeSCCnN8zlneMGkEuUMzrenlqFxuSYPyiNG8iLtxJMFcMQ/0St7BbAMNrY+uRWrvUbi5vqWLPtLHH4BcswjUvjWgSFbaYzFK52M/Y7Do6jN+YTb47JLQ1AtlVWZq29LfbfIl+y5UGoTpqALcyXwLlAZZJVlMhhWAdoeCRwiuN8aW6P6LVDPY1qhpCwCWE4wq+HtbQfdz3VHhfTqWAIUhyxJPg6FqCWGg1GdxmBOnEk7OTx8/DeSGxGzDLYMSFoCWSuzZBERFm81bdVTApxSAXIit78H7luWcX00xXdtx7tuk//L7uDia9WRu4qJpm+p6WNo9vPmsGFeXZl8XWMUc0E2U4Aep//m7XeNWvzb0KOhI1oHzQ4fu9PqAzrDZiyTFH26Zs20rBRnH4bwUTf57bZPY0lDtz28HmerMAkwHOLXcDntFSQ/OIOSPMuK0C3EzsTV98QLIIdw0SFH3iSDusifyA3yugNPn2G4xZd7ACZdTstKUkrJs8YQFKWT2tXyrzu6EiHjYkF3VL5Csd0m9T/MAwvPA3iUHdAAFpe5wAAAAAAAA=",
@@ -357,6 +358,7 @@ const DATA = {
   "comingSoon": {
     "text": "New apps on the way:",
     "items": [
+      "More app",
       "roblox is down for this till they find a way to do it again; it was fun while it lasted",
       "Movies such as anime if an movie is not on there i guess im adding a second one and i know a app that almost have all of the movie",
       "os app that actually good sometime"
@@ -580,15 +582,33 @@ const DATA = {
         "id": "emw5z7m32",
         "type": "text",
         "x": 10,
-        "y": 25,
+        "y": 5,
         "w": 80,
         "h": 55,
-        "text": "Hey guest canvas if you finish with your work sent the code to my Gmail to: lpzchris054@gmail.com\nupdate: im not sure about it\n\nSoon you will have access to pictures as i fix things  in the code plus i have to deal with link being blocked so good luck you artist!!! (I don't know why im locked to this i will soon has access to everything later.",
+        "text": "Hey guest canvas if you finish with your work sent the code to my Gmail to: 0493680@student.clayton.k12.ga.us\n\nSoon you will have access to pictures as i fix things  in the code plus i have to deal with link being blocked so good luck you artist!!! (I don't know why im locked to this i will soon has access to everything later.",
         "size": 18,
         "color": "#ffffff",
         "fill": "#a66bff",
         "fillA": 0,
         "op": 0,
+        "radius": 0,
+        "image": "",
+        "font": "Default",
+        "link": ""
+      },
+      {
+        "id": "emw5zc7qc",
+        "type": "circle",
+        "x": 40,
+        "y": 65,
+        "w": 25,
+        "h": 18,
+        "text": "",
+        "size": 18,
+        "color": "#ffffff",
+        "fill": "#a66bff",
+        "fillA": 100,
+        "op": 62,
         "radius": 0,
         "image": "",
         "font": "Default",
@@ -3873,4 +3893,4 @@ html[data-vtheme="light"] #ppzCatBar button, html[data-vtheme="light"] #ppzChips
   renderPage();
 })();
 &lt;/script&gt;
-&lt;/body&gt;&lt;div id="ibotta-extension-root" style="all: initial;"&gt;&lt;/div&gt;&lt;/html&gt;</pre></body></html>
+&lt;div id="ibotta-extension-root" style="all: initial;"&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre></body></html>
