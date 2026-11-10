@@ -227,7 +227,7 @@
 
 
 <div class="wrap">
-  <header>
+  <header class="">
     <h1 id="siteTitle" data-dyn="" class=""></h1>
     <p id="siteTagline" data-dyn="" class=""></p>
     <span class="version" id="siteVersion" data-dyn=""></span>
@@ -253,10 +253,10 @@
   </section><section class="box" id="guestBox" style="">
     <h2>🖌 GUEST CANVAS</h2>
     <p class="sub">Just for fun! Make something with shapes and text. It's locked to a 540px box, and what you make is saved only on your device. Tap "Copy my canvas" and send the code to the owner to get featured.</p>
-    <div class="cv" id="gv" style="height: 540px; --gs: 0.5750;" data-dyn=""></div>
+    <div class="cv" id="gv" style="height: 540px; --gs: 0.9972;" data-dyn=""></div>
     <div id="gtools" data-dyn="" class=""></div>
   </section><section class="box" id="soonBox">
-    <h2>🚧 COMING SOON</h2>
+    <h2 class="">🚧 COMING SOON</h2>
     <div class="soon">
       <div id="soonText" data-dyn="" class=""></div>
       <div class="items" id="soonItems" data-dyn=""></div>
@@ -291,7 +291,7 @@
 </div>
 
 <!-- Developer panel -->
-<button class="fab" id="fab" data-act="openDev" hidden="">⚙ DEV · 14h 14m</button>
+<button class="fab" id="fab" data-act="openDev" hidden="">⚙ DEV · 9h 52m</button>
 <div class="dev" id="dev">
   <div class="dev-head">
     <h2>⚙ Developer</h2>
@@ -321,13 +321,25 @@ const DATA = {
   "site": {
     "title": "ProxyPathz (being honest)",
     "tagline": "hey welcome i guess you can search around and finally it easy to update i guess [question mark",
-    "version": "v1.5 — redesigned since i hated the old one!",
-    "scrollHint": "⬇ scroll down for more ⬇",
+    "version": "v2 - why did proxy path got remaster is because due to the website being so large that had issue with using other devices so yeah!",
+    "scrollHint": "⬇Scroll up if you want to see more since your down here⬇",
     "topText": "My picks that should last a while and are easy to find. I'll add more later, but no useless ones.",
-    "tips": "💡 Tip: if a link gets blocked, wait a few minutes. It usually comes back.",
+    "tips": "💡 Tip: if a link gets blocked, wait a few days or hour. It usually comes back.",
     "footer": "Made with 💜 that include all you guy! — ProxyPathz",
     "pageLayout": {
       "box2": {
+        "x": 0,
+        "y": 0
+      },
+      "header": {
+        "x": 0,
+        "y": -8
+      },
+      "#footer": {
+        "x": 0,
+        "y": -3318
+      },
+      "#soonBox": {
         "x": 0,
         "y": 0
       }
@@ -335,7 +347,18 @@ const DATA = {
     "capStyle": "default",
     "capText": "dark",
     "capC1": "#000000",
-    "capC2": "#ffffff"
+    "capC2": "#ffffff",
+    "pageOrder": [
+      "header",
+      "#updatesBox",
+      "box0",
+      "box1",
+      "box2",
+      "#soonBox",
+      "#canvasBox",
+      "#guestBox",
+      "#footer"
+    ]
   },
   "images": {
     "daydream": "data:image/webp;base64,UklGRtAFAABXRUJQVlA4IMQFAABwJgCdASreAN8APlEmkkYjoiGhIrMJaHAKCWdu4XPxB5hb4sq51u3h51V4x3Zd5hvnfETvfle8KtJGzqJsAfvnY/fOx++dj987H751LDNGvHtVeLdwfoInP0hG9J+Oq6+pPjzzYSYfBhiquH+HuhVtdgpvCG663tYQxy4oD6oTsfrJwjlBHfnyVePzqC5fjYvmmv/APOZeaaEEidiIraHVEldpTmSGAtesx2jf+iOH0Za16vGD6M7AtpIgncDMgCsGJp9/hZYp/d+MgtN8O68NIzua8imbag5CLhHIE8JeE+4+srP2Pc7Iwxf6Wsec/qN2MUIQei/JI6QxQ4Z8DMwuGdfPH8BbJpO7CzdeXomFV2VLz6X8PrLlbd4vhq3limcVqgtPJ2P3zsfvnY/fOx++dj987H752P3zsegAAP7/dVX9V9tFwAAA2RgDR+y5447r/6kFPEhFmLNSoVxfTtVQAjhTcKFMzmeVfnnrmsVctG0EHcwr6miZSqNeia8976YwT9CSHaty4TNlgQ+u3TdoEFYno0Hqw8g4W7tV6maNYpp1k/a4+HfK3z2yiXWrkH1ypO29WJxu8KXCL+7tC2trzSP06cVGHU1AEr8tNoY9WG1QnTX7vQMtL+YSHn1ZEjlN87SCDfMTIWBFUwJZbZmwr8IrHZuk3Xgse2v/IqFPcGEbheb5XR1vWMk5RgB8RwAAd/m37qgs+hYDyAzl48tRV8IBneLt9q5uOxCeoBjB6yJGlKW9PxKkK3+fL4K2qJMudthbzhfA3J9H9OLKT6ghQqtQBQAsxKSwrdm1OjjwGsR0psTsf3SaVy0Lv/WhiRguwPaigLx6HYPX0qOJsHCZdEmidddftXZIsNVwz0cVKkRpVLbSJJl+ihMaGycGLW2g/vo1QCfTRKm2YfaqEs3EBqpWwTfSjv95d+1a9Swmkk583NvuyOYU5bvnIYLx2vhdjYwLrjJG/yKF7i5lXIziCwOy/dQJwpNgeAiR/SYwwerSsgn+WVPI1eO392ZFJpghOWnHh0+7USkI941x1rAZ0myTojx9YLMU03ubAX9lb73XXxfFzlMliwTDnIpmuRTkuUUyctPyE8EerbQxoAl3MC+yLX26Kra8oJlTgMHu2Drcf6Ip1H7TrZlbsTBy0Hb9Nif4GzsnhQqbjJlYprfAXzXABBEsBmblysH7tvmc/oWavv3c9647aMrJbsSrf2UWfbNkmekd/xdtQMgf04hCcNw0q5P47h2AsYFiYM1gK7lSlKG07bTcRI1Dr495fe7U2BnBlt2v7dl97cP3jGJbPFFEtUmwPi4TSIbij33nLJ7ljKdm9YEN+vnvBTWSwTl1Dn0uZpvaefUsW5qVLb2r5nSRxlaBeFt+8F37tSg5yBKSyZ8MGmEJezAgKj2KntNUeSCCnN8zlneMGkEuUMzrenlqFxuSYPyiNG8iLtxJMFcMQ/0St7BbAMNrY+uRWrvUbi5vqWLPtLHH4BcswjUvjWgSFbaYzFK52M/Y7Do6jN+YTb47JLQ1AtlVWZq29LfbfIl+y5UGoTpqALcyXwLlAZZJVlMhhWAdoeCRwiuN8aW6P6LVDPY1qhpCwCWE4wq+HtbQfdz3VHhfTqWAIUhyxJPg6FqCWGg1GdxmBOnEk7OTx8/DeSGxGzDLYMSFoCWSuzZBERFm81bdVTApxSAXIit78H7luWcX00xXdtx7tuk//L7uDia9WRu4qJpm+p6WNo9vPmsGFeXZl8XWMUc0E2U4Aep//m7XeNWvzb0KOhI1oHzQ4fu9PqAzrDZiyTFH26Zs20rBRnH4bwUTf57bZPY0lDtz28HmerMAkwHOLXcDntFSQ/OIOSPMuK0C3EzsTV98QLIIdw0SFH3iSDusifyA3yugNPn2G4xZd7ACZdTstKUkrJs8YQFKWT2tXyrzu6EiHjYkF3VL5Csd0m9T/MAwvPA3iUHdAAFpe5wAAAAAAAA=",
@@ -348,7 +371,7 @@ const DATA = {
   },
   "updates": [
     "those apps are still on hold \"im crine\"",
-    "version 1 was unstable and it was hard to keep up so this is version 1.5 I GUESS [question mark"
+    "version 1 was unstable and it was hard to keep up so this is version 2 I GUESS?"
   ],
   "rules": [
     "**Rule #1:** Sharing links is kinda allowed, but tell people not to spread them.",
@@ -3893,4 +3916,4 @@ html[data-vtheme="light"] #ppzCatBar button, html[data-vtheme="light"] #ppzChips
   renderPage();
 })();
 </script>
-<div id="ibotta-extension-root" style="all: initial;"></div></body></html>
+<div id="ibotta-extension-root" style="all: initial;"></div><div dji-sru-rewordify-popup="true"><div class="dji-sru-close-btn"></div><div dji-sru-rewordify-body="true" tabindex="0"><div dji-non-draggable="true"></div></div><div class="dji-geom-ctrl-resize-top"></div><div class="dji-geom-ctrl-resize-bottom"></div><div class="dji-geom-ctrl-resize-left"></div><div class="dji-geom-ctrl-resize-right"></div><div class="dji-geom-ctrl-resize-top-left"></div><div class="dji-geom-ctrl-resize-top-right"></div><div class="dji-geom-ctrl-resize-bottom-right"></div><div class="dji-geom-ctrl-resize-bottom-left"></div><div class="geomCtrlContainerOverlay"></div></div><div id="dji-sru-busy-state"></div><dji-sru-distraction></dji-sru-distraction><div dji-sru-rewordify-popup="true"><div class="dji-sru-close-btn"></div><div dji-sru-rewordify-body="true" tabindex="0"><div dji-non-draggable="true"></div></div><div class="dji-geom-ctrl-resize-top"></div><div class="dji-geom-ctrl-resize-bottom"></div><div class="dji-geom-ctrl-resize-left"></div><div class="dji-geom-ctrl-resize-right"></div><div class="dji-geom-ctrl-resize-top-left"></div><div class="dji-geom-ctrl-resize-top-right"></div><div class="dji-geom-ctrl-resize-bottom-right"></div><div class="dji-geom-ctrl-resize-bottom-left"></div><div class="geomCtrlContainerOverlay"></div></div></body><dji-sru id="__dji_sru_components"></dji-sru><dji-sru id="__dji_sru_main_container"></dji-sru><dji-cowriter tabindex="-1"></dji-cowriter></html>
