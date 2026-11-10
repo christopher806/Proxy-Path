@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="--accent: #a66bff;" class="ppz-bgon"><head>
+<html lang="en" style="--accent: #a66bff;"><head>
       
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -225,7 +225,7 @@
 @media (pointer:coarse) { .ci .rh { width:34px; height:34px; } }
 </style>
 </head>
-<body id="artifacts-component-root-html">
+<body id="artifacts-component-root-html" class="">
 <div class="wrap">
   <header>
     <h1 id="siteTitle" data-dyn="" class=""></h1>
@@ -253,7 +253,7 @@
   </section><section class="box" id="guestBox">
     <h2>🖌 GUEST CANVAS</h2>
     <p class="sub">Just for fun! Make something with shapes and text. It's locked to a 540px box, and what you make is saved only on your device. Tap "Copy my canvas" and send the code to the owner to get featured.</p>
-    <div class="cv" id="gv" style="height:540px" data-dyn=""></div>
+    <div class="cv" id="gv" style="height: 540px; --gs: 0.5750;" data-dyn=""></div>
     <div id="gtools" data-dyn="" class=""></div>
   </section><section class="box" id="soonBox">
     <h2>🚧 COMING SOON</h2>
@@ -291,7 +291,7 @@
 </div>
 
 <!-- Developer panel -->
-<button class="fab" id="fab" data-act="openDev" hidden="">⚙ DEV · 8h 4m</button>
+<button class="fab" id="fab" data-act="openDev" hidden="">⚙ DEV · 7h 42m</button>
 <div class="dev" id="dev">
   <div class="dev-head">
     <h2>⚙ Developer</h2>
@@ -325,17 +325,7 @@ const DATA = {
     "scrollHint": "⬇ scroll down for more ⬇",
     "topText": "My picks that should last a while and are easy to find. I'll add more later, but no useless ones.",
     "tips": "💡 Tip: if a link gets blocked, wait a few minutes. It usually comes back.",
-    "footer": "Made with 💜 that include all you guy! — ProxyPathz",
-    "pageLayout": {
-      "box2": {
-        "x": 0,
-        "y": 0
-      }
-    },
-    "capStyle": "animated",
-    "capText": "dark",
-    "capC1": "#000000",
-    "capC2": "#ffffff"
+    "footer": "Made with 💜 that include all you guy! — ProxyPathz"
   },
   "images": {
     "daydream": "data:image/webp;base64,UklGRtAFAABXRUJQVlA4IMQFAABwJgCdASreAN8APlEmkkYjoiGhIrMJaHAKCWdu4XPxB5hb4sq51u3h51V4x3Zd5hvnfETvfle8KtJGzqJsAfvnY/fOx++dj987H751LDNGvHtVeLdwfoInP0hG9J+Oq6+pPjzzYSYfBhiquH+HuhVtdgpvCG663tYQxy4oD6oTsfrJwjlBHfnyVePzqC5fjYvmmv/APOZeaaEEidiIraHVEldpTmSGAtesx2jf+iOH0Za16vGD6M7AtpIgncDMgCsGJp9/hZYp/d+MgtN8O68NIzua8imbag5CLhHIE8JeE+4+srP2Pc7Iwxf6Wsec/qN2MUIQei/JI6QxQ4Z8DMwuGdfPH8BbJpO7CzdeXomFV2VLz6X8PrLlbd4vhq3limcVqgtPJ2P3zsfvnY/fOx++dj987H752P3zsegAAP7/dVX9V9tFwAAA2RgDR+y5447r/6kFPEhFmLNSoVxfTtVQAjhTcKFMzmeVfnnrmsVctG0EHcwr6miZSqNeia8976YwT9CSHaty4TNlgQ+u3TdoEFYno0Hqw8g4W7tV6maNYpp1k/a4+HfK3z2yiXWrkH1ypO29WJxu8KXCL+7tC2trzSP06cVGHU1AEr8tNoY9WG1QnTX7vQMtL+YSHn1ZEjlN87SCDfMTIWBFUwJZbZmwr8IrHZuk3Xgse2v/IqFPcGEbheb5XR1vWMk5RgB8RwAAd/m37qgs+hYDyAzl48tRV8IBneLt9q5uOxCeoBjB6yJGlKW9PxKkK3+fL4K2qJMudthbzhfA3J9H9OLKT6ghQqtQBQAsxKSwrdm1OjjwGsR0psTsf3SaVy0Lv/WhiRguwPaigLx6HYPX0qOJsHCZdEmidddftXZIsNVwz0cVKkRpVLbSJJl+ihMaGycGLW2g/vo1QCfTRKm2YfaqEs3EBqpWwTfSjv95d+1a9Swmkk583NvuyOYU5bvnIYLx2vhdjYwLrjJG/yKF7i5lXIziCwOy/dQJwpNgeAiR/SYwwerSsgn+WVPI1eO392ZFJpghOWnHh0+7USkI941x1rAZ0myTojx9YLMU03ubAX9lb73XXxfFzlMliwTDnIpmuRTkuUUyctPyE8EerbQxoAl3MC+yLX26Kra8oJlTgMHu2Drcf6Ip1H7TrZlbsTBy0Hb9Nif4GzsnhQqbjJlYprfAXzXABBEsBmblysH7tvmc/oWavv3c9647aMrJbsSrf2UWfbNkmekd/xdtQMgf04hCcNw0q5P47h2AsYFiYM1gK7lSlKG07bTcRI1Dr495fe7U2BnBlt2v7dl97cP3jGJbPFFEtUmwPi4TSIbij33nLJ7ljKdm9YEN+vnvBTWSwTl1Dn0uZpvaefUsW5qVLb2r5nSRxlaBeFt+8F37tSg5yBKSyZ8MGmEJezAgKj2KntNUeSCCnN8zlneMGkEuUMzrenlqFxuSYPyiNG8iLtxJMFcMQ/0St7BbAMNrY+uRWrvUbi5vqWLPtLHH4BcswjUvjWgSFbaYzFK52M/Y7Do6jN+YTb47JLQ1AtlVWZq29LfbfIl+y5UGoTpqALcyXwLlAZZJVlMhhWAdoeCRwiuN8aW6P6LVDPY1qhpCwCWE4wq+HtbQfdz3VHhfTqWAIUhyxJPg6FqCWGg1GdxmBOnEk7OTx8/DeSGxGzDLYMSFoCWSuzZBERFm81bdVTApxSAXIit78H7luWcX00xXdtx7tuk//L7uDia9WRu4qJpm+p6WNo9vPmsGFeXZl8XWMUc0E2U4Aep//m7XeNWvzb0KOhI1oHzQ4fu9PqAzrDZiyTFH26Zs20rBRnH4bwUTf57bZPY0lDtz28HmerMAkwHOLXcDntFSQ/OIOSPMuK0C3EzsTV98QLIIdw0SFH3iSDusifyA3yugNPn2G4xZd7ACZdTstKUkrJs8YQFKWT2tXyrzu6EiHjYkF3VL5Csd0m9T/MAwvPA3iUHdAAFpe5wAAAAAAAA=",
@@ -2887,6 +2877,1010 @@ body.ppz-pe #ppzGear, body.ppz-pe #ppzSet, body.ppz-pe #fab, body.ppz-pe #ppzPEb
     body.prepend(b);
   };
   if ($("dev").classList.contains("open")) renderDev();
+})();
+</script>
+<script id="ppz-addon-extras">
+/* ===== ProxyPathz add-on: visitor cosmetics + guest canvas, link and preview fixes ===== */
+(() => {
+  if (window.__ppzExtras) return; window.__ppzExtras = true;
+  const CKEY = "proxypathz_v15_cosmetics";
+  const HEX = /^#[0-9a-f]{6}$/i;
+  const DEF = { cap: "", c1: "#a66bff", c2: "#2b6bff", accent: "", font: "", shape: "", hover: "", size: "", title: "", trail: "", burst: false };
+  let C = Object.assign({}, DEF);
+  try { C = Object.assign(C, JSON.parse(localStorage.getItem(CKEY)) || {}); } catch (e) {}
+  const saveC = () => { try { localStorage.setItem(CKEY, JSON.stringify(C)); } catch (e) {} };
+  const motionOff = () => document.body.classList.contains("noanim") || document.body.classList.contains("vnoanim") ||
+    matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const CAPS = [["", "Site default"], ["default", "Default"], ["glass", "Glass"], ["solid", "Solid color"], ["gradient", "Gradient"],
+    ["animated", "Animated"], ["neon", "Neon glow"], ["shine", "Shine"], ["none", "None"]];
+  const ACCENTS = [["", "Site default"], ["#a66bff", "Purple"], ["#4d8dff", "Blue"], ["#ff5cc8", "Pink"], ["#3ddc84", "Green"],
+    ["#ff9a3d", "Orange"], ["#ff5c7a", "Red"], ["#ffd84d", "Gold"], ["custom", "Custom…"]];
+  const FONTS = [["", "Site default"], ["Poppins", "Poppins"], ["Orbitron", "Orbitron"], ["Russo One", "Russo One"],
+    ["Space Grotesk", "Space Grotesk"], ["JetBrains Mono", "JetBrains Mono"]];
+  const SHAPES = [["", "Default"], ["round", "Rounded"], ["sharp", "Sharp"], ["pill", "Extra round"]];
+  const HOVERS = [["", "Default"], ["lift", "Lift"], ["glow", "Glow"], ["tilt", "Tilt"], ["none", "None"]];
+  const SIZES = [["", "Normal"], ["compact", "Compact"], ["big", "Big"]];
+  const TITLES = [["", "Default"], ["glow", "Glow"], ["rainbow", "Rainbow"], ["neon", "Neon flicker"], ["plain", "Plain"]];
+  const TRAILS = [["", "Off"], ["sparkle", "Sparkles"], ["stars", "Stars"], ["bubble", "Bubbles"]];
+  const ok = (list, v) => list.some(x => x[0] === v) ? v : "";
+  const o = (list, cur) => list.map(([v, l]) => `<option value="${v}" ${v === cur ? "selected" : ""}>${l}</option>`).join("");
+
+  /* ---------- Styles ---------- */
+  const css = document.createElement("style");
+  css.id = "ppzExtrasCss"; css.setAttribute("data-ppzv", "");
+  css.textContent = `
+html[data-vshape="round"] .tile { border-radius:22px !important; }
+html[data-vshape="sharp"] .tile { border-radius:4px !important; }
+html[data-vshape="pill"] .tile { border-radius:34px !important; }
+html[data-vhover] .tile { transition:transform .2s ease, box-shadow .2s ease; }
+html[data-vhover="lift"] .tile:hover { transform:translateY(-6px); }
+html[data-vhover="glow"] .tile:hover { box-shadow:0 0 0 2px var(--accent),0 0 26px var(--accent); }
+html[data-vhover="tilt"] .tile:hover { transform:rotate(-1.5deg) scale(1.03); }
+html[data-vhover="none"] .tile:hover { transform:none !important; box-shadow:none !important; }
+html[data-vsize="compact"] .grid { grid-template-columns:repeat(auto-fill,minmax(120px,1fr)) !important; }
+html[data-vsize="big"] .grid { grid-template-columns:repeat(auto-fill,minmax(250px,1fr)) !important; }
+html[data-vtitle="glow"] #siteTitle { text-shadow:0 0 10px var(--accent),0 0 24px var(--accent) !important; }
+html[data-vtitle="rainbow"] #siteTitle { background:linear-gradient(90deg,#ff5c7a,#ffd84d,#3ddc84,#4dd2ff,#a66bff,#ff5c7a) 0 0/200% 100% !important;
+  -webkit-background-clip:text !important; background-clip:text !important; color:transparent !important;
+  -webkit-text-fill-color:transparent !important; animation:ppzRain 4s linear infinite !important; }
+@keyframes ppzRain { to { background-position:200% 0; } }
+html[data-vtitle="neon"] #siteTitle { background:none !important; color:#fff !important; -webkit-text-fill-color:#fff !important;
+  text-shadow:0 0 4px #fff,0 0 12px var(--accent),0 0 28px var(--accent) !important; animation:ppzFlick 3s infinite !important; }
+@keyframes ppzFlick { 0%,19%,21%,23%,55%,57%,100% { opacity:1; } 20%,22%,56% { opacity:.55; } }
+html[data-vtitle="plain"] #siteTitle { background:none !important; color:var(--text) !important;
+  -webkit-text-fill-color:currentColor !important; text-shadow:none !important; animation:none !important; }
+#ppzFx { position:fixed; inset:0; pointer-events:none; z-index:95; overflow:hidden; }
+.ppzP { position:absolute; font-size:13px; line-height:1; color:var(--accent); text-shadow:0 0 6px var(--accent);
+  animation:ppzPart .8s ease-out forwards; will-change:transform,opacity; }
+.ppzP-bubble { width:10px; height:10px; border:1.5px solid var(--accent); border-radius:50%; }
+.ppzP-burst { width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); }
+@keyframes ppzPart { from { transform:translate(-50%,-50%) scale(1); opacity:1; }
+  to { transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.3); opacity:0; } }
+#ppzCosSec input[type=color] { width:44px; height:36px; padding:2px; border-radius:8px; border:1px solid var(--line); background:var(--panel2); }
+#gv { height:auto !important; aspect-ratio:4/3; width:100%; max-width:720px; margin-left:auto; margin-right:auto; }
+.preview-note { font-size:.8rem; color:var(--muted); margin:6px 0; }
+.preview-note a { color:var(--accent2); font-weight:600; }`;
+  document.head.appendChild(css);
+  const dyn = document.createElement("style");
+  dyn.id = "ppzExtrasDyn"; dyn.setAttribute("data-ppzv", "");
+  document.head.appendChild(dyn);
+
+  /* ---------- Apply cosmetics ---------- */
+  const H = document.documentElement;
+  function setAttr(name, v) { v ? H.setAttribute(name, v) : H.removeAttribute(name); }
+  function apply() {
+    setAttr("data-vshape", ok(SHAPES, C.shape));
+    setAttr("data-vhover", ok(HOVERS, C.hover));
+    setAttr("data-vsize", ok(SIZES, C.size));
+    setAttr("data-vtitle", ok(TITLES, C.title));
+    let t = "";
+    if (HEX.test(C.accent)) t += `html { --accent:${C.accent} !important; }`;
+    const f = ok(FONTS, C.font);
+    if (f) t += `body, body *:not(.ppz-ov):not(.ci):not(code):not(pre) { font-family:"${f}", sans-serif !important; }`;
+    dyn.textContent = t;
+  }
+  apply();
+
+  /* Visitor's own card title bar */
+  if (typeof tile === "function") {
+    const baseTile = tile;
+    tile = function () {
+      const h = baseTile.apply(this, arguments);
+      const s = ok(CAPS, C.cap); if (!s) return h;
+      const c1 = HEX.test(C.c1) ? C.c1 : "#a66bff", c2 = HEX.test(C.c2) ? C.c2 : "#2b6bff";
+      const rep = `<div class="info cs-${s} $1" style="--c1:${c1};--c2:${c2};">`;
+      const out = h.replace(/<div class="info cs-[\w-]+ (ct-[\w-]+)" style="[^"]*">/, rep);
+      return out !== h ? out : h.replace('<div class="info">', rep.replace("$1", "ct-auto"));
+    };
+  }
+
+  /* ---------- Mouse trail + tap burst ---------- */
+  const fx = document.createElement("div");
+  fx.id = "ppzFx"; fx.setAttribute("data-ppzv", ""); fx.setAttribute("aria-hidden", "true");
+  document.body.appendChild(fx);
+  function spawn(x, y, kind, n) {
+    if (motionOff() || document.body.classList.contains("ppz-pe") || fx.childElementCount > 70) return;
+    for (let k = 0; k < n; k++) {
+      const p = document.createElement("span");
+      p.className = "ppzP ppzP-" + kind;
+      if (kind === "sparkle") p.textContent = "✦";
+      if (kind === "stars") p.textContent = "★";
+      let dx, dy;
+      if (kind === "burst") { const a = (Math.PI * 2 * k) / n; dx = Math.cos(a) * 42; dy = Math.sin(a) * 42; }
+      else { dx = (Math.random() - .5) * 26; dy = 14 + Math.random() * 18; }
+      p.style.left = x + "px"; p.style.top = y + "px";
+      p.style.setProperty("--dx", dx.toFixed(1) + "px"); p.style.setProperty("--dy", dy.toFixed(1) + "px");
+      fx.appendChild(p);
+      setTimeout(() => p.remove(), 850);
+    }
+  }
+  let lastTrail = 0;
+  document.addEventListener("pointermove", e => {
+    if (!C.trail || e.pointerType !== "mouse") return;
+    const now = performance.now(); if (now - lastTrail < 45) return; lastTrail = now;
+    spawn(e.clientX, e.clientY, ok(TRAILS, C.trail) || "sparkle", 1);
+  }, { passive: true });
+  document.addEventListener("pointerdown", e => { if (C.burst) spawn(e.clientX, e.clientY, "burst", 8); }, { passive: true });
+
+  /* ---------- ⚙ Settings section ---------- */
+  const panel = $("ppzSet");
+  function addSection() {
+    if (!panel || !panel.lastElementChild || panel.querySelector("#ppzCosSec")) return;
+    const accSel = C.accent ? (ACCENTS.some(a => a[0] === C.accent) ? C.accent : "custom") : "";
+    const sec = document.createElement("div");
+    sec.id = "ppzCosSec";
+    sec.innerHTML = `<h3 style="margin-top:12px">✨ Cosmetics</h3>
+      <label><span>Card title bar<small>Your own style</small></span><select data-c="cap">${o(CAPS, ok(CAPS, C.cap))}</select></label>
+      <label><span>Title bar colors<small>For Solid, Gradient, Animated, Neon</small></span>
+        <span style="display:flex;gap:6px"><input type="color" data-c="c1" value="${HEX.test(C.c1) ? C.c1 : "#a66bff"}">
+        <input type="color" data-c="c2" value="${HEX.test(C.c2) ? C.c2 : "#2b6bff"}"></span></label>
+      <label><span>Theme color</span><select data-c="accentSel">${o(ACCENTS, accSel)}</select></label>
+      ${accSel === "custom" ? `<label><span>Custom color</span><input type="color" data-c="accent" value="${HEX.test(C.accent) ? C.accent : "#a66bff"}"></label>` : ""}
+      <label><span>Font</span><select data-c="font">${o(FONTS, ok(FONTS, C.font))}</select></label>
+      <label><span>Card corners</span><select data-c="shape">${o(SHAPES, ok(SHAPES, C.shape))}</select></label>
+      <label><span>Card hover</span><select data-c="hover">${o(HOVERS, ok(HOVERS, C.hover))}</select></label>
+      <label><span>Card size</span><select data-c="size">${o(SIZES, ok(SIZES, C.size))}</select></label>
+      <label><span>Title effect</span><select data-c="title">${o(TITLES, ok(TITLES, C.title))}</select></label>
+      <label><span>Mouse trail<small>Mouse or trackpad only</small></span><select data-c="trail">${o(TRAILS, ok(TRAILS, C.trail))}</select></label>
+      <label><span>Tap burst<small>Little burst where you tap</small></span><input type="checkbox" data-c="burst" ${C.burst ? "checked" : ""}></label>
+      <div class="row"><button type="button" id="ppzCosReset">Reset cosmetics</button></div>`;
+    panel.insertBefore(sec, panel.lastElementChild);
+    const redraw = () => { sec.remove(); addSection(); };
+    const onChange = e => {
+      const k = e.target.dataset.c; if (!k) return;
+      const v = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+      if (k === "accentSel") {
+        C.accent = v === "custom" ? (HEX.test(C.accent) ? C.accent : "#a66bff") : v;
+        saveC(); apply(); if (e.type === "change") redraw(); return;
+      }
+      C[k] = v; saveC(); apply();
+      if (["cap", "c1", "c2"].includes(k)) renderPage();
+    };
+    sec.addEventListener("change", onChange);
+    sec.addEventListener("input", e => { if (e.target.type === "color") onChange(e); });
+    sec.querySelector("#ppzCosReset").onclick = () => {
+      if (!confirm("Reset all cosmetics to the site default?")) return;
+      C = Object.assign({}, DEF); saveC(); apply(); renderPage(); redraw();
+    };
+  }
+  if (panel) { new MutationObserver(addSection).observe(panel, { childList: true }); addSection(); }
+
+  /* ---------- Fix: guest canvas keeps the same shape on every screen ---------- */
+  const gv = $("gv");
+  if (gv && typeof paintGuest === "function") {
+    const setScale = () => gv.style.setProperty("--gs", ((gv.clientWidth || 720) / 720).toFixed(4));
+    new ResizeObserver(setScale).observe(gv); setScale();
+    const basePaint = paintGuest;
+    paintGuest = function () {
+      basePaint.apply(this, arguments);
+      gv.querySelectorAll(".ci").forEach(el => {
+        const it = G.find(g => g.id === el.dataset.id);
+        if (it) el.style.fontSize = "calc(" + it.size + "px * var(--gs, 1))";
+      });
+    };
+    paintGuest();
+  }
+
+  /* ---------- Fix: hide empty links like "https://" ---------- */
+  if (typeof openProxy === "function") {
+    const baseOpen = openProxy;
+    openProxy = function () {
+      baseOpen.apply(this, arguments);
+      const sheet = $("sheet"); if (!sheet) return;
+      sheet.querySelectorAll("a.link").forEach(a => {
+        let good = false;
+        try { const u = new URL(a.getAttribute("href")); good = /^https?:$/.test(u.protocol) && u.hostname.includes("."); } catch (e) {}
+        if (!good) a.remove();
+      });
+    };
+  }
+
+  /* ---------- Fix: explain blank previews ---------- */
+  if (ACT && ACT.previewSite) {
+    const basePrev = ACT.previewSite;
+    ACT.previewSite = function (el) {
+      basePrev.call(this, el);
+      const box = $("previewBox"), fr = box && box.querySelector("iframe");
+      if (!fr || box.querySelector(".preview-note")) return;
+      const note = document.createElement("p");
+      note.className = "preview-note";
+      note.innerHTML = 'Blank or "refused to connect"? That site doesn\'t allow previews. ' +
+        '<a href="' + esc(fr.src) + '" target="_blank" rel="noopener">Open it normally ↗</a>';
+      fr.after(note);
+    };
+  }
+
+  /* ---------- Keep visitor cosmetics out of exported files ---------- */
+  if (typeof buildHTML === "function") {
+    const baseBuild = buildHTML;
+    const ATTRS = ["data-vshape", "data-vhover", "data-vsize", "data-vtitle"];
+    buildHTML = function () {
+      const saved = ATTRS.map(a => [a, H.getAttribute(a)]);
+      ATTRS.forEach(a => H.removeAttribute(a));
+      try { return baseBuild.apply(this, arguments); }
+      finally { saved.forEach(([a, v]) => v && H.setAttribute(a, v)); }
+    };
+  }
+
+  renderPage();
+})();
+</script>
+<script id="ppz-addon-organize">
+/* ===== ProxyPathz add-on: tabbed settings, panel color themes, categories ===== */
+(() => {
+  if (window.__ppzOrg) return; window.__ppzOrg = true;
+  const TKEY = "proxypathz_v15_theme";
+  let TH = { theme: "", custom: "#1d0f33" };
+  try { TH = Object.assign(TH, JSON.parse(localStorage.getItem(TKEY)) || {}); } catch (e) {}
+  const saveTH = () => { try { localStorage.setItem(TKEY, JSON.stringify(TH)); } catch (e) {} };
+  const HEX = /^#[0-9a-f]{6}$/i;
+  const H = document.documentElement;
+
+  const THEMES = {
+    "":       { name: "Purple" },
+    light:    { name: "White",    mode: "light", bg: "#f4f1fa", panel: "#ffffff", panel2: "#f0eaf9", line: "#dcd0f0", text: "#1d1430", muted: "#6b5d85" },
+    midnight: { name: "Midnight", mode: "dark",  bg: "#050507", panel: "#0f0f14", panel2: "#17171f", line: "#262633", text: "#ececf1", muted: "#8a8aa0" },
+    ocean:    { name: "Ocean",    mode: "dark",  bg: "#06121f", panel: "#0b1d33", panel2: "#12294a", line: "#1d3b63", text: "#e6f0ff", muted: "#8aa4c8" },
+    forest:   { name: "Forest",   mode: "dark",  bg: "#07140d", panel: "#0d2117", panel2: "#143021", line: "#1f4630", text: "#e6f7ec", muted: "#8fb8a0" },
+    sunset:   { name: "Sunset",   mode: "dark",  bg: "#1a0b0b", panel: "#2a1212", panel2: "#3a1a17", line: "#5a2a22", text: "#fff0e8", muted: "#c9a093" },
+    rose:     { name: "Rose",     mode: "dark",  bg: "#1a0814", panel: "#2a0f22", panel2: "#3a1530", line: "#5a2449", text: "#ffe8f5", muted: "#c993b4" },
+    custom:   { name: "Custom" }
+  };
+
+  /* ---------- Styles ---------- */
+  const css = document.createElement("style");
+  css.id = "ppzOrgCss"; css.setAttribute("data-ppzv", "");
+  css.textContent = `
+#ppzSet [hidden] { display:none !important; }
+#ppzTabs { display:flex; gap:6px; overflow-x:auto; padding:2px 0 10px; margin-bottom:6px; border-bottom:1px solid var(--line); scrollbar-width:none; }
+#ppzTabs::-webkit-scrollbar { display:none; }
+#ppzTabs button { flex:none; min-height:36px; padding:0 12px; border-radius:999px; border:1px solid var(--line);
+  background:var(--panel2); color:var(--text); font:inherit; font-size:.8rem; cursor:pointer; white-space:nowrap; touch-action:manipulation; }
+#ppzTabs button.on { background:var(--accent); border-color:var(--accent); color:#12081f; font-weight:700; }
+#ppzSet .ppz-tabbed > h3:first-child { display:none; }
+.ppzThemes { display:grid; grid-template-columns:repeat(auto-fill,minmax(84px,1fr)); gap:8px; margin:8px 0; }
+.ppzThemes button { min-height:64px; border-radius:12px; border:2px solid var(--line); cursor:pointer; font:inherit; font-size:.75rem;
+  font-weight:600; display:flex; align-items:flex-end; justify-content:center; padding:6px; touch-action:manipulation; }
+.ppzThemes button.on { border-color:var(--accent); box-shadow:0 0 0 2px var(--accent); }
+html[data-vtheme] body { background-color:var(--bg) !important; }
+html[data-vtheme] .box { background:color-mix(in srgb, var(--panel) 92%, transparent) !important; border-color:var(--line) !important; }
+html[data-vtheme] #ppzSet, html[data-vtheme] .sheet, html[data-vtheme] #sheet { background:var(--panel) !important; color:var(--text) !important; }
+html[data-vtheme] input, html[data-vtheme] select, html[data-vtheme] textarea { color:var(--text); }
+html[data-vtheme="light"] #ppzGear { box-shadow:0 4px 14px rgba(0,0,0,.15); }
+#ppzChips { display:flex; gap:8px; overflow-x:auto; padding:10px 0 4px; scrollbar-width:none; }
+#ppzChips::-webkit-scrollbar { display:none; }
+#ppzChips button, .ppzTagPick button { flex:none; min-height:38px; padding:0 14px; border-radius:999px; border:1px solid var(--line);
+  background:var(--panel2); color:var(--text); font:inherit; font-size:.85rem; cursor:pointer; white-space:nowrap; touch-action:manipulation; }
+#ppzChips button.on, .ppzTagPick button.on { background:var(--accent); border-color:var(--accent); color:#12081f; font-weight:700; }
+.ppzTagPick { display:flex; flex-wrap:wrap; gap:6px; margin:-4px 0 12px; }
+.ppzTagPick button { min-height:34px; padding:0 10px; font-size:.8rem; }`;
+  document.head.appendChild(css);
+  const dyn = document.createElement("style");
+  dyn.id = "ppzOrgDyn"; dyn.setAttribute("data-ppzv", "");
+  document.head.appendChild(dyn);
+
+  /* ---------- Panel color themes ---------- */
+  function themeVars() {
+    if (TH.theme === "custom" && HEX.test(TH.custom)) {
+      const n = parseInt(TH.custom.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+      const light = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 > 0.55, X = TH.custom;
+      return light
+        ? { mode: "light", bg: `color-mix(in srgb, ${X} 88%, #000)`, panel: X, panel2: `color-mix(in srgb, ${X} 93%, #000)`,
+            line: `color-mix(in srgb, ${X} 78%, #000)`, text: "#1a1424", muted: "#5d5470" }
+        : { mode: "dark", bg: `color-mix(in srgb, ${X} 60%, #000)`, panel: X, panel2: `color-mix(in srgb, ${X} 88%, #fff)`,
+            line: `color-mix(in srgb, ${X} 70%, #fff)`, text: "#f1eef7", muted: "#a9a1bb" };
+    }
+    const t = THEMES[TH.theme];
+    return t && t.bg ? t : null;
+  }
+  function applyTheme() {
+    const v = themeVars();
+    if (!v) { H.removeAttribute("data-vtheme"); dyn.textContent = ""; return; }
+    H.setAttribute("data-vtheme", v.mode);
+    dyn.textContent = `html { --bg:${v.bg} !important; --panel:${v.panel} !important; --panel2:${v.panel2} !important;
+      --line:${v.line} !important; --text:${v.text} !important; --muted:${v.muted} !important; color-scheme:${v.mode}; }`;
+  }
+  applyTheme();
+
+  /* ---------- Settings: Colors section ---------- */
+  const panel = $("ppzSet");
+  function addThemeSection() {
+    if (!panel || !panel.lastElementChild || panel.querySelector("#ppzThemeSec")) return;
+    const sec = document.createElement("div");
+    sec.id = "ppzThemeSec";
+    const sw = Object.entries(THEMES).map(([k, t]) => {
+      const bg = k === "" ? "linear-gradient(135deg,#12081f,#1d0f33)" : k === "custom"
+        ? "conic-gradient(#ff5c7a,#ffd84d,#3ddc84,#4dd2ff,#a66bff,#ff5c7a)" : `linear-gradient(135deg,${t.bg},${t.panel})`;
+      const fg = t.mode === "light" ? "#1d1430" : "#fff";
+      return `<button type="button" data-theme="${k}" class="${(TH.theme || "") === k ? "on" : ""}"
+        style="background:${bg};color:${fg};text-shadow:${t.mode === "light" ? "none" : "0 1px 3px #000"}">${t.name}</button>`;
+    }).join("");
+    sec.innerHTML = `<h3 style="margin-top:12px">🎨 Panel colors</h3>
+      <p class="note" style="margin-top:0">Changes the boxes, menus and background. Saved on this device.</p>
+      <div class="ppzThemes">${sw}</div>
+      ${TH.theme === "custom" ? `<label><span>Your panel color<small>Text color adjusts automatically</small></span>
+        <input type="color" id="ppzThemeCustom" value="${HEX.test(TH.custom) ? TH.custom : "#1d0f33"}"
+        style="width:54px;height:38px;padding:2px;border-radius:8px;border:1px solid var(--line);background:var(--panel2)"></label>` : ""}`;
+    panel.insertBefore(sec, panel.lastElementChild);
+    sec.querySelector(".ppzThemes").addEventListener("click", e => {
+      const b = e.target.closest("[data-theme]"); if (!b) return;
+      TH.theme = b.dataset.theme; saveTH(); applyTheme();
+      setTimeout(() => { sec.remove(); addThemeSection(); }, 0);
+    });
+    const ci = sec.querySelector("#ppzThemeCustom");
+    if (ci) ci.addEventListener("input", () => { TH.custom = ci.value; saveTH(); applyTheme(); });
+  }
+
+  /* ---------- Settings: tabs ---------- */
+  const TABS = [["general", "⚙ General"], ["colors", "🎨 Colors"], ["bar", "🏷 Title bar"], ["bg", "🌌 Background"], ["cos", "✨ Cosmetics"]];
+  const SEC = { colors: "#ppzThemeSec", bar: "#ppzBarSec", bg: "#ppzVBgSec", cos: "#ppzCosSec" };
+  let active = "general", tabKey = "", orgT = 0;
+  function showTab() {
+    const gen = panel.querySelector("#ppzTabGen");
+    if (gen) gen.hidden = active !== "general";
+    for (const k in SEC) { const s = panel.querySelector(SEC[k]); if (s) { s.hidden = active !== k; s.classList.add("ppz-tabbed"); } }
+    panel.querySelectorAll("#ppzTabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === active));
+  }
+  function organize() {
+    if (!panel || !panel.firstElementChild) return;
+    const title = panel.firstElementChild, last = panel.lastElementChild;
+    if (title === last) return;
+    let bar = panel.querySelector("#ppzTabs");
+    if (!bar) { bar = document.createElement("div"); bar.id = "ppzTabs"; title.after(bar); tabKey = ""; }
+    let gen = panel.querySelector("#ppzTabGen");
+    if (!gen) { gen = document.createElement("div"); gen.id = "ppzTabGen"; bar.after(gen); }
+    [...panel.children].forEach(ch => {
+      if (ch === title || ch === bar || ch === gen || ch === last) return;
+      if (ch.matches(Object.values(SEC).join(","))) return;
+      gen.appendChild(ch);
+    });
+    const avail = TABS.filter(([k]) => k === "general" || panel.querySelector(SEC[k]));
+    if (!avail.some(([k]) => k === active)) active = "general";
+    const key = avail.map(a => a[0]).join(",");
+    if (key !== tabKey) {
+      tabKey = key;
+      bar.innerHTML = avail.map(([k, l]) => `<button type="button" data-tab="${k}">${l}</button>`).join("");
+    }
+    showTab();
+  }
+  if (panel) {
+    new MutationObserver(() => { addThemeSection(); clearTimeout(orgT); orgT = setTimeout(organize, 0); })
+      .observe(panel, { childList: true });
+    panel.addEventListener("click", e => {
+      const b = e.target.closest("#ppzTabs [data-tab]");
+      if (b) { active = b.dataset.tab; showTab(); panel.scrollTop = 0; }
+      e.stopPropagation(); /* stops the panel from closing when a button inside it redraws */
+    });
+    addThemeSection(); organize();
+  }
+
+  /* ---------- Categories on the page ---------- */
+  const QUICK = [["Games", "🎮"], ["Video", "🎬"], ["Browsing", "🌐"], ["Music", "🎵"], ["Social", "💬"], ["Other", "📦"]];
+  const EMO = Object.fromEntries(QUICK.map(([t, e]) => [t.toLowerCase(), e]));
+  let cat = "all", chipKey = "";
+  const favs = () => { try { return (JSON.parse(localStorage.getItem("proxypathz_v15_visitor")) || {}).favs || []; } catch (e) { return []; } };
+  const search = $("search"), all = $("all");
+  let chips = null, emptyMsg = null;
+  if (search && all) {
+    chips = document.createElement("div");
+    chips.id = "ppzChips"; chips.setAttribute("data-ppzv", "");
+    search.after(chips);
+    emptyMsg = document.createElement("div");
+    emptyMsg.className = "empty"; emptyMsg.hidden = true; emptyMsg.setAttribute("data-ppzv", "");
+    emptyMsg.textContent = "No proxies in this category.";
+    all.after(emptyMsg);
+    chips.addEventListener("click", e => {
+      const b = e.target.closest("[data-cat]"); if (!b) return;
+      cat = b.dataset.cat; drawChips(true); filter();
+    });
+    new MutationObserver(() => { drawChips(); filter(); }).observe(all, { childList: true });
+    drawChips(); filter();
+  }
+  function drawChips(force) {
+    const tags = new Map();
+    D.proxies.forEach(p => (p.tags || []).forEach(t => {
+      const k = String(t).trim().toLowerCase(); if (k && !tags.has(k)) tags.set(k, String(t).trim());
+    }));
+    const hasFav = favs().length > 0;
+    const list = [["all", "All"], ...(hasFav ? [["__fav", "⭐ Favorites"]] : []), ["__work", "✅ Working"],
+      ...[...tags].map(([k, label]) => [k, (EMO[k] ? EMO[k] + " " : "") + label])];
+    if (!list.some(x => x[0] === cat)) cat = "all";
+    const key = list.map(x => x.join(":")).join("|") + "#" + cat;
+    if (key === chipKey && !force) return;
+    chipKey = key;
+    chips.innerHTML = list.map(([k, l]) => `<button type="button" data-cat="${esc(k)}" class="${k === cat ? "on" : ""}">${esc(l)}</button>`).join("");
+  }
+  function filter() {
+    if (!all) return;
+    const f = favs();
+    let shown = 0;
+    all.querySelectorAll(".tile[data-i]").forEach(t => {
+      const p = D.proxies[+t.dataset.i];
+      const okCat = !p ? true
+        : cat === "all" ? true
+        : cat === "__fav" ? f.includes(p.name)
+        : cat === "__work" ? (p.links || []).some(l => l.status === "working")
+        : (p.tags || []).some(x => String(x).trim().toLowerCase() === cat);
+      t.style.display = okCat ? "" : "none";
+      if (okCat) shown++;
+    });
+    const hasTiles = !!all.querySelector(".tile");
+    emptyMsg.hidden = !(hasTiles && shown === 0);
+  }
+  document.addEventListener("click", e => { if (e.target.closest(".ppz-star")) setTimeout(() => { drawChips(); filter(); }, 0); });
+
+  /* ---------- Quick category buttons in the Proxies tab ---------- */
+  if (typeof PUBLIC_BUILD === "undefined" || !PUBLIC_BUILD) {
+    function drawPick(box, i, inp) {
+      const p = D.proxies[i]; if (!p) return;
+      const has = new Set((p.tags || []).map(t => String(t).trim().toLowerCase()));
+      box.innerHTML = QUICK.map(([t, e]) => `<button type="button" data-tag="${t}" class="${has.has(t.toLowerCase()) ? "on" : ""}">${e} ${t}</button>`).join("");
+      box.onclick = ev => {
+        const b = ev.target.closest("[data-tag]"); if (!b) return;
+        const t = b.dataset.tag, tags = (p.tags || []).slice();
+        const k = tags.findIndex(x => String(x).trim().toLowerCase() === t.toLowerCase());
+        k >= 0 ? tags.splice(k, 1) : tags.push(t);
+        p.tags = tags; inp.value = tags.join(", ");
+        save(); drawPick(box, i, inp);
+      };
+    }
+    function addPickers() {
+      if (typeof tab === "undefined" || tab !== "proxies") return;
+      document.querySelectorAll('#devBody input[data-path$=".tags"]').forEach(inp => {
+        const lab = inp.closest("label");
+        if (!lab || (lab.nextElementSibling && lab.nextElementSibling.classList.contains("ppzTagPick"))) return;
+        const i = +inp.dataset.path.split(".")[1];
+        const box = document.createElement("div"); box.className = "ppzTagPick";
+        lab.after(box); drawPick(box, i, inp);
+        inp.addEventListener("input", () => setTimeout(() => drawPick(box, i, inp), 0));
+      });
+    }
+    const baseDev = renderDev;
+    renderDev = function () { baseDev.apply(this, arguments); addPickers(); };
+    if ($("dev").classList.contains("open")) renderDev();
+  }
+
+  /* ---------- Keep visitor theme out of exported files ---------- */
+  if (typeof buildHTML === "function") {
+    const baseBuild = buildHTML;
+    buildHTML = function () {
+      const v = H.getAttribute("data-vtheme"); H.removeAttribute("data-vtheme");
+      const hidden = [...document.querySelectorAll("#all .tile")].filter(t => t.style.display === "none");
+      hidden.forEach(t => t.style.display = "");
+      try { return baseBuild.apply(this, arguments); }
+      finally { if (v) H.setAttribute("data-vtheme", v); hidden.forEach(t => t.style.display = "none"); }
+    };
+  }
+})();
+</script>
+<script id="ppz-addon-style2">
+/* ===== ProxyPathz add-on: new title bars + drawing editor, title effects, hover fix, top category bar ===== */
+(() => {
+  if (window.__ppzStyle2) return; window.__ppzStyle2 = true;
+  const VKEY = "proxypathz_v15_titlebar", DKEY = "proxypathz_v15_capdraw", AKEY = "proxypathz_v15_catarrange";
+  const HEX = /^#[0-9a-f]{6}$/i;
+  const load = (k, d) => { try { return Object.assign(d, JSON.parse(localStorage.getItem(k)) || {}); } catch (e) { return d; } };
+  let V = load(VKEY, { cap: "", c1: "#a66bff", c2: "#2b6bff", te: "" });
+  const saveV = () => { try { localStorage.setItem(VKEY, JSON.stringify(V)); } catch (e) {} };
+  const getDraw = () => localStorage.getItem(DKEY) || "";
+  const unlocked = () => typeof isUnlocked === "function" && (typeof PUBLIC_BUILD === "undefined" || !PUBLIC_BUILD) && isUnlocked();
+
+  /* Migrate old cosmetics title settings once */
+  try {
+    const old = JSON.parse(localStorage.getItem("proxypathz_v15_cosmetics")) || {};
+    if (!V.cap && old.cap) { V.cap = old.cap; if (HEX.test(old.c1)) V.c1 = old.c1; if (HEX.test(old.c2)) V.c2 = old.c2; }
+    if (!V.te && old.title) V.te = old.title;
+    saveV();
+  } catch (e) {}
+
+  const BARS = [
+    ["", "Site default"], ["default", "Default"], ["frosted", "Frosted"], ["holo", "Holo"], ["midnight", "Midnight"],
+    ["candy", "Candy"], ["sunset", "Sunset"], ["aqua", "Aqua"], ["toxic", "Toxic"], ["gold", "Gold"], ["carbon", "Carbon"],
+    ["pixel", "Pixel"], ["outline", "Outline"], ["neon", "Neon"], ["duo", "Your colors"], ["duoflow", "Your colors (moving)"],
+    ["solid", "Solid"], ["none", "Text only"], ["drawn", "🎨 Custom drawing"]];
+  const OLD = { glass: "frosted", gradient: "duo", animated: "duoflow", shine: "holo" };
+  const DARK = new Set(["holo", "candy", "gold"]);
+  const USES_COLORS = new Set(["duo", "duoflow", "solid", "neon"]);
+  const TES = [["", "Default"], ["glow", "Glow"], ["rainbow", "Rainbow"], ["neon", "Neon"], ["fire", "Fire"],
+    ["ice", "Ice"], ["glitch", "Glitch"], ["outline", "Outline"], ["plain", "Plain"]];
+  const lum = h => { const n = parseInt(h.slice(1), 16); return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255; };
+
+  /* ---------- Styles ---------- */
+  const css = document.createElement("style");
+  css.id = "ppzStyle2Css"; css.setAttribute("data-ppzv", "");
+  css.textContent = `
+.tile .info[class*="cb-"] { position:relative; }
+.tile .info.cb-frosted { background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.04)) !important;
+  backdrop-filter:blur(12px) saturate(140%); -webkit-backdrop-filter:blur(12px) saturate(140%); border-top:1px solid rgba(255,255,255,.25); }
+.tile .info.cb-holo { background:linear-gradient(115deg,#ff9ad5,#9ad0ff,#b8ffda,#fff5a8,#ff9ad5) !important; background-size:300% 100% !important;
+  animation:cbFlow 6s ease-in-out infinite alternate; }
+.tile .info.cb-midnight { background:linear-gradient(180deg,#0b0716,#160d2b) !important; border-top:2px solid var(--accent);
+  box-shadow:inset 0 10px 18px -12px var(--accent); }
+.tile .info.cb-candy { background:linear-gradient(135deg,#ffb3d9,#c9b3ff,#b3e5ff) !important; }
+.tile .info.cb-sunset { background:linear-gradient(135deg,#ff7a59,#ff3d7f,#a33dff) !important; }
+.tile .info.cb-aqua { background:linear-gradient(135deg,#00e0d0,#0099ff,#3d5bff) !important; }
+.tile .info.cb-toxic { background:#0a0f05 !important; border-top:2px solid #9dff3d; }
+.tile .info.cb-toxic h3 { color:#c8ff7a !important; text-shadow:0 0 8px #9dff3d; }
+.tile .info.cb-toxic small { color:#9dbb7a !important; }
+.tile .info.cb-gold { background:linear-gradient(135deg,#7a5410,#f5d27a 30%,#fff3c4 50%,#d9a63f 70%,#7a5410) !important;
+  background-size:200% 100% !important; animation:cbFlow 8s ease-in-out infinite alternate; }
+.tile .info.cb-carbon { background:repeating-linear-gradient(45deg,#15151a 0 6px,#1d1d24 6px 12px) !important; border-top:1px solid #34343f; }
+.tile .info.cb-pixel { background:var(--panel) !important; border-top:4px solid var(--accent); box-shadow:inset 0 4px 0 rgba(255,255,255,.08); }
+.tile .info.cb-pixel h3 { font-family:"JetBrains Mono",monospace !important; letter-spacing:1px; text-transform:uppercase; }
+.tile .info.cb-outline { background:rgba(0,0,0,.25) !important; box-shadow:inset 0 0 0 2px var(--accent); }
+.tile .info.cb-neon { background:rgba(6,2,12,.9) !important; box-shadow:inset 0 0 0 1px var(--c1),inset 0 0 18px -4px var(--c1); }
+.tile .info.cb-neon h3 { color:#fff !important; text-shadow:0 0 6px var(--c1),0 0 14px var(--c1); }
+.tile .info.cb-duo { background:linear-gradient(135deg,var(--c1),var(--c2)) !important; }
+.tile .info.cb-duoflow { background:linear-gradient(120deg,var(--c1),var(--c2),var(--c1)) !important; background-size:300% 100% !important;
+  animation:cbFlow 6s ease-in-out infinite alternate; }
+.tile .info.cb-solid { background:var(--c1) !important; }
+.tile .info.cb-none { background:transparent !important; box-shadow:none; border:none; }
+.tile .info.cb-none h3, .tile .info.cb-none small, .tile .info.cb-drawn h3, .tile .info.cb-drawn small,
+.tile .info.cb-picture h3, .tile .info.cb-picture small { text-shadow:0 1px 4px rgba(0,0,0,.9); }
+.tile .info.cb-picture { background:linear-gradient(rgba(10,5,20,.45),rgba(10,5,20,.6)),var(--ci) center/cover !important; }
+.tile .info.cb-drawn { background:var(--cd) center/100% 100% no-repeat !important; }
+.tile .info.cb-dark h3 { color:#1a1030 !important; text-shadow:none !important; }
+.tile .info.cb-dark small { color:rgba(26,16,48,.72) !important; }
+.tile .info.cb-light h3 { color:#fff !important; }
+.tile .info.cb-light small { color:rgba(255,255,255,.82) !important; }
+@keyframes cbFlow { from { background-position:0% 50%; } to { background-position:100% 50%; } }
+
+#siteTitle.ppz-te-glow { filter:drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 18px var(--accent)); }
+#siteTitle.ppz-te-rainbow { background-image:linear-gradient(90deg,#ff5c7a,#ffd84d,#3ddc84,#4dd2ff,#a66bff,#ff5c7a) !important;
+  background-size:200% auto !important; animation:ppzTeRain 4s linear infinite !important; }
+#siteTitle.ppz-te-neon { background:none !important; color:#fff !important; -webkit-text-fill-color:#fff !important;
+  filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 16px var(--accent)); animation:ppzTeFlick 3.2s infinite !important; }
+#siteTitle.ppz-te-fire { background-image:linear-gradient(0deg,#ff3d00,#ff9a3d,#ffd84d) !important; background-size:100% 200% !important;
+  animation:ppzTeFire 1.6s ease-in-out infinite alternate !important; filter:drop-shadow(0 0 10px rgba(255,120,0,.6)); }
+#siteTitle.ppz-te-ice { background-image:linear-gradient(90deg,#e0f7ff,#7fd8ff,#ffffff,#7fd8ff,#e0f7ff) !important;
+  background-size:200% auto !important; animation:ppzTeRain 5s linear infinite !important; filter:drop-shadow(0 0 8px rgba(127,216,255,.6)); }
+#siteTitle.ppz-te-outline { background:none !important; color:transparent !important; -webkit-text-fill-color:transparent !important;
+  -webkit-text-stroke:1.5px var(--accent); filter:drop-shadow(0 0 6px var(--accent)); animation:none !important; }
+#siteTitle.ppz-te-plain { background:none !important; color:var(--text) !important; -webkit-text-fill-color:var(--text) !important; animation:none !important; }
+#siteTitle.ppz-te-glitch { position:relative; }
+#siteTitle.ppz-te-glitch::before, #siteTitle.ppz-te-glitch::after { content:attr(data-text); position:absolute; left:0; top:0; width:100%;
+  background:none; -webkit-text-fill-color:currentColor; pointer-events:none; }
+#siteTitle.ppz-te-glitch::before { color:#4dd2ff; animation:ppzGl1 2.4s infinite steps(1); }
+#siteTitle.ppz-te-glitch::after { color:#ff5cc8; animation:ppzGl2 2.4s infinite steps(1); }
+@keyframes ppzTeRain { to { background-position:200% center; } }
+@keyframes ppzTeFlick { 0%,19%,21%,23%,55%,57%,100% { opacity:1; } 20%,22%,56% { opacity:.55; } }
+@keyframes ppzTeFire { from { background-position:center 0%; } to { background-position:center 100%; } }
+@keyframes ppzGl1 { 0%,100% { clip-path:inset(0 0 100% 0); transform:none; } 10% { clip-path:inset(10% 0 60% 0); transform:translate(-3px,-1px); }
+  30% { clip-path:inset(50% 0 20% 0); transform:translate(3px,1px); } 50% { clip-path:inset(0 0 100% 0); } }
+@keyframes ppzGl2 { 0%,100% { clip-path:inset(0 0 100% 0); transform:none; } 15% { clip-path:inset(60% 0 10% 0); transform:translate(3px,1px); }
+  35% { clip-path:inset(20% 0 55% 0); transform:translate(-3px,-1px); } 55% { clip-path:inset(0 0 100% 0); } }
+html[data-vtitle] #siteTitle:not([class*="ppz-te-"]) { text-shadow:none !important; }
+
+@media (hover:none) {
+  .tile:hover, .tile:focus, html[data-vhover] .tile:hover { transform:none !important; box-shadow:none !important; }
+  .tile:hover .pic, .tile:focus .pic { transform:none !important; }
+  .tile:active { transform:scale(.97) !important; transition:transform .1s; }
+}
+.tile:focus:not(:focus-visible) { transform:none; border-color:var(--line); }
+
+#ppzCatBar { position:sticky; top:0; z-index:30; display:flex; gap:10px; overflow-x:auto; padding:10px 4px; margin:0 58px 8px -4px;
+  scrollbar-width:none; background:linear-gradient(var(--bg) 70%, transparent); }
+#ppzCatBar::-webkit-scrollbar { display:none; }
+#ppzCatBar[hidden], body.ppz-pe #ppzCatBar { display:none !important; }
+#ppzCatBar button, #ppzChips button { flex:none; display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 20px;
+  border-radius:999px; border:1px solid rgba(255,255,255,.09); background:color-mix(in srgb, var(--panel) 55%, #0c0c12);
+  color:var(--text); font-family:"Poppins",sans-serif; font-size:.95rem; font-weight:500; cursor:pointer; white-space:nowrap;
+  box-shadow:0 2px 10px rgba(0,0,0,.35); touch-action:manipulation; transition:border-color .15s, background .15s, transform .1s; }
+#ppzCatBar button:active, #ppzChips button:active { transform:scale(.96); }
+#ppzCatBar button.on, #ppzChips button.on { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 22%, #0c0c12);
+  color:var(--text); box-shadow:0 0 0 1px var(--accent),0 0 16px -4px var(--accent); font-weight:600; }
+#ppzCatBar button.arr { color:var(--muted); }
+html[data-vtheme="light"] #ppzCatBar button, html[data-vtheme="light"] #ppzChips button { background:#fff; border-color:var(--line); box-shadow:0 2px 8px rgba(0,0,0,.08); }
+#all { scroll-margin-top:80px; }
+
+.ppzBarGrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px; margin:8px 0; }
+.ppzBarGrid > button { padding:0; border:2px solid var(--line); border-radius:12px; background:var(--panel2); cursor:pointer; overflow:hidden;
+  text-align:left; touch-action:manipulation; }
+.ppzBarGrid > button.on { border-color:var(--accent); box-shadow:0 0 0 2px var(--accent); }
+.ppzMini { pointer-events:none; margin:0 !important; border:none !important; border-radius:0 !important; min-height:0 !important;
+  background:linear-gradient(135deg,#2a1748,#120a22) !important; aspect-ratio:auto !important; animation:none !important; }
+.ppzMini .info { position:relative !important; padding:8px 10px !important; }
+.ppzMini .info h3 { font-size:.8rem !important; margin:0 !important; }
+.ppzMini .info small { font-size:.62rem !important; }
+.ppzBarGrid .lbl { display:block; padding:5px 8px; font-size:.72rem; color:var(--text); }
+.ppzDrawMsg { border:1px dashed var(--accent); border-radius:12px; padding:10px; margin:8px 0; font-size:.85rem; }
+#ppzBarSec .row button, .ppzDrawMsg button { min-height:40px; }
+
+#ppzDraw, #ppzArr { position:fixed; inset:0; z-index:100; background:rgba(5,2,10,.85); display:flex; align-items:flex-start;
+  justify-content:center; overflow:auto; padding:12px; }
+#ppzDraw[hidden], #ppzArr[hidden] { display:none; }
+.pd-box { width:min(680px,100%); background:var(--panel); border:1px solid var(--accent); border-radius:16px; padding:14px; color:var(--text); }
+.pd-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.pd-head b { color:var(--accent2); }
+.pd-box button { min-height:40px; min-width:40px; padding:0 12px; border-radius:10px; border:1px solid var(--line); background:var(--panel2);
+  color:var(--text); font:inherit; font-size:.85rem; cursor:pointer; touch-action:manipulation; }
+.pd-box button.on, .pd-box button.pri { background:var(--accent); border-color:var(--accent); color:#12081f; font-weight:700; }
+.pd-row { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:8px 0; }
+.pd-row label { display:flex; align-items:center; gap:6px; font-size:.8rem; color:var(--muted); }
+.pd-row input[type=color] { width:44px; height:38px; padding:2px; border-radius:8px; border:1px solid var(--line); background:var(--panel2); }
+.pd-row input[type=range] { accent-color:var(--accent); width:120px; }
+#pdCv { width:100%; aspect-ratio:4/1; border-radius:10px; touch-action:none; cursor:crosshair; display:block;
+  background:repeating-conic-gradient(#2a2a35 0 25%,#1f1f28 0 50%) 0 0/20px 20px; }
+.pd-prev { display:flex; align-items:center; gap:10px; margin-bottom:8px; font-size:.75rem; color:var(--muted); }
+.pd-prev .tile { width:200px; }
+.pa-row { display:flex; align-items:center; gap:6px; padding:8px 0; border-bottom:1px dashed var(--line); }
+.pa-row span { flex:1; }
+.pa-row.off span { opacity:.45; text-decoration:line-through; }`;
+  document.head.appendChild(css);
+
+  /* ---------- Title bar: works out the final look for every card ---------- */
+  function barFor(p) {
+    const S = D.site || {};
+    const mine = !!V.cap;
+    let s = mine ? V.cap : ((p && p.capStyle) || S.capStyle || "default");
+    s = OLD[s] || s;
+    let c1 = mine ? V.c1 : ((p && p.capC1) || S.capC1 || "#a66bff");
+    let c2 = mine ? V.c2 : ((p && p.capC2) || S.capC2 || "#2b6bff");
+    if (!HEX.test(c1)) c1 = "#a66bff"; if (!HEX.test(c2)) c2 = "#2b6bff";
+    let vars = `--c1:${c1};--c2:${c2};`, extra = "";
+    if (s === "drawn") {
+      const src = mine ? getDraw() : (S.capDrawn || "");
+      if (src) vars += `--cd:url("${src}");`; else s = "frosted";
+    }
+    if (s === "picture") {
+      const src = typeof img === "function" ? img((p && p.capImage) || S.capImage || "") : "";
+      if (src) vars += `--ci:url("${src}");`; else s = "frosted";
+    }
+    if (DARK.has(s)) extra = " cb-dark";
+    else if (s === "solid" || s === "duo" || s === "duoflow") extra = lum(c1) > .62 ? " cb-dark" : " cb-light";
+    else if (!mine) { const t = (p && p.capText) || S.capText; if (t === "dark") extra = " cb-dark"; if (t === "light") extra = " cb-light"; }
+    if (s === "default") return null;
+    return `<div class="info cb-${s}${extra}" style="${esc(vars)}">`;
+  }
+  if (typeof tile === "function") {
+    const baseTile = tile;
+    tile = function (p) {
+      const h = baseTile.apply(this, arguments);
+      const open = barFor(p);
+      return h.replace(/<div class="info[^"]*"(?: style="[^"]*")?>/, open || '<div class="info">');
+    };
+  }
+
+  /* ---------- Title effects ---------- */
+  new MutationObserver(() => { if (document.documentElement.hasAttribute("data-vtitle")) document.documentElement.removeAttribute("data-vtitle"); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ["data-vtitle"] });
+  document.documentElement.removeAttribute("data-vtitle");
+  function applyTE() {
+    const t = $("siteTitle"); if (!t) return;
+    [...t.classList].filter(c => c.startsWith("ppz-te-")).forEach(c => t.classList.remove(c));
+    const te = TES.some(x => x[0] === V.te) ? V.te : "";
+    if (te) t.classList.add("ppz-te-" + te);
+    if (te === "glitch") t.setAttribute("data-text", t.textContent); else t.removeAttribute("data-text");
+  }
+
+  /* ---------- Hover fix: drop the highlight after tapping a card ---------- */
+  document.addEventListener("click", e => { const t = e.target.closest && e.target.closest(".tile"); if (t) setTimeout(() => t.blur(), 0); });
+
+  /* ---------- Settings: Title bar tab ---------- */
+  const panel = $("ppzSet");
+  function mini(key) {
+    let open;
+    if (key === "") open = barFor(null) || '<div class="info">';
+    else {
+      const keep = { ...V }; V.cap = key;
+      open = key === "drawn" && !getDraw() ? '<div class="info cb-frosted">' : (barFor(null) || '<div class="info">');
+      Object.assign(V, keep);
+    }
+    return `<div class="tile ppzMini">${open}<h3>Space</h3><small>click to see more</small></div></div>`;
+  }
+  function addBarSection() {
+    if (!panel || !panel.lastElementChild || panel.querySelector("#ppzBarSec")) return;
+    const sec = document.createElement("div");
+    sec.id = "ppzBarSec";
+    const cur = V.cap || "";
+    sec.innerHTML = `<h3 style="margin-top:12px">🏷 Card title bar</h3>
+      <div class="ppzBarGrid">${BARS.map(([k, l]) => `<button type="button" data-bar="${k}" class="${k === cur ? "on" : ""}">
+        ${mini(k)}<span class="lbl">${l}</span></button>`).join("")}</div>
+      ${USES_COLORS.has(cur) ? `<label><span>Your colors</span><span style="display:flex;gap:6px">
+        <input type="color" data-bc="c1" value="${V.c1}" style="width:44px;height:36px"><input type="color" data-bc="c2" value="${V.c2}" style="width:44px;height:36px"></span></label>` : ""}
+      ${cur === "drawn" ? `<div class="ppzDrawMsg">🎨 <b>Make it yours!</b> You can draw your own custom title bar by tapping <b>✏️ Open editor</b>.
+        Download your drawing to keep it or use it on another device.
+        <div class="row" style="margin-top:8px"><button type="button" data-d2="open">✏️ Open editor</button>
+        ${getDraw() ? '<button type="button" data-d2="dl">⬇ Download</button>' : ""}</div></div>` : ""}
+      <h3 style="margin-top:14px">✨ Title effect</h3>
+      <label><span>Effect on the big title</span><select data-te>${TES.map(([k, l]) => `<option value="${k}" ${k === (V.te || "") ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+      ${unlocked() ? `<div class="row" style="margin-top:10px"><button type="button" data-d2="everyone">🌍 Use my title bar for everyone</button></div>` : ""}`;
+    panel.insertBefore(sec, panel.lastElementChild);
+    const redraw = () => setTimeout(() => { sec.remove(); addBarSection(); }, 0);
+    sec.addEventListener("click", e => {
+      const b = e.target.closest("[data-bar]");
+      if (b) {
+        V.cap = b.dataset.bar; saveV(); renderPage(); redraw();
+        if (V.cap === "drawn") { toast("🎨 You can draw your own! Tap ✏️ Open editor"); if (!getDraw()) setTimeout(openEditor, 150); }
+        return;
+      }
+      const d = e.target.closest("[data-d2]"); if (!d) return;
+      if (d.dataset.d2 === "open") openEditor();
+      if (d.dataset.d2 === "dl") downloadURL(getDraw());
+      if (d.dataset.d2 === "everyone") {
+        if (!V.cap) return toast("Pick a style first");
+        if (V.cap === "drawn") { if (!getDraw()) return toast("Draw something first"); D.site.capDrawn = getDraw(); }
+        D.site.capStyle = V.cap; D.site.capC1 = V.c1; D.site.capC2 = V.c2;
+        save(); renderPage(); toast("🌍 Set for everyone. Publish to make it live");
+      }
+    });
+    sec.addEventListener("input", e => { const k = e.target.dataset.bc; if (k) { V[k] = e.target.value; saveV(); renderPage(); } });
+    sec.addEventListener("change", e => { if (e.target.hasAttribute("data-te")) { V.te = e.target.value; saveV(); applyTE(); } });
+  }
+  if (panel) { new MutationObserver(addBarSection).observe(panel, { childList: true }); addBarSection(); }
+  const hideOld = document.createElement("style");
+  hideOld.setAttribute("data-ppzv", "");
+  hideOld.textContent = `#ppzCosSec label:has(select[data-c="cap"]), #ppzCosSec label:has(input[data-c="c1"]),
+    #ppzCosSec label:has(select[data-c="title"]) { display:none !important; }`;
+  document.head.appendChild(hideOld);
+
+  /* ---------- Drawing editor ---------- */
+  function downloadURL(url, name) {
+    if (!url) return;
+    const a = document.createElement("a"); a.href = url; a.download = name || "ProxyPathz-title-bar.png";
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+  let ed = null, cv, ctx, tool = "brush", drawing = null, hist = [];
+  function openEditor() {
+    if (!ed) buildEditor();
+    ctx.clearRect(0, 0, cv.width, cv.height); hist = [];
+    const src = getDraw() || (D.site && D.site.capDrawn) || "";
+    if (src) { const im = new Image(); im.onload = () => { ctx.drawImage(im, 0, 0, cv.width, cv.height); updPrev(); }; im.src = src; }
+    else starter("purple");
+    ed.hidden = false;
+    if (panel) panel.hidden = true;
+  }
+  function buildEditor() {
+    ed = document.createElement("div");
+    ed.id = "ppzDraw"; ed.hidden = true; ed.setAttribute("data-ppzv", "");
+    ed.innerHTML = `<div class="pd-box">
+      <div class="pd-head"><b>🎨 Title bar editor</b><button data-d="close" aria-label="Close">✕</button></div>
+      <div class="pd-prev"><div class="tile ppzMini"><div class="info cb-drawn" id="pdPrev"><h3>Space</h3><small>click to see more</small></div></div><span>Live preview</span></div>
+      <canvas id="pdCv" width="600" height="150"></canvas>
+      <div class="pd-row">
+        <button data-tool="brush" class="on">✏️ Brush</button><button data-tool="eraser">🧽 Eraser</button>
+        <button data-tool="line">📏 Line</button><button data-tool="rect">▭ Box</button><button data-tool="circle">⬤ Circle</button>
+        <button data-tool="text">🔤 Text</button><button data-tool="fill">🪣 Fill</button></div>
+      <div class="pd-row"><label>Color <input type="color" id="pdColor" value="#a66bff"></label>
+        <label>Size <input type="range" id="pdSize" min="1" max="40" value="8"></label>
+        <button data-d="undo">↶ Undo</button><button data-d="clear">🗑 Clear</button></div>
+      <div class="pd-row"><span style="font-size:.8rem;color:var(--muted)">Start from:</span>
+        <button data-st="purple">💜 Purple</button><button data-st="sunset">🌅 Sunset</button><button data-st="ocean">🌊 Ocean</button>
+        <button data-st="grid">🟪 Grid</button><button data-st="stars">✨ Stars</button></div>
+      <div class="pd-row"><button data-d="load">🖼 Load picture</button><button data-d="download">⬇ Download</button>
+        <button data-d="save" class="pri">✅ Save &amp; use</button>
+        ${unlocked() ? '<button data-d="everyone">🌍 Use for everyone</button>' : ""}</div></div>`;
+    document.body.appendChild(ed);
+    cv = ed.querySelector("#pdCv"); ctx = cv.getContext("2d");
+    const color = () => ed.querySelector("#pdColor").value, size = () => +ed.querySelector("#pdSize").value;
+    const pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
+    const snap = () => { hist.push(ctx.getImageData(0, 0, cv.width, cv.height)); if (hist.length > 30) hist.shift(); };
+    cv.addEventListener("pointerdown", e => {
+      e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (err) {}
+      const [x, y] = pos(e); snap();
+      ctx.globalCompositeOperation = "source-over"; ctx.fillStyle = ctx.strokeStyle = color();
+      if (tool === "fill") { ctx.globalCompositeOperation = "destination-over"; ctx.fillRect(0, 0, cv.width, cv.height); ctx.globalCompositeOperation = "source-over"; updPrev(); return; }
+      if (tool === "text") {
+        const t = prompt("Text to add:"); if (!t) { hist.pop(); return; }
+        ctx.font = `bold ${size() * 3 + 10}px Poppins, sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.fillText(t, x, y); updPrev(); return;
+      }
+      if (tool === "brush" || tool === "eraser") {
+        if (tool === "eraser") ctx.globalCompositeOperation = "destination-out";
+        ctx.beginPath(); ctx.arc(x, y, size() / 2, 0, Math.PI * 2); ctx.fill();
+        drawing = { x, y, id: e.pointerId };
+      } else drawing = { x0: x, y0: y, id: e.pointerId, base: ctx.getImageData(0, 0, cv.width, cv.height) };
+    });
+    cv.addEventListener("pointermove", e => {
+      if (!drawing || e.pointerId !== drawing.id) return;
+      const [x, y] = pos(e);
+      if (tool === "brush" || tool === "eraser") {
+        ctx.lineWidth = size(); ctx.lineCap = ctx.lineJoin = "round";
+        ctx.beginPath(); ctx.moveTo(drawing.x, drawing.y); ctx.lineTo(x, y); ctx.stroke();
+        drawing.x = x; drawing.y = y; return;
+      }
+      ctx.putImageData(drawing.base, 0, 0);
+      ctx.fillStyle = ctx.strokeStyle = color();
+      if (tool === "line") { ctx.lineWidth = size(); ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(drawing.x0, drawing.y0); ctx.lineTo(x, y); ctx.stroke(); }
+      if (tool === "rect") ctx.fillRect(Math.min(drawing.x0, x), Math.min(drawing.y0, y), Math.abs(x - drawing.x0), Math.abs(y - drawing.y0));
+      if (tool === "circle") {
+        ctx.beginPath();
+        ctx.ellipse((drawing.x0 + x) / 2, (drawing.y0 + y) / 2, Math.abs(x - drawing.x0) / 2 || 1, Math.abs(y - drawing.y0) / 2 || 1, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    const end = e => { if (!drawing || e.pointerId !== drawing.id) return; drawing = null; ctx.globalCompositeOperation = "source-over"; updPrev(); };
+    cv.addEventListener("pointerup", end); cv.addEventListener("pointercancel", end);
+    ed.addEventListener("click", e => {
+      e.stopPropagation();
+      if (e.target === ed) { ed.hidden = true; return; }
+      const t = e.target.closest("[data-tool]");
+      if (t) { tool = t.dataset.tool; ed.querySelectorAll("[data-tool]").forEach(b => b.classList.toggle("on", b === t)); return; }
+      const st = e.target.closest("[data-st]"); if (st) { snap(); starter(st.dataset.st); return; }
+      const d = e.target.closest("[data-d]"); if (!d) return;
+      const a = d.dataset.d;
+      if (a === "close") ed.hidden = true;
+      if (a === "undo") { const h = hist.pop(); if (h) { ctx.putImageData(h, 0, 0); updPrev(); } else toast("Nothing to undo"); }
+      if (a === "clear") { snap(); ctx.clearRect(0, 0, cv.width, cv.height); updPrev(); }
+      if (a === "download") cv.toBlob(b => { const u = URL.createObjectURL(b); downloadURL(u); setTimeout(() => URL.revokeObjectURL(u), 4000); });
+      if (a === "load") {
+        const inp = document.createElement("input"); inp.type = "file"; inp.accept = "image/*";
+        inp.onchange = () => {
+          const f = inp.files[0]; if (!f) return;
+          const r = new FileReader();
+          r.onload = () => { const im = new Image(); im.onload = () => {
+            snap(); const k = Math.max(cv.width / im.width, cv.height / im.height), w = im.width * k, h = im.height * k;
+            ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(im, (cv.width - w) / 2, (cv.height - h) / 2, w, h); updPrev();
+          }; im.src = r.result; };
+          r.readAsDataURL(f);
+        };
+        inp.click();
+      }
+      if (a === "save" || a === "everyone") {
+        let url = cv.toDataURL("image/png");
+        if (url.length > 450000) url = cv.toDataURL("image/webp", .85);
+        if (a === "save") {
+          try { localStorage.setItem(DKEY, url); } catch (err) { return toast("Too big to save on this device. Try fewer details."); }
+          V.cap = "drawn"; saveV(); toast("✅ Saved! Your cards use your drawing now");
+        } else {
+          D.site.capDrawn = url; D.site.capStyle = "drawn"; save();
+          toast("🌍 Set for everyone. Publish to make it live");
+        }
+        renderPage(); ed.hidden = true;
+        const s = panel && panel.querySelector("#ppzBarSec"); if (s) { s.remove(); addBarSection(); }
+      }
+    });
+  }
+  function starter(k) {
+    const w = cv.width, h = cv.height;
+    ctx.globalCompositeOperation = "source-over"; ctx.clearRect(0, 0, w, h);
+    const g = ctx.createLinearGradient(0, 0, w, h);
+    const sets = { purple: ["#2a1059", "#a66bff"], sunset: ["#ff7a59", "#a33dff"], ocean: ["#003a66", "#00e0d0"], grid: ["#12081f", "#1d0f33"], stars: ["#05030c", "#1a0f33"] };
+    const [a, b] = sets[k] || sets.purple;
+    g.addColorStop(0, a); g.addColorStop(1, b); ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    if (k === "grid") { ctx.strokeStyle = "rgba(166,107,255,.35)"; ctx.lineWidth = 1;
+      for (let x = 0; x < w; x += 25) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+      for (let y = 0; y < h; y += 25) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); } }
+    if (k === "stars") for (let i = 0; i < 90; i++) { ctx.fillStyle = `rgba(255,255,255,${Math.random() * .8 + .2})`;
+      ctx.beginPath(); ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 1.6 + .3, 0, Math.PI * 2); ctx.fill(); }
+    updPrev();
+  }
+  function updPrev() { const p = ed && ed.querySelector("#pdPrev"); if (p) p.style.setProperty("--cd", `url("${cv.toDataURL("image/png")}")`); }
+
+  /* ---------- Top category bar + arrange ---------- */
+  const loadA = () => { try { return JSON.parse(localStorage.getItem(AKEY)) || null; } catch (e) { return null; } };
+  const saveA = a => { try { a ? localStorage.setItem(AKEY, JSON.stringify(a)) : localStorage.removeItem(AKEY); } catch (e) {} };
+  const arrangement = () => loadA() || { order: D.site.catOrder || [], hide: D.site.catHide || [] };
+  const chipsEl = () => $("ppzChips");
+  const wrap = document.querySelector(".wrap") || document.body;
+  const bar = document.createElement("nav");
+  bar.id = "ppzCatBar"; bar.hidden = true; bar.setAttribute("data-ppzv", ""); bar.setAttribute("aria-label", "Categories");
+  wrap.prepend(bar);
+  let barKey = "";
+  function applyArrange() {
+    const src = chipsEl(); if (!src) return;
+    const A = arrangement(), btns = [...src.querySelectorAll("[data-cat]")];
+    const idx = k => k === "all" ? -1 : (A.order.indexOf(k) < 0 ? 1000 + btns.findIndex(b => b.dataset.cat === k) : A.order.indexOf(k));
+    const sorted = btns.slice().sort((a, b) => idx(a.dataset.cat) - idx(b.dataset.cat));
+    if (sorted.some((b, i) => b !== btns[i])) sorted.forEach(b => src.appendChild(b));
+    btns.forEach(b => {
+      const want = b.dataset.cat !== "all" && A.hide.includes(b.dataset.cat) && !b.classList.contains("on") ? "none" : "";
+      if (b.style.display !== want) b.style.display = want;
+    });
+  }
+  function syncBar() {
+    const src = chipsEl(); if (!src) { bar.hidden = true; return; }
+    const btns = [...src.querySelectorAll("[data-cat]")].filter(b => b.style.display !== "none");
+    const key = btns.map(b => b.dataset.cat + (b.classList.contains("on") ? "*" : "")).join("|");
+    bar.hidden = !btns.length;
+    if (key === barKey) return; barKey = key;
+    bar.innerHTML = btns.map(b => `<button type="button" data-cat="${esc(b.dataset.cat)}" class="${b.classList.contains("on") ? "on" : ""}">${esc(b.textContent)}</button>`).join("")
+      + `<button type="button" class="arr" data-arr>⇅ Arrange</button>`;
+  }
+  function refreshCats() { applyArrange(); syncBar(); }
+  bar.addEventListener("click", e => {
+    if (e.target.closest("[data-arr]")) return openArrange();
+    const b = e.target.closest("[data-cat]"); if (!b) return;
+    const src = chipsEl() && chipsEl().querySelector(`[data-cat="${CSS.escape(b.dataset.cat)}"]`);
+    if (src) src.click();
+    const all = $("all"); if (all) all.closest(".box").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  const startCats = () => {
+    const src = chipsEl(); if (!src) return false;
+    new MutationObserver(refreshCats).observe(src, { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
+    refreshCats(); return true;
+  };
+  if (!startCats()) { const t = setInterval(() => { if (startCats()) clearInterval(t); }, 500); setTimeout(() => clearInterval(t), 10000); }
+
+  let arr = null, arrMode = "me";
+  function openArrange() {
+    if (!arr) {
+      arr = document.createElement("div");
+      arr.id = "ppzArr"; arr.setAttribute("data-ppzv", "");
+      document.body.appendChild(arr);
+      arr.addEventListener("click", onArr);
+    }
+    arrMode = "me"; drawArr(); arr.hidden = false;
+  }
+  function workingCopy() {
+    const base = arrMode === "everyone" ? { order: D.site.catOrder || [], hide: D.site.catHide || [] } : arrangement();
+    const keys = [...chipsEl().querySelectorAll("[data-cat]")].map(b => [b.dataset.cat, b.textContent]).filter(([k]) => k !== "all");
+    const idx = k => base.order.indexOf(k) < 0 ? 1000 + keys.findIndex(x => x[0] === k) : base.order.indexOf(k);
+    keys.sort((a, b) => idx(a[0]) - idx(b[0]));
+    return { keys, hide: base.hide.slice() };
+  }
+  function drawArr() {
+    const w = workingCopy();
+    arr.innerHTML = `<div class="pd-box" style="max-width:460px">
+      <div class="pd-head"><b>⇅ Arrange categories</b><button data-a="close" aria-label="Close">✕</button></div>
+      ${unlocked() ? `<div class="pd-row">
+        <button data-a="mode" data-m="me" class="${arrMode === "me" ? "on" : ""}">👤 Just me</button>
+        <button data-a="mode" data-m="everyone" class="${arrMode === "everyone" ? "on" : ""}">🌍 Everyone</button></div>` : ""}
+      <p style="font-size:.8rem;color:var(--muted);margin:4px 0 8px">${arrMode === "everyone"
+        ? "Sets the default order for every visitor. Publish to make it live. Visitors can still arrange their own."
+        : "Only changes your screen. Other people won't see this."}</p>
+      ${w.keys.length ? w.keys.map(([k, l], i) => `<div class="pa-row ${w.hide.includes(k) ? "off" : ""}">
+        <span>${esc(l)}</span>
+        <button data-a="up" data-i="${i}" ${i === 0 ? "disabled" : ""} aria-label="Move up">▲</button>
+        <button data-a="down" data-i="${i}" ${i === w.keys.length - 1 ? "disabled" : ""} aria-label="Move down">▼</button>
+        <button data-a="eye" data-i="${i}" aria-label="Show or hide">${w.hide.includes(k) ? "🙈" : "👁"}</button>
+      </div>`).join("") : '<p style="font-size:.85rem">No categories yet. Add tags to your proxies first.</p>'}
+      <div class="pd-row" style="margin-top:12px">
+        <button data-a="reset">↺ Reset</button>
+        <button data-a="close" class="pri">Done</button></div></div>`;
+  }
+  function commitArr(w) {
+    const data = { order: w.keys.map(k => k[0]), hide: w.hide };
+    if (arrMode === "everyone") { D.site.catOrder = data.order; D.site.catHide = data.hide; save(); }
+    else saveA(data);
+    barKey = ""; refreshCats(); drawArr();
+  }
+  function onArr(e) {
+    e.stopPropagation();
+    if (e.target === arr) { arr.hidden = true; return; }
+    const b = e.target.closest("[data-a]"); if (!b || b.disabled) return;
+    const a = b.dataset.a, i = +b.dataset.i;
+    if (a === "close") { arr.hidden = true; return; }
+    if (a === "mode") { arrMode = b.dataset.m; drawArr(); return; }
+    if (a === "reset") {
+      if (arrMode === "everyone") { delete D.site.catOrder; delete D.site.catHide; save(); toast("Default order reset"); }
+      else { saveA(null); toast("Back to the site's order"); }
+      barKey = ""; refreshCats(); drawArr(); return;
+    }
+    const w = workingCopy();
+    if (a === "up" && i > 0) [w.keys[i - 1], w.keys[i]] = [w.keys[i], w.keys[i - 1]];
+    if (a === "down" && i < w.keys.length - 1) [w.keys[i + 1], w.keys[i]] = [w.keys[i], w.keys[i + 1]];
+    if (a === "eye") {
+      const k = w.keys[i][0], j = w.hide.indexOf(k);
+      j >= 0 ? w.hide.splice(j, 1) : w.hide.push(k);
+    }
+    commitArr(w);
+  }
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    if (arr && !arr.hidden) arr.hidden = true;
+    if (ed && !ed.hidden) ed.hidden = true;
+  });
+
+  /* ---------- Re-apply after every page redraw ---------- */
+  const basePage = renderPage;
+  renderPage = function () { basePage.apply(this, arguments); applyTE(); refreshCats(); };
+
+  /* ---------- Keep visitor-only stuff out of exported files ---------- */
+  if (typeof buildHTML === "function") {
+    const baseBuild = buildHTML;
+    buildHTML = function () {
+      const t = $("siteTitle"), cls = t ? [...t.classList].filter(c => c.startsWith("ppz-te-")) : [];
+      const txt = t && t.getAttribute("data-text");
+      if (t) { cls.forEach(c => t.classList.remove(c)); t.removeAttribute("data-text"); if (!t.getAttribute("class")) t.removeAttribute("class"); }
+      try { return baseBuild.apply(this, arguments); }
+      finally { if (t) { cls.forEach(c => t.classList.add(c)); if (txt) t.setAttribute("data-text", txt); } }
+    };
+  }
+
+  applyTE();
+  renderPage();
 })();
 </script>
 </body></html>
