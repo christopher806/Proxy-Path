@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><title>source</title></head><body><pre>&lt;!DOCTYPE html&gt;
-&lt;html lang="en" style="--accent: #a66bff;" class="ppz-bgon"&gt;&lt;head&gt;&lt;/head&gt;&lt;body id="artifacts-component-root-html" class=""&gt;&lt;plasmo-csui&gt;&lt;/plasmo-csui&gt;
+&lt;html lang="en" style="--accent: #a66bff;" class=""&gt;&lt;head&gt;&lt;/head&gt;&lt;body id="artifacts-component-root-html" class=""&gt;&lt;div id="ppz-wl-banners"&gt;&lt;/div&gt;&lt;plasmo-csui&gt;&lt;/plasmo-csui&gt;
       
 &lt;meta charset="UTF-8"&gt;
 &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"&gt;
@@ -92,6 +92,29 @@
   .soon .items { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0; }
   .tips { margin-top:10px; font-size:.85rem; color:var(--muted); }
   .empty { color:var(--muted); text-align:center; padding:20px; grid-column:1/-1; }
+
+  /* ===== Custom text panels ===== */
+  .text-panels { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:14px; }
+  .tp-card { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:13px;
+    background:var(--panel2); padding:15px; }
+  .tp-card.wide { grid-column:1/-1; }
+  .tp-card.glow { border-color:var(--accent); box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 45%,transparent),0 0 22px color-mix(in srgb,var(--accent) 38%,transparent); animation:tpGlow 2.4s ease-in-out infinite alternate; }
+  @keyframes tpGlow { from { box-shadow:0 0 8px color-mix(in srgb,var(--accent) 18%,transparent); } to { box-shadow:0 0 24px color-mix(in srgb,var(--accent) 55%,transparent); } }
+  .tp-card h3,.tp-card summary { color:var(--accent2); font:600 1rem "Poppins",sans-serif; }
+  .tp-card summary { cursor:pointer; list-style:none; display:flex; align-items:center; gap:8px; }
+  .tp-card summary::-webkit-details-marker { display:none; }
+  .tp-card summary::after { content:"▾"; margin-left:auto; color:var(--muted); }
+  .tp-card:not([open]) summary::after { content:"▸"; }
+  .tp-content { margin-top:10px; }
+  .tp-picture { width:100%; max-height:220px; display:block; object-fit:cover; border-radius:9px; margin:0 0 12px; background:var(--panel); }
+  .tp-picture.fit { object-fit:contain; }
+  .tp-text { white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.55; }
+  .tp-copy { margin-top:12px; }
+  .tp-draft { display:inline-block; margin-left:7px; border:1px solid var(--unk); border-radius:999px; padding:2px 7px; color:var(--unk); font:600 .65rem "Poppins",sans-serif; vertical-align:middle; }
+  .tp-editor-preview { padding:12px; border:1px dashed var(--accent); border-radius:12px; margin-top:10px; }
+  .tp-editor-preview &gt; .sub { margin-bottom:8px; }
+  .tp-editor-preview .tp-card { background:var(--panel); }
+  body.noanim .tp-card.glow { animation:none !important; }
   footer { text-align:center; color:var(--muted); font-size:.8rem; margin-top:30px; }
 
   /* ===== Developer panel (mobile-first) ===== */
@@ -227,13 +250,16 @@
 
 
 &lt;div class="wrap"&gt;
-  &lt;header class=""&gt;
+  &lt;header&gt;
     &lt;h1 id="siteTitle" data-dyn="" class=""&gt;&lt;/h1&gt;
     &lt;p id="siteTagline" data-dyn="" class=""&gt;&lt;/p&gt;
     &lt;span class="version" id="siteVersion" data-dyn=""&gt;&lt;/span&gt;
   &lt;/header&gt;&lt;section class="box" id="updatesBox"&gt;
     &lt;h2 class=""&gt;📢 UPDATE&lt;/h2&gt;
     &lt;ul class="list" id="updates" data-dyn=""&gt;&lt;/ul&gt;
+  &lt;/section&gt;&lt;section class="box" id="textPanelsBox" hidden=""&gt;
+    &lt;h2&gt;📝 TEXT PANELS&lt;/h2&gt;
+    &lt;div class="text-panels" id="textPanels" data-dyn=""&gt;&lt;/div&gt;
   &lt;/section&gt;&lt;section class="box"&gt;
     &lt;h2&gt;⭐ TOP 5&lt;/h2&gt;
     &lt;p class="sub" id="topText" data-dyn=""&gt;&lt;/p&gt;
@@ -256,14 +282,14 @@
     &lt;div class="cv" id="gv" style="height: 540px; --gs: 0.5750;" data-dyn=""&gt;&lt;/div&gt;
     &lt;div id="gtools" data-dyn="" class=""&gt;&lt;/div&gt;
   &lt;/section&gt;&lt;section class="box" id="soonBox"&gt;
-    &lt;h2 class=""&gt;🚧 COMING SOON&lt;/h2&gt;
+    &lt;h2&gt;🚧 COMING SOON&lt;/h2&gt;
     &lt;div class="soon"&gt;
       &lt;div id="soonText" data-dyn="" class=""&gt;&lt;/div&gt;
       &lt;div class="items" id="soonItems" data-dyn=""&gt;&lt;/div&gt;
       &lt;div class="tips" id="tips" data-dyn=""&gt;&lt;/div&gt;
     &lt;/div&gt;
   &lt;/section&gt;&lt;section class="box"&gt;
-    &lt;h2 class=""&gt;📜 RULES&lt;/h2&gt;
+    &lt;h2&gt;📜 RULES&lt;/h2&gt;
     &lt;ul class="list" id="rules" data-dyn=""&gt;&lt;/ul&gt;
   &lt;/section&gt;&lt;footer id="footer" data-dyn="" class=""&gt;&lt;/footer&gt;
   &lt;div class="scroll-hint" id="scrollHint" data-dyn=""&gt;&lt;/div&gt;
@@ -290,24 +316,75 @@
   &lt;div class="sheet" id="sheet" data-dyn=""&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;!-- Developer panel --&gt;
+&lt;!-- Private developer editor. Public exports remove the button and editor contents. --&gt;
 &lt;button class="fab" id="fab" data-act="openDev" hidden=""&gt;⚙ DEV · 9h 59m&lt;/button&gt;
-&lt;div class="dev" id="dev"&gt;
+&lt;div class="dev" id="dev" aria-label="Developer panel"&gt;
   &lt;div class="dev-head"&gt;
-    &lt;h2&gt;⚙ Developer&lt;/h2&gt;
-    &lt;button class="btn sm" data-act="lock"&gt;Log out&lt;/button&gt;
-    &lt;button class="btn sm" data-act="closeDev"&gt;Done&lt;/button&gt;
+    &lt;h2&gt;⚙ Developer panel&lt;/h2&gt;
+    &lt;button class="btn sm" type="button" data-act="closeDev"&gt;Close&lt;/button&gt;
   &lt;/div&gt;
-  &lt;div class="dev-tabs" id="devTabs"&gt;
-    &lt;button class="btn sm" data-act="tab" data-tab="proxies"&gt;Proxies&lt;/button&gt;
-    &lt;button class="btn sm" data-act="tab" data-tab="text"&gt;Text&lt;/button&gt;
-    &lt;button class="btn sm" data-act="tab" data-tab="look"&gt;Look&lt;/button&gt;
-    &lt;button class="btn sm" data-act="tab" data-tab="canvas"&gt;Canvas&lt;/button&gt;
-    &lt;button class="btn sm" data-act="tab" data-tab="lists"&gt;Updates &amp;amp; Rules&lt;/button&gt;
-    &lt;button class="btn sm" data-act="tab" data-tab="images"&gt;Images&lt;/button&gt;
-    &lt;button class="btn sm on" data-act="tab" data-tab="save"&gt;Save / Export&lt;/button&gt;
-  &lt;/div&gt;
-  &lt;div class="dev-body" id="devBody" data-dyn=""&gt;&lt;/div&gt;
+  &lt;nav class="dev-tabs" id="devTabs" aria-label="Editor sections"&gt;
+    &lt;button class="btn sm" type="button" data-tab="proxies"&gt;Proxies&lt;/button&gt;
+    &lt;button class="btn sm" type="button" data-tab="text"&gt;Text&lt;/button&gt;
+    &lt;button class="btn sm" type="button" data-tab="look"&gt;Look&lt;/button&gt;
+    &lt;button class="btn sm" type="button" data-tab="lists"&gt;Lists&lt;/button&gt;
+    &lt;button class="btn sm" type="button" data-tab="canvas"&gt;Canvas&lt;/button&gt;
+    &lt;button class="btn sm" type="button" data-tab="images"&gt;Images&lt;/button&gt;
+    &lt;button class="btn sm on" type="button" data-tab="save"&gt;Save&lt;/button&gt;
+  &lt;/nav&gt;
+  &lt;div class="dev-body" id="devBody"&gt;&lt;div id="ppzPub" style="border: 1px solid var(--accent); border-radius: 12px; padding: 12px; margin-bottom: 16px; background: var(--panel2);"&gt;
+      &lt;h3 style="margin-top:0"&gt;🚀 Publish to GitHub&lt;/h3&gt;
+      &lt;p class="sub"&gt;Puts your edits on the real website for everyone. Not published from this device yet.&lt;/p&gt;
+      &lt;button type="button" class="btn full" id="ppzPubGo" style="background:var(--accent);color:#12081f;font-weight:700;min-height:48px"&gt;🚀 Publish now&lt;/button&gt;
+      &lt;p class="sub" id="ppzPubLog" style="margin-top:8px"&gt;⏳ Building file…&lt;/p&gt;
+      &lt;details id="ppzUpBox" style="margin-top:8px"&gt;
+        &lt;summary style="cursor:pointer;padding:8px 0"&gt;📁 Upload a file to GitHub&lt;/summary&gt;
+        &lt;p class="sub"&gt;Pick a file from your device, like an updated ProxyPathz.html or a picture. To replace the live site, pick the HTML file and keep the name below as index.html.&lt;/p&gt;
+        &lt;input type="file" id="ppzUpFile" style="margin-bottom:8px;width:100%"&gt;
+        &lt;label class="field"&gt;&lt;span&gt;Save it on GitHub as&lt;/span&gt;&lt;input id="ppzUpPath" value="index.html" placeholder="index.html or images/photo.png"&gt;&lt;/label&gt;
+        &lt;button type="button" class="btn full" id="ppzUpGo"&gt;⬆ Upload file&lt;/button&gt;
+      &lt;/details&gt;
+      &lt;details id="ppzPubConn" style="margin-top:8px"&gt;
+        &lt;summary style="cursor:pointer;padding:8px 0"&gt;⚙ GitHub connection ✅&lt;/summary&gt;
+        &lt;label class="field"&gt;&lt;span&gt;Token (starts with github_pat_)&lt;/span&gt;
+          &lt;input type="password" id="ppzPubTok" autocomplete="off" placeholder="Saved. Paste a new one to replace it"&gt;&lt;/label&gt;
+        &lt;label style="display:flex;gap:10px;align-items:center;margin:6px 0 10px"&gt;
+          &lt;input type="checkbox" id="ppzPubRem" checked="" style="width:22px;height:22px"&gt;
+          &lt;span&gt;Remember on this device &lt;small style="color:var(--muted)"&gt;(only on your own device)&lt;/small&gt;&lt;/span&gt;&lt;/label&gt;
+        &lt;div class="row"&gt;
+          &lt;label class="field" style="flex:1"&gt;&lt;span&gt;Username&lt;/span&gt;&lt;input id="ppzPubOwner" value="christopher806"&gt;&lt;/label&gt;
+          &lt;label class="field" style="flex:1"&gt;&lt;span&gt;Repo&lt;/span&gt;&lt;input id="ppzPubRepo" value="Proxy-Path"&gt;&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class="row"&gt;
+          &lt;label class="field" style="flex:1"&gt;&lt;span&gt;Branch&lt;/span&gt;&lt;input id="ppzPubBranch" value="main"&gt;&lt;/label&gt;
+          &lt;label class="field" style="flex:1"&gt;&lt;span&gt;File&lt;/span&gt;&lt;input id="ppzPubPath" value="index.html"&gt;&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;label style="display:flex;gap:10px;align-items:center;margin:6px 0 10px"&gt;
+          &lt;input type="checkbox" id="ppzPubSv" checked="" style="width:22px;height:22px"&gt;
+          &lt;span&gt;Also update source-view.html&lt;/span&gt;&lt;/label&gt;
+        &lt;div class="row"&gt;
+          &lt;button type="button" class="btn sm" id="ppzPubSave"&gt;💾 Save&lt;/button&gt;
+          &lt;button type="button" class="btn sm" id="ppzPubTest"&gt;🔌 Test&lt;/button&gt;
+          &lt;button type="button" class="btn sm danger" id="ppzPubForget"&gt;Forget token&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/details&gt;&lt;/div&gt;&lt;button id="ppzPEopen" type="button" class="btn full" style="margin-bottom: 12px; min-height: 46px; font-weight: 700;"&gt;✏️ Edit the page directly (move, hide, add shapes)&lt;/button&gt;&lt;div class="warn"&gt;🟡 &lt;b&gt;Unpublished edits.&lt;/b&gt; They are saved on this device only. Your live site does not change until you download the updated file and upload it to your site.&lt;/div&gt;&lt;p class="sub"&gt;Updated file size: about &lt;b&gt;536 KB&lt;/b&gt; · Page version: &lt;b&gt;2026-11-11-a&lt;/b&gt;&lt;/p&gt;
+      &lt;button class="btn full" data-act="undo"&gt;↶ Undo last change&lt;/button&gt;
+      &lt;button class="btn pri full" data-act="downloadPublic"&gt;⬇ Download PUBLIC version (upload this to your site)&lt;/button&gt;
+      &lt;p class="sub"&gt;The public copy has no developer panel and no stored login, so visitors can't open it.&lt;/p&gt;
+      &lt;button class="btn full" data-act="download"&gt;⬇ Download editable copy (keep this for yourself)&lt;/button&gt;
+      &lt;button class="btn full" data-act="copyHTML"&gt;📋 Copy full code instead&lt;/button&gt;
+      &lt;h3&gt;🔒 Login&lt;/h3&gt;
+      &lt;p class="sub"&gt;A login is set. Fill these in only if you want to change it.&lt;/p&gt;
+      &lt;input id="newUser" placeholder="New username" autocapitalize="off" autocorrect="off" style="margin-bottom:8px"&gt;
+      &lt;input type="password" id="newPass" placeholder="New password" style="margin-bottom:8px"&gt;
+      &lt;button class="btn full" data-act="setPass"&gt;Save new login&lt;/button&gt;
+      &lt;button class="btn full" data-act="lock"&gt;Lock now&lt;/button&gt;
+      &lt;div id="ppzBackup"&gt;&lt;h3&gt;💾 Backup&lt;/h3&gt;
+        &lt;p class="sub"&gt;Saves all your proxies, pictures, canvas and settings into one file. Restore loads it back on any device. Your login is not included.&lt;/p&gt;
+        &lt;p class="sub"&gt;Your data: 108 KB · pictures stored inside the file: 102 KB&lt;/p&gt;
+        &lt;button class="btn full" data-act="ppzBackup" style="margin-bottom:8px"&gt;⬇ Download backup&lt;/button&gt;
+        &lt;button class="btn full" data-act="ppzRestore"&gt;⬆ Restore from backup&lt;/button&gt;&lt;/div&gt;&lt;h3&gt;⚠ Danger zone&lt;/h3&gt;
+      &lt;button class="btn full danger" data-act="discard"&gt;Discard device edits&lt;/button&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div id="edit" data-dyn="" class="" hidden=""&gt;&lt;/div&gt;
 &lt;div class="toast" id="toast" data-dyn=""&gt;&lt;/div&gt;
@@ -321,7 +398,7 @@ const DATA = {
   "site": {
     "title": "ProxyPathz (being honest)",
     "tagline": "hey welcome i guess you can search around and finally it easy to update i guess [question mark",
-    "version": "v1.5 — redesigned since i hated the old one!",
+    "version": "v1.6 — custom text panels added",
     "scrollHint": "⬇ scroll down for more ⬇",
     "topText": "My picks that should last a while and are easy to find. I'll add more later, but no useless ones.",
     "tips": "💡 Tip: if a link gets blocked, wait a few minutes. It usually comes back.",
@@ -571,26 +648,10 @@ const DATA = {
           "status": "working"
         }
       ]
-    },
-    {
-      "name": "New proxy",
-      "aka": "",
-      "image": "",
-      "top": false,
-      "note": "",
-      "tags": [
-        "Ai"
-      ],
-      "links": [
-        {
-          "url": "https://",
-          "status": "unknown"
-        }
-      ]
     }
   ],
   "devHash": "s:eca9220fc942221342a7a43f02fc73e179c9b9a86edfae443438dc57fece3dab",
-  "_build": "2026-11-07-g",
+  "_build": "2026-11-11-a",
   "canvas": {
     "height": 520,
     "items": [
@@ -631,13 +692,14 @@ const DATA = {
         "link": ""
       }
     ]
-  }
+  },
+  "textPanels": []
 };
 &lt;/script&gt;
 
 &lt;script&gt;
 /* ===================== Page logic (no need to edit) ===================== */
-const PUBLIC_BUILD = false;   // the "public" download flips this to true: no developer panel, no stored login
+const PUBLIC_BUILD = false;  // editable source; Download PUBLIC creates the visitor-only copy
 const DRAFT_KEY = "ppz_draft", UNLOCK_KEY = "ppz_unlock_until", SESSION_HOURS = 10;
 const $ = id =&gt; document.getElementById(id);
 const esc = s =&gt; String(s ?? "").replace(/[&amp;&lt;&gt;"']/g, c =&gt; ({'&amp;':'&amp;amp;','&lt;':'&amp;lt;','&gt;':'&amp;gt;','"':'&amp;quot;',"'":'&amp;#39;'}[c]));
@@ -651,8 +713,20 @@ const STATUS = {
 const st = s =&gt; STATUS[s] || STATUS.unknown;
 
 // Load draft from this device if one exists
-const BUILD = "2026-11-07-g";   // bump this whenever the page code/data is replaced with a new version
-const normalize = d =&gt; { d._build = BUILD; d.canvas = d.canvas || { height: 520, items: [] }; return d; };
+const BUILD = "2026-11-11-a";   // bump this whenever the page code/data is replaced with a new version
+const normalize = d =&gt; {
+  d._build = BUILD;
+  d.canvas = d.canvas || { height: 520, items: [] };
+  d.textPanels = Array.isArray(d.textPanels) ? d.textPanels : [];
+  d.textPanels.forEach((p, i) =&gt; {
+    p.title ??= "Text panel"; p.text ??= ""; p.image ??= "";
+    p.uploadKey ??= "tp_image_" + (p.id || i);
+    p.imageFit ??= "cover";
+    p.wide ??= false; p.glow ??= false; p.collapsible ??= false;
+    p.startCollapsed ??= false; p.copy ??= true; p.draft ??= false;
+  });
+  return d;
+};
 const EXPORTED_DATA = normalize(JSON.parse(JSON.stringify(DATA)));   // what this file shipped with
 let D = JSON.parse(JSON.stringify(DATA)), hasDraft = false;
 try {
@@ -694,6 +768,28 @@ function renderAll() {
     [p.name, p.aka, p.note, ...(p.tags || [])].join(" ").toLowerCase().includes(q));
   $("all").innerHTML = list.map(([p, i]) =&gt; tile(p, i)).join("") || `&lt;div class="empty"&gt;No proxies match.&lt;/div&gt;`;
 }
+function textPanelCard(p, i, preview = false) {
+  const classes = ["tp-card", p.wide ? "wide" : "", p.glow ? "glow" : ""].filter(Boolean).join(" ");
+  const title = esc(p.title || "Untitled panel");
+  const src = img(p.image);
+  const picture = src ? `&lt;img class="tp-picture ${p.imageFit === "contain" ? "fit" : ""}" src="${esc(src)}" alt="${title}" loading="lazy"&gt;` : "";
+  const draft = p.draft &amp;&amp; !PUBLIC_BUILD ? `&lt;span class="tp-draft"&gt;DRAFT · visitors won't see this&lt;/span&gt;` : "";
+  const copy = p.copy !== false ? `&lt;button type="button" class="btn sm tp-copy" data-act="copyTextPanel" data-i="${i}"&gt;📋 Copy text&lt;/button&gt;` : "";
+  const content = `&lt;div class="tp-content"&gt;${picture}&lt;div class="tp-text"&gt;${bold(p.text || "")}&lt;/div&gt;${copy}&lt;/div&gt;`;
+  if (p.collapsible &amp;&amp; !preview) {
+    return `&lt;details class="${classes}" ${p.startCollapsed ? "" : "open"}&gt;&lt;summary&gt;${title}${draft}&lt;/summary&gt;${content}&lt;/details&gt;`;
+  }
+  return `&lt;article class="${classes}"&gt;&lt;h3&gt;${title}${draft}&lt;/h3&gt;${content}&lt;/article&gt;`;
+}
+
+function renderTextPanels() {
+  const list = (D.textPanels || []).map((p, i) =&gt; ({ p, i })).filter(({ p }) =&gt; !p.draft || !PUBLIC_BUILD);
+  const box = $("textPanelsBox"), target = $("textPanels");
+  if (!box || !target) return;
+  box.hidden = list.length === 0;
+  target.innerHTML = list.map(({ p, i }) =&gt; textPanelCard(p, i)).join("");
+}
+
 function renderPage() {
   const S = D.site;
   $("siteTitle").textContent = S.title;
@@ -710,6 +806,7 @@ function renderPage() {
   $("soonBox").hidden = !D.comingSoon.items.length;
   $("soonText").textContent = D.comingSoon.text;
   $("soonItems").innerHTML = D.comingSoon.items.map(i =&gt; `&lt;span class="tag"&gt;${esc(i)}&lt;/span&gt;`).join("");
+  renderTextPanels();
   renderTop(); renderAll();
 }
 let renderTimer;
@@ -770,6 +867,7 @@ const unlock = () =&gt; localStorage.setItem(UNLOCK_KEY, Date.now() + SESSION_HO
 
 let tab = "proxies";
 const openSet = new Set();
+const textPanelOpenSet = new Set();
 
 function toast(msg) {
   const t = $("toast"); t.textContent = msg; t.classList.add("show");
@@ -880,13 +978,42 @@ const TABS = {
   },
   text() {
     const S = "site";
+    const imageOpts = [["", "(no picture)"], ...Object.keys(D.images || {}).map(k =&gt; [k, k])];
+    const panels = (D.textPanels || []).map((p, i) =&gt; `
+      &lt;details class="card tp-edit-card" data-tp-i="${i}" ${textPanelOpenSet.has(i) ? "open" : ""}&gt;
+        &lt;summary&gt;${esc(p.title || "(untitled panel)")}&lt;/summary&gt;
+        &lt;div class="in"&gt;
+          ${field("Panel title", `textPanels.${i}.title`, p.title || "")}
+          ${field("Text", `textPanels.${i}.text`, p.text || "", true)}
+          &lt;label class="field"&gt;&lt;span&gt;Picture&lt;/span&gt;
+            &lt;select data-path="textPanels.${i}.image"&gt;${opts(imageOpts, p.image || "")}&lt;/select&gt;
+          &lt;/label&gt;
+          &lt;div class="row"&gt;
+            &lt;span class="btn sm upl"&gt;⬆ Upload custom picture&lt;input type="file" accept="image/*" data-key="${esc(p.uploadKey)}" data-panel-index="${i}"&gt;&lt;/span&gt;
+            &lt;select data-path="textPanels.${i}.imageFit" aria-label="Picture display"&gt;${opts([["cover", "Fill (may crop)"], ["contain", "Fit (whole picture)"]], p.imageFit || "cover")}&lt;/select&gt;
+          &lt;/div&gt;
+          &lt;label class="check"&gt;&lt;input type="checkbox" data-path="textPanels.${i}.wide" ${p.wide ? "checked" : ""}&gt; Wide (takes the whole row)&lt;/label&gt;
+          &lt;label class="check"&gt;&lt;input type="checkbox" data-path="textPanels.${i}.glow" ${p.glow ? "checked" : ""}&gt; Announcement glow&lt;/label&gt;
+          &lt;label class="check"&gt;&lt;input type="checkbox" data-path="textPanels.${i}.collapsible" ${p.collapsible ? "checked" : ""}&gt; Visitors can collapse it&lt;/label&gt;
+          &lt;label class="check"&gt;&lt;input type="checkbox" data-path="textPanels.${i}.startCollapsed" ${p.startCollapsed ? "checked" : ""}&gt; Start collapsed&lt;/label&gt;
+          &lt;p class="sub"&gt;“Start collapsed” only applies when visitors can collapse the panel.&lt;/p&gt;
+          &lt;label class="check"&gt;&lt;input type="checkbox" data-path="textPanels.${i}.copy" ${p.copy !== false ? "checked" : ""}&gt; Show “Copy text” button&lt;/label&gt;
+          &lt;label class="check"&gt;&lt;input type="checkbox" data-path="textPanels.${i}.draft" ${p.draft ? "checked" : ""}&gt; Hidden from visitors (draft)&lt;/label&gt;
+          &lt;div class="tp-editor-preview"&gt;&lt;p class="sub"&gt;Live preview&lt;/p&gt;&lt;div class="tp-live-preview"&gt;${textPanelCard(p, i, true)}&lt;/div&gt;&lt;/div&gt;
+          &lt;button class="btn full danger" type="button" data-act="delTextPanel" data-i="${i}"&gt;Delete text panel&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/details&gt;`).join("");
     return field("Title", `${S}.title`, D.site.title) +
       field("Tagline", `${S}.tagline`, D.site.tagline) +
       field("Version badge", `${S}.version`, D.site.version) +
       field("Scroll hint", `${S}.scrollHint`, D.site.scrollHint) +
       field("Top 5 description", `${S}.topText`, D.site.topText, true) +
       field("Tips note", `${S}.tips`, D.site.tips, true) +
-      field("Footer", `${S}.footer`, D.site.footer);
+      field("Footer", `${S}.footer`, D.site.footer) +
+      `&lt;h3&gt;📝 Custom text panels&lt;/h3&gt;
+      &lt;p class="sub"&gt;Add announcement-style cards with their own text, picture and display options.&lt;/p&gt;
+      &lt;button class="btn pri full" type="button" data-act="addTextPanel"&gt;+ Add text panel&lt;/button&gt;` +
+      (panels || `&lt;p class="sub"&gt;No custom text panels yet.&lt;/p&gt;`);
   },
   look() {
     const acc = D.site.accent || "#a66bff";
@@ -1138,6 +1265,42 @@ const ACT = {
       links: [{ url: "https://", status: "unknown" }] });
     openSet.add(D.proxies.length - 1); save(); renderDev();
   },
+  addTextPanel() {
+    const id = "tp" + Date.now().toString(36);
+    const index = D.textPanels.length;
+    D.textPanels.push({ id, title: "New text panel", text: "Write your message here.", image: "",
+      uploadKey: "tp_image_" + id, imageFit: "cover", wide: false, glow: false,
+      collapsible: false, startCollapsed: false, copy: true, draft: false });
+    textPanelOpenSet.clear(); textPanelOpenSet.add(index);
+    save(); renderDev();
+  },
+  delTextPanel(el) {
+    const i = +el.dataset.i, p = D.textPanels[i];
+    if (!p) return;
+    if (!confirm(`Delete text panel "${p.title || "Untitled panel"}"?`)) return;
+    if (p.uploadKey) delete D.images[p.uploadKey];
+    D.textPanels.splice(i, 1);
+    textPanelOpenSet.clear();
+    save(); renderDev();
+  },
+  async copyTextPanel(el) {
+    const p = D.textPanels[+el.dataset.i];
+    if (!p) return;
+    const value = String(p.text || "");
+    if (!value.trim()) return toast("There is no text to copy");
+    try {
+      if (navigator.clipboard &amp;&amp; window.isSecureContext) {
+        await navigator.clipboard.writeText(value);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = value; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        const ok = document.execCommand("copy"); ta.remove();
+        if (!ok) throw new Error("copy failed");
+      }
+      toast("Text copied");
+    } catch (e) { toast("Copy failed"); }
+  },
   delProxy(el) {
     const i = +el.dataset.i;
     if (!confirm(`Delete "${D.proxies[i].name}"?`)) return;
@@ -1169,6 +1332,7 @@ const ACT = {
     if (!confirm(`Delete picture "${k}"?`)) return;
     delete D.images[k];
     D.proxies.forEach(p =&gt; { if (p.image === k) p.image = ""; });
+    (D.textPanels || []).forEach(p =&gt; { if (p.image === k) p.image = "" });
     save(); renderDev();
   },
   download() {
@@ -1201,6 +1365,15 @@ const ACT = {
 
 /* ---------- Events ---------- */
 document.addEventListener("click", e =&gt; {
+  // Developer section navigation. Keep this scoped so other widgets can use data-tab too.
+  const tabButton = e.target.closest("#devTabs [data-tab]");
+  if (tabButton) {
+    e.preventDefault();
+    tab = tabButton.dataset.tab;
+    renderDev();
+    $("devBody").scrollTop = 0;
+    return;
+  }
   const a = e.target.closest("[data-act]");
   if (a) { e.preventDefault(); ACT[a.dataset.act]?.(a); return; }
   const t = e.target.closest(".tile");
@@ -1215,6 +1388,16 @@ function onEdit(e) {
   if (el.dataset.type === "csv") v = v.split(",").map(s =&gt; s.trim()).filter(Boolean);
   setPath(D, el.dataset.path, v);
   save();
+  if (el.dataset.path.startsWith("textPanels.")) {
+    const bits = el.dataset.path.split("."), i = +bits[1];
+    const editor = el.closest(".tp-edit-card");
+    const preview = editor &amp;&amp; editor.querySelector(".tp-live-preview");
+    if (preview &amp;&amp; D.textPanels[i]) preview.innerHTML = textPanelCard(D.textPanels[i], i, true);
+    if (bits[2] === "title" &amp;&amp; editor) {
+      const summary = editor.querySelector("summary");
+      if (summary) summary.textContent = D.textPanels[i]?.title || "(untitled panel)";
+    }
+  }
 }
 document.addEventListener("input", onEdit);
 document.addEventListener("change", e =&gt; {
@@ -1224,12 +1407,24 @@ document.addEventListener("change", e =&gt; {
     const f = el.files[0];
     if (f.size &gt; 400 * 1024 &amp;&amp; !confirm(`This picture is ${Math.round(f.size / 1024)} KB, which will make your file bigger. Use it anyway?`)) return;
     const r = new FileReader();
-    r.onload = () =&gt; { D.images[el.dataset.key] = r.result; save(); renderDev(); toast("Picture added"); };
+    r.onload = () =&gt; {
+      D.images[el.dataset.key] = r.result;
+      if (el.dataset.panelIndex !== undefined) {
+        const panel = D.textPanels[+el.dataset.panelIndex];
+        if (panel) panel.image = el.dataset.key;
+      }
+      save(); renderDev(); toast("Picture added");
+    };
     r.readAsDataURL(f);
   }
 });
 document.addEventListener("toggle", e =&gt; {
   if (!e.target.matches?.("details.card")) return;
+  if (e.target.dataset.tpI !== undefined) {
+    const i = +e.target.dataset.tpI;
+    e.target.open ? textPanelOpenSet.add(i) : textPanelOpenSet.delete(i);
+    return;
+  }
   const i = +e.target.dataset.i;
   e.target.open ? openSet.add(i) : openSet.delete(i);
 }, true);
@@ -3239,8 +3434,8 @@ html[data-vtheme="light"] #ppzGear { box-shadow:0 4px 14px rgba(0,0,0,.15); }
   }
 
   /* ---------- Settings: tabs ---------- */
-  const TABS = [["general", "⚙ General"], ["colors", "🎨 Colors"], ["bar", "🏷 Title bar"], ["bg", "🌌 Background"], ["cos", "✨ Cosmetics"]];
-  const SEC = { colors: "#ppzThemeSec", bar: "#ppzBarSec", bg: "#ppzVBgSec", cos: "#ppzCosSec" };
+  const TABS = [["general", "⚙ General"], ["colors", "🎨 Colors"], ["bar", "🏷 Title bar"], ["text", "🔤 Text effects"], ["bg", "🌌 Background"], ["cos", "✨ Cosmetics"]];
+  const SEC = { colors: "#ppzThemeSec", bar: "#ppzBarSec", text: "#ppzTxSec", bg: "#ppzVBgSec", cos: "#ppzCosSec" };
   let active = "general", tabKey = "", orgT = 0;
   function showTab() {
     const gen = panel.querySelector("#ppzTabGen");
@@ -3909,4 +4104,751 @@ html[data-vtheme="light"] #ppzCatBar button, html[data-vtheme="light"] #ppzChips
   renderPage();
 })();
 &lt;/script&gt;
-&lt;div id="ibotta-extension-root" style="all: initial;"&gt;&lt;/div&gt;&lt;div dji-sru-rewordify-popup="true"&gt;&lt;div class="dji-sru-close-btn"&gt;&lt;/div&gt;&lt;div dji-sru-rewordify-body="true" tabindex="0"&gt;&lt;div dji-non-draggable="true"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-left"&gt;&lt;/div&gt;&lt;div class="geomCtrlContainerOverlay"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id="dji-sru-busy-state"&gt;&lt;/div&gt;&lt;dji-sru-distraction&gt;&lt;/dji-sru-distraction&gt;&lt;div dji-sru-rewordify-popup="true"&gt;&lt;div class="dji-sru-close-btn"&gt;&lt;/div&gt;&lt;div dji-sru-rewordify-body="true" tabindex="0"&gt;&lt;div dji-non-draggable="true"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-left"&gt;&lt;/div&gt;&lt;div class="geomCtrlContainerOverlay"&gt;&lt;/div&gt;&lt;/div&gt;&lt;dji-sru id="__dji_sru_components"&gt;&lt;/dji-sru&gt;&lt;dji-sru id="__dji_sru_main_container"&gt;&lt;/dji-sru&gt;&lt;dji-cowriter tabindex="-1"&gt;&lt;/dji-cowriter&gt;&lt;div dji-sru-rewordify-popup="true"&gt;&lt;div class="dji-sru-close-btn"&gt;&lt;/div&gt;&lt;div dji-sru-rewordify-body="true" tabindex="0"&gt;&lt;div dji-non-draggable="true"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-left"&gt;&lt;/div&gt;&lt;div class="geomCtrlContainerOverlay"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id="dji-sru-busy-state"&gt;&lt;/div&gt;&lt;dji-sru-distraction&gt;&lt;/dji-sru-distraction&gt;&lt;div dji-sru-rewordify-popup="true"&gt;&lt;div class="dji-sru-close-btn"&gt;&lt;/div&gt;&lt;div dji-sru-rewordify-body="true" tabindex="0"&gt;&lt;div dji-non-draggable="true"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-left"&gt;&lt;/div&gt;&lt;div class="geomCtrlContainerOverlay"&gt;&lt;/div&gt;&lt;/div&gt;&lt;dji-sru id="__dji_sru_main_container"&gt;&lt;/dji-sru&gt;&lt;dji-cowriter tabindex="-1"&gt;&lt;/dji-cowriter&gt;&lt;div dji-sru-rewordify-popup="true"&gt;&lt;div class="dji-sru-close-btn"&gt;&lt;/div&gt;&lt;div dji-sru-rewordify-body="true" tabindex="0"&gt;&lt;div dji-non-draggable="true"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-left"&gt;&lt;/div&gt;&lt;div class="geomCtrlContainerOverlay"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id="dji-sru-busy-state"&gt;&lt;/div&gt;&lt;dji-sru-distraction&gt;&lt;/dji-sru-distraction&gt;&lt;div dji-sru-rewordify-popup="true"&gt;&lt;div class="dji-sru-close-btn"&gt;&lt;/div&gt;&lt;div dji-sru-rewordify-body="true" tabindex="0"&gt;&lt;div dji-non-draggable="true"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-left"&gt;&lt;/div&gt;&lt;div class="geomCtrlContainerOverlay"&gt;&lt;/div&gt;&lt;/div&gt;&lt;dji-sru id="__dji_sru_main_container"&gt;&lt;/dji-sru&gt;&lt;dji-cowriter tabindex="-1"&gt;&lt;/dji-cowriter&gt;&lt;div dji-sru-rewordify-popup="true"&gt;&lt;div class="dji-sru-close-btn"&gt;&lt;/div&gt;&lt;div dji-sru-rewordify-body="true" tabindex="0"&gt;&lt;div dji-non-draggable="true"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-left"&gt;&lt;/div&gt;&lt;div class="geomCtrlContainerOverlay"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id="dji-sru-busy-state"&gt;&lt;/div&gt;&lt;dji-sru-distraction&gt;&lt;/dji-sru-distraction&gt;&lt;div dji-sru-rewordify-popup="true"&gt;&lt;div class="dji-sru-close-btn"&gt;&lt;/div&gt;&lt;div dji-sru-rewordify-body="true" tabindex="0"&gt;&lt;div dji-non-draggable="true"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-left"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-top-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-right"&gt;&lt;/div&gt;&lt;div class="dji-geom-ctrl-resize-bottom-left"&gt;&lt;/div&gt;&lt;div class="geomCtrlContainerOverlay"&gt;&lt;/div&gt;&lt;/div&gt;&lt;dji-sru id="__dji_sru_main_container"&gt;&lt;/dji-sru&gt;&lt;dji-cowriter tabindex="-1"&gt;&lt;/dji-cowriter&gt;&lt;/body&gt;&lt;/html&gt;</pre></body></html>
+&lt;script id="ppz-addon-texteffects"&gt;
+/* ===== ProxyPathz add-on: text effects for any text (visitor setting) ===== */
+(() =&gt; {
+  if (window.__ppzTx) return; window.__ppzTx = true;
+  const KEY = "proxypathz_v15_texteffects";
+  let V = { fx: "", speed: "normal", groups: [], picked: [] };
+  try { V = Object.assign(V, JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) {}
+  if (!Array.isArray(V.groups)) V.groups = [];
+  if (!Array.isArray(V.picked)) V.picked = [];
+  const saveV = () =&gt; { try { localStorage.setItem(KEY, JSON.stringify(V)); } catch (e) {} };
+
+  const EFFECTS = [["", "Off"], ["glow", "Glow"], ["rainbow", "Rainbow"], ["neon", "Neon"], ["fire", "Fire"], ["ice", "Ice"],
+    ["outline", "Outline"], ["shadow3d", "3D shadow"], ["accent", "Theme color"], ["pulse", "Pulse"]];
+  const SPEEDS = { slow: 1.8, normal: 1, fast: .55 };
+  const GROUPS = [
+    ["all", "✅ Everything", "h1, h2, h3, h4, p, li, small, a, button, label, b, strong, em, span"],
+    ["title", "🏷 Big title", "#siteTitle"],
+    ["headings", "📌 Section headings", ".box &gt; h2, .box h2, header h2"],
+    ["cards", "🃏 Proxy names on cards", ".tile .info h3"],
+    ["text", "📝 Normal text", "header p, .box p, .box li, footer, footer p"],
+    ["small", "🔹 Small text", ".tile .info small, .box small, header small"],
+    ["buttons", "🔘 Buttons and links", ".btn, a.link, .box a, #ppzCatBar button, #ppzChips button"]
+  ];
+  const EXCL = ":not(#dev *):not(#ppzSet *):not(#ppzDraw *):not(#ppzArr *):not(#ppzPEui *):not(#ppzTxBar *):not(#ppzGear):not(input):not(select):not(textarea)";
+  const FX = {
+    glow: "text-shadow:0 0 6px var(--accent),0 0 14px var(--accent) !important;",
+    rainbow: "-webkit-text-fill-color:currentColor !important; animation:ppzTxRain calc(4s * var(--txs,1)) linear infinite !important;",
+    neon: "color:#fff !important; -webkit-text-fill-color:#fff !important; text-shadow:0 0 2px #fff,0 0 8px var(--accent),0 0 18px var(--accent) !important; animation:ppzTxFlick calc(3.2s * var(--txs,1)) infinite !important;",
+    fire: "-webkit-text-fill-color:currentColor !important; animation:ppzTxFire calc(1.2s * var(--txs,1)) ease-in-out infinite alternate !important;",
+    ice: "color:#d8f6ff !important; -webkit-text-fill-color:#d8f6ff !important; animation:ppzTxIce calc(2.6s * var(--txs,1)) ease-in-out infinite alternate !important;",
+    outline: "color:transparent !important; -webkit-text-fill-color:transparent !important; -webkit-text-stroke:1px var(--accent) !important;",
+    shadow3d: "text-shadow:1px 1px 0 var(--accent),2px 2px 0 color-mix(in srgb,var(--accent) 70%,#000),3px 3px 0 color-mix(in srgb,var(--accent) 45%,#000),4px 4px 6px rgba(0,0,0,.5) !important;",
+    accent: "color:var(--accent) !important; -webkit-text-fill-color:var(--accent) !important;",
+    pulse: "animation:ppzTxPulse calc(2s * var(--txs,1)) ease-in-out infinite !important;"
+  };
+
+  /* ---------- Fixed styles ---------- */
+  const css = document.createElement("style");
+  css.id = "ppzTxCss"; css.setAttribute("data-ppzv", "");
+  css.textContent = `
+@keyframes ppzTxRain { 0%,100% { color:#ff5c7a; } 20% { color:#ffd84d; } 40% { color:#3ddc84; } 60% { color:#4dd2ff; } 80% { color:#a66bff; } }
+@keyframes ppzTxFlick { 0%,19%,21%,23%,55%,57%,100% { opacity:1; } 20%,22%,56% { opacity:.55; } }
+@keyframes ppzTxFire { from { color:#ffd84d; text-shadow:0 0 4px #ff9a3d,0 -2px 10px #ff3d00; }
+  to { color:#ff7a1a; text-shadow:0 0 8px #ff3d00,0 -4px 16px #ff9a3d; } }
+@keyframes ppzTxIce { from { text-shadow:0 0 4px #7fd8ff,0 0 10px rgba(127,216,255,.4); } to { text-shadow:0 0 8px #bff0ff,0 0 18px rgba(127,216,255,.75); } }
+@keyframes ppzTxPulse { 0%,100% { opacity:1; text-shadow:none; } 50% { opacity:.75; text-shadow:0 0 12px var(--accent); } }
+body.ppz-txpick .ppz-txp { outline:2px dashed var(--accent) !important; outline-offset:2px; }
+body.ppz-txpick { cursor:crosshair; }
+#ppzTxBar { position:fixed; left:50%; bottom:16px; transform:translateX(-50%); z-index:90; display:flex; align-items:center; gap:10px;
+  padding:8px 8px 8px 16px; border-radius:999px; background:var(--panel); border:1px solid var(--accent);
+  box-shadow:0 6px 24px rgba(0,0,0,.5); font-size:.85rem; color:var(--text); max-width:calc(100vw - 24px); }
+#ppzTxBar[hidden] { display:none; }
+#ppzTxBar button { min-height:40px; padding:0 14px; border-radius:999px; border:none; background:var(--accent); color:#12081f;
+  font:inherit; font-weight:700; cursor:pointer; }
+#ppzTxSec .ppzTxGroups label { padding:8px 0; }`;
+  document.head.appendChild(css);
+  const dyn = document.createElement("style");
+  dyn.id = "ppzTxDyn"; dyn.setAttribute("data-ppzv", "");
+  document.head.appendChild(dyn);
+
+  /* ---------- Build the effect CSS ---------- */
+  function apply() {
+    document.documentElement.style.setProperty("--txs", SPEEDS[V.speed] || 1);
+    const rule = FX[V.fx];
+    if (!rule) { dyn.textContent = ""; return; }
+    const parts = [];
+    V.groups.forEach(g =&gt; { const G = GROUPS.find(x =&gt; x[0] === g); if (G) parts.push(...G[2].split(",")); });
+    parts.push(".ppz-txp");
+    const sel = parts.map(s =&gt; s.trim() + EXCL);
+    const off = sel.flatMap(s =&gt; ["body.noanim " + s, "body.vnoanim " + s]);
+    dyn.textContent = `${sel.join(",\n")} { ${rule} }
+${off.join(",\n")} { animation:none !important; }
+@media (prefers-reduced-motion: reduce) { ${sel.join(",\n")} { animation:none !important; } }`;
+  }
+
+  /* ---------- Remembering picked text ---------- */
+  const kids = el =&gt; [...el.children].filter(c =&gt; !c.hasAttribute("data-ppzv"));
+  function keyOf(el) {
+    const path = []; let cur = el;
+    while (cur &amp;&amp; cur !== document.body &amp;&amp; cur !== document.documentElement) {
+      if (cur.id &amp;&amp; !cur.id.startsWith("ppz")) return "i:" + cur.id + "&gt;" + path.join(".");
+      if (cur.dataset &amp;&amp; cur.dataset.ppzk) return "k:" + cur.dataset.ppzk + "&gt;" + path.join(".");
+      const p = cur.parentElement; if (!p) return null;
+      const i = kids(p).indexOf(cur); if (i &lt; 0) return null;
+      path.unshift(i); cur = p;
+    }
+    return null;
+  }
+  function byKey(k) {
+    const m = String(k).match(/^([ki]):([^&gt;]*)&gt;(.*)$/); if (!m) return null;
+    let el = m[1] === "i" ? document.getElementById(m[2]) : document.querySelector('[data-ppzk="' + CSS.escape(m[2]) + '"]');
+    if (!el) return null;
+    if (m[3]) for (const i of m[3].split(".").map(Number)) { el = kids(el)[i]; if (!el) return null; }
+    return el;
+  }
+  function markPicked() {
+    document.querySelectorAll(".ppz-txp").forEach(e =&gt; e.classList.remove("ppz-txp"));
+    V.picked.forEach(k =&gt; { const el = byKey(k); if (el) el.classList.add("ppz-txp"); });
+  }
+
+  /* ---------- Pick mode ---------- */
+  let picking = false;
+  const bar = document.createElement("div");
+  bar.id = "ppzTxBar"; bar.hidden = true; bar.setAttribute("data-ppzv", "");
+  document.body.appendChild(bar);
+  function updBar() {
+    bar.innerHTML = `&lt;span&gt;👆 Tap text to add or remove the effect · &lt;b&gt;${V.picked.length}&lt;/b&gt; picked&lt;/span&gt;&lt;button type="button" data-txdone&gt;✅ Done&lt;/button&gt;`;
+  }
+  function startPick() {
+    if (!V.fx) { V.fx = "glow"; saveV(); apply(); toast("Turned on Glow so you can see it"); }
+    picking = true; document.body.classList.add("ppz-txpick");
+    const p = $("ppzSet"); if (p) p.hidden = true;
+    updBar(); bar.hidden = false;
+  }
+  function stopPick() {
+    picking = false; document.body.classList.remove("ppz-txpick"); bar.hidden = true;
+    toast(V.picked.length + " text" + (V.picked.length === 1 ? "" : "s") + " picked");
+  }
+  bar.addEventListener("click", e =&gt; { e.stopPropagation(); if (e.target.closest("[data-txdone]")) stopPick(); });
+  document.addEventListener("click", e =&gt; {
+    if (!picking || e.target.closest("#ppzTxBar")) return;
+    e.preventDefault(); e.stopPropagation();
+    let t = e.target; if (t &amp;&amp; t.nodeType !== 1) t = t.parentElement;
+    if (!t || t.closest("#dev, #ppzSet, #ppzDraw, #ppzArr, #ppzPEui, #ppzGear, #fab, #ppzBg")) return;
+    if (!t.textContent.trim()) return toast("Tap right on some text");
+    const k = keyOf(t); if (!k) return toast("Can't pick that one, try the text next to it");
+    const i = V.picked.indexOf(k);
+    i &gt;= 0 ? V.picked.splice(i, 1) : (V.picked.length &lt; 150 &amp;&amp; V.picked.push(k));
+    saveV(); markPicked(); updBar();
+  }, true);
+  document.addEventListener("keydown", e =&gt; { if (picking &amp;&amp; e.key === "Escape") stopPick(); });
+
+  /* ---------- Settings: Text effects tab ---------- */
+  const panel = $("ppzSet");
+  function addSection() {
+    if (!panel || !panel.lastElementChild || panel.querySelector("#ppzTxSec")) return;
+    const sec = document.createElement("div");
+    sec.id = "ppzTxSec";
+    sec.innerHTML = `&lt;h3 style="margin-top:12px"&gt;🔤 Text effects&lt;/h3&gt;
+      &lt;label&gt;&lt;span&gt;Effect&lt;/span&gt;&lt;select data-tx="fx"&gt;${EFFECTS.map(([k, l]) =&gt; `&lt;option value="${k}" ${k === V.fx ? "selected" : ""}&gt;${l}&lt;/option&gt;`).join("")}&lt;/select&gt;&lt;/label&gt;
+      &lt;label&gt;&lt;span&gt;Speed&lt;small&gt;For moving effects&lt;/small&gt;&lt;/span&gt;&lt;select data-tx="speed"&gt;
+        ${[["slow", "Slow"], ["normal", "Normal"], ["fast", "Fast"]].map(([k, l]) =&gt; `&lt;option value="${k}" ${k === V.speed ? "selected" : ""}&gt;${l}&lt;/option&gt;`).join("")}&lt;/select&gt;&lt;/label&gt;
+      &lt;p class="note" style="margin:10px 0 0"&gt;Add it to:&lt;/p&gt;
+      &lt;div class="ppzTxGroups"&gt;${GROUPS.map(([k, l]) =&gt; `&lt;label&gt;&lt;span&gt;${l}&lt;/span&gt;&lt;input type="checkbox" data-txg="${k}" ${V.groups.includes(k) ? "checked" : ""}&gt;&lt;/label&gt;`).join("")}&lt;/div&gt;
+      &lt;div class="row" style="margin-top:10px"&gt;
+        &lt;button type="button" data-tx2="pick"&gt;👆 Pick text on the page&lt;/button&gt;
+        &lt;button type="button" data-tx2="clear" ${V.picked.length ? "" : "disabled"}&gt;Clear picked (${V.picked.length})&lt;/button&gt;&lt;/div&gt;
+      &lt;div class="row"&gt;&lt;button type="button" data-tx2="reset"&gt;Reset text effects&lt;/button&gt;&lt;/div&gt;`;
+    panel.insertBefore(sec, panel.lastElementChild);
+    const redraw = () =&gt; setTimeout(() =&gt; { sec.remove(); addSection(); }, 0);
+    sec.addEventListener("change", e =&gt; {
+      const t = e.target;
+      if (t.dataset.tx) { V[t.dataset.tx] = t.value; saveV(); apply(); return; }
+      if (t.dataset.txg) {
+        const g = t.dataset.txg, i = V.groups.indexOf(g);
+        t.checked ? (i &lt; 0 &amp;&amp; V.groups.push(g)) : (i &gt;= 0 &amp;&amp; V.groups.splice(i, 1));
+        if (t.checked &amp;&amp; !V.fx) { V.fx = "glow"; toast("Turned on Glow so you can see it"); redraw(); }
+        saveV(); apply();
+      }
+    });
+    sec.addEventListener("click", e =&gt; {
+      const b = e.target.closest("[data-tx2]"); if (!b || b.disabled) return;
+      const a = b.dataset.tx2;
+      if (a === "pick") startPick();
+      if (a === "clear") { V.picked = []; saveV(); markPicked(); redraw(); toast("Cleared picked text"); }
+      if (a === "reset") {
+        if (!confirm("Turn off all text effects?")) return;
+        V = { fx: "", speed: "normal", groups: [], picked: [] }; saveV(); apply(); markPicked(); redraw();
+      }
+    });
+  }
+  if (panel) { new MutationObserver(addSection).observe(panel, { childList: true }); addSection(); }
+
+  /* ---------- Re-apply after every page redraw ---------- */
+  const basePage = renderPage;
+  renderPage = function () { basePage.apply(this, arguments); markPicked(); };
+
+  /* ---------- Keep it out of exported files ---------- */
+  if (typeof buildHTML === "function") {
+    const baseBuild = buildHTML;
+    buildHTML = function () {
+      const picked = [...document.querySelectorAll(".ppz-txp")];
+      picked.forEach(e =&gt; { e.classList.remove("ppz-txp"); if (!e.getAttribute("class")) e.removeAttribute("class"); });
+      const txs = document.documentElement.style.getPropertyValue("--txs");
+      document.documentElement.style.removeProperty("--txs");
+      try { return baseBuild.apply(this, arguments); }
+      finally { picked.forEach(e =&gt; e.classList.add("ppz-txp")); if (txs) document.documentElement.style.setProperty("--txs", txs); }
+    };
+  }
+
+  apply(); markPicked();
+})();
+&lt;/script&gt;
+&lt;div id="ibotta-extension-root" style="all: initial;"&gt;&lt;/div&gt;
+
+&lt;!-- ===== ProxyPathz v1.5 add-on: Resize (ppz-addon-resize) ===== --&gt;
+&lt;script type="application/json" id="ppz-resize-data"&gt;{"savedAt":1794407717274,"items":{}}&lt;/script&gt;
+&lt;style id="ppz-resize-ui"&gt;
+.ppz-rs-bar{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:6px 0;width:100%}
+.ppz-rs-bar button{min-width:36px;padding:6px 9px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:inherit;cursor:pointer;font:inherit;font-size:.85em}
+.ppz-rs-info{flex-basis:100%;font-size:.75em;opacity:.75}
+.ppz-rs-h{position:fixed;z-index:2147482000;width:18px;height:18px;background:#a78bfa;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 2px rgba(0,0,0,.4);touch-action:none;display:none}
+.ppz-rs-h[data-d=e]{cursor:ew-resize}.ppz-rs-h[data-d=s]{cursor:ns-resize}.ppz-rs-h[data-d=se]{cursor:nwse-resize;border-radius:5px}
+@media (pointer:coarse){.ppz-rs-h{width:34px;height:34px}}
+.ppz-rs-tip{position:fixed;z-index:2147482001;background:#111;color:#fff;font:12px system-ui;padding:3px 7px;border-radius:6px;pointer-events:none;display:none}
+&lt;/style&gt;
+&lt;style id="ppz-resize-css"&gt;&lt;/style&gt;
+&lt;script id="ppz-addon-resize"&gt;
+(function(){'use strict';
+if(window.__ppzResize)return;window.__ppzResize=true;
+var ID='ppz-resize-data',KEY='proxypathz_v15_resize',STEP={w:20,h:20,f:1,z:10};
+var state={savedAt:0,items:{}},hist=[],sel=null,selKey=null,lastT=null,lastLabel='',bar=null,H={},tip=null,on=null,roots=[],drag=null;
+
+function x(e){try{return document.evaluate(e,document,null,9,null).singleNodeValue}catch(_){return null}}
+function vis(el){return !!(el&amp;&amp;el.getClientRects().length)}
+function editorOn(){var e=x("//*[not(self::script or self::style or self::textarea)][contains(text(),'Editing page')]");return vis(e)?e:null}
+function labelEl(){var e=x("//*[not(self::script or self::style or self::textarea)][starts-with(normalize-space(text()),'Selected:')]");return vis(e)?e:null}
+function fixedRoot(el){while(el&amp;&amp;el!==document.body){var p=getComputedStyle(el).position;if(p==='fixed'||p==='sticky')return el;el=el.parentElement}return null}
+
+function valid(d){return d&amp;&amp;d.items&amp;&amp;typeof d.items==='object'}
+function load(){var a=null,b=null;try{a=JSON.parse(document.getElementById(ID).textContent)}catch(_){}try{b=JSON.parse(localStorage.getItem(KEY)||'null')}catch(_){}
+  var p=valid(a)?a:null;if(valid(b)&amp;&amp;(!p||(b.savedAt||0)&gt;(p.savedAt||0)))p=b;state=p||{savedAt:0,items:{}}}
+function json(){return JSON.stringify(state).replace(/&lt;/g,'\\u003c')}
+function save(){state.savedAt=Date.now();try{localStorage.setItem(KEY,JSON.stringify(state))}catch(_){}
+  var t=document.getElementById(ID);if(!t){t=document.createElement('script');t.type='application/json';t.id=ID;document.body.appendChild(t)}t.textContent=json()}
+function applyCSS(){var out='';Object.keys(state.items).forEach(function(s){var v=state.items[s],r=[];
+  if(v.d)r.push('display:inline-block!important');
+  if(v.w)r.push('width:'+v.w+'px!important','max-width:100%!important','box-sizing:border-box!important');
+  if(v.h)r.push(v.m?'height:'+v.h+'px!important;object-fit:cover':'min-height:'+v.h+'px!important');
+  if(v.f)r.push('font-size:'+v.f+'px!important');
+  if(v.z&amp;&amp;v.z!==100)r.push('zoom:'+(v.z/100));
+  if(r.length)out+=s+'{'+r.join(';')+'}\n'});
+  var st=document.getElementById('ppz-resize-css');if(!st){st=document.createElement('style');st.id='ppz-resize-css';document.head.appendChild(st)}st.textContent=out}
+
+function cssPath(el){var parts=[];
+  while(el&amp;&amp;el.nodeType===1&amp;&amp;el!==document.body&amp;&amp;el!==document.documentElement){
+    if(el.id&amp;&amp;document.querySelectorAll('#'+CSS.escape(el.id)).length===1){parts.unshift('#'+CSS.escape(el.id));break}
+    var tp=el.getAttribute('data-ppz-tp');if(tp){parts.unshift('[data-ppz-tp="'+tp+'"]');break}
+    var i=1,s=el;while((s=s.previousElementSibling))if(s.tagName===el.tagName)i++;
+    parts.unshift(el.tagName.toLowerCase()+':nth-of-type('+i+')');el=el.parentElement}
+  if(!parts.length)return null;if(!/^[#\[]/.test(parts[0]))parts.unshift('body');return parts.join(' &gt; ')}
+
+function resolve(L){if(!lastT||!document.contains(lastT))return null;
+  var t=L.textContent.replace(/\s+/g,' '),m=t.match(/Selected:\s*([a-z][a-z0-9-]*)\s*(?:[-–—:]\s*["“']?(.*?)["”']?\s*)?$/i);if(!m)return null;
+  var tag=m[1].toUpperCase(),snip=(m[2]||'').replace(/(\.\.\.|…)$/,'').replace(/\s+/g,' ').trim().slice(0,25),c=[],el=lastT;
+  while(el&amp;&amp;el!==document.body){if(el.tagName===tag)c.push(el);el=el.parentElement}
+  if(!c.length)return null;
+  if(snip)for(var i=0;i&lt;c.length;i++){var tx=(c[i].innerText||c[i].textContent||'').replace(/\s+/g,' ').trim();if(tx.indexOf(snip)===0)return c[i]}
+  return c[0]}
+
+function measure(){var r=sel.getBoundingClientRect(),cs=getComputedStyle(sel);
+  return{w:Math.round(r.width),h:Math.round(r.height),f:Math.round(parseFloat(cs.fontSize)),inl:cs.display==='inline',m:/^(IMG|VIDEO|IFRAME|CANVAS|SVG|PICTURE)$/i.test(sel.tagName)}}
+function cur(){return state.items[selKey]||(state.items[selKey]={})}
+function snap(){hist.push(JSON.stringify(state.items));if(hist.length&gt;40)hist.shift()}
+function commit(){Object.keys(state.items).forEach(function(k){var v=state.items[k];if(!v.w&amp;&amp;!v.h&amp;&amp;!v.f&amp;&amp;(!v.z||v.z===100))delete state.items[k]});applyCSS();save();info()}
+function bump(k,dir){if(!sel)return;snap();var v=cur(),m=measure(),z=(v.z||100)/100;
+  if(k==='w'){v.w=Math.max(30,(v.w||Math.round(m.w/z))+dir*STEP.w);if(m.inl)v.d=1}
+  if(k==='h'){v.h=Math.max(20,(v.h||Math.round(m.h/z))+dir*STEP.h);v.m=m.m?1:0;if(m.inl)v.d=1}
+  if(k==='f')v.f=Math.min(120,Math.max(8,(v.f||m.f)+dir*STEP.f));
+  if(k==='z')v.z=Math.min(300,Math.max(30,(v.z||100)+dir*STEP.z));
+  commit()}
+function resetSel(){if(sel&amp;&amp;state.items[selKey]){snap();delete state.items[selKey];commit()}}
+function undo(){if(hist.length){state.items=JSON.parse(hist.pop());commit()}}
+
+function info(){if(!bar)return;var el=bar.querySelector('.ppz-rs-info');
+  if(!sel){el.textContent='Tap something on the page to resize it.';return}
+  var v=state.items[selKey]||{};
+  el.textContent='Size: W '+(v.w?v.w+'px':'auto')+' · H '+(v.h?v.h+'px'+(v.m?'':' (min)'):'auto')+' · Text '+(v.f?v.f+'px':'auto')+' · Zoom '+(v.z||100)+'% — or drag the purple dots'}
+function ensureBar(L){if(bar&amp;&amp;document.contains(bar))return;
+  bar=document.createElement('div');bar.className='ppz-rs-bar';bar.setAttribute('data-ppz-rs-ui','');
+  var b=[['w',-1,'↔ −'],['w',1,'↔ +'],['h',-1,'↕ −'],['h',1,'↕ +'],['f',-1,'A−'],['f',1,'A+'],['z',-1,'🔍−'],['z',1,'🔍+']];
+  bar.innerHTML=b.map(function(a){return '&lt;button type="button" data-k="'+a[0]+'" data-d="'+a[1]+'"&gt;'+a[2]+'&lt;/button&gt;'}).join('')+
+    '&lt;button type="button" data-r title="Reset size"&gt;↺ Size&lt;/button&gt;&lt;button type="button" data-u title="Undo size change"&gt;↶&lt;/button&gt;&lt;div class="ppz-rs-info"&gt;&lt;/div&gt;';
+  bar.addEventListener('click',function(e){var t=e.target.closest('button');if(!t)return;e.preventDefault();e.stopPropagation();
+    if(t.hasAttribute('data-r'))resetSel();else if(t.hasAttribute('data-u'))undo();else bump(t.dataset.k,+t.dataset.d)});
+  L.insertAdjacentElement('afterend',bar);info()}
+
+function mkHandles(){['e','s','se'].forEach(function(d){var h=document.createElement('div');h.className='ppz-rs-h';h.dataset.d=d;h.setAttribute('data-ppz-rs-ui','');
+  h.addEventListener('pointerdown',startDrag);document.body.appendChild(h);H[d]=h});
+  tip=document.createElement('div');tip.className='ppz-rs-tip';tip.setAttribute('data-ppz-rs-ui','');document.body.appendChild(tip)}
+function startDrag(e){if(!sel)return;e.preventDefault();e.stopPropagation();snap();var m=measure(),v=cur(),z=(v.z||100)/100;
+  drag={id:e.pointerId,d:e.currentTarget.dataset.d,x:e.clientX,y:e.clientY,w:m.w/z,h:m.h/z,z:z,m:m};
+  try{e.currentTarget.setPointerCapture(e.pointerId)}catch(_){}}
+document.addEventListener('pointermove',function(e){if(!drag||e.pointerId!==drag.id)return;e.preventDefault();
+  var v=cur(),dx=(e.clientX-drag.x)/drag.z,dy=(e.clientY-drag.y)/drag.z;
+  if(drag.d!=='s'){v.w=Math.max(30,Math.round(drag.w+dx));if(drag.m.inl)v.d=1}
+  if(drag.d!=='e'){v.h=Math.max(20,Math.round(drag.h+dy));v.m=drag.m.m?1:0;if(drag.m.inl)v.d=1}
+  applyCSS();tip.style.display='block';tip.style.left=Math.min(innerWidth-90,e.clientX+14)+'px';tip.style.top=(e.clientY+14)+'px';
+  tip.textContent=(v.w||'auto')+' × '+(v.h||'auto')},{passive:false});
+function endDrag(e){if(!drag||e.pointerId!==drag.id)return;drag=null;tip.style.display='none';commit()}
+document.addEventListener('pointerup',endDrag);document.addEventListener('pointercancel',endDrag);
+
+function pos(h,l,t){var s=h.offsetWidth;h.style.left=Math.max(0,Math.min(innerWidth-s,l))+'px';h.style.top=Math.max(0,Math.min(innerHeight-s,t))+'px'}
+function place(){var show=on&amp;&amp;sel&amp;&amp;document.contains(sel);
+  ['e','s','se'].forEach(function(d){H[d].style.display=show?'block':'none'});
+  if(!on)return;
+  if(show){var r=sel.getBoundingClientRect(),hw=H.e.offsetWidth/2;
+    pos(H.e,r.right-hw,r.top+r.height/2-hw);pos(H.s,r.left+r.width/2-hw,r.bottom-hw);pos(H.se,r.right-hw,r.bottom-hw)}
+  requestAnimationFrame(place)}
+
+document.addEventListener('pointerdown',function(e){if(!on)return;var t=e.target;
+  if(t.closest('[data-ppz-rs-ui]')||roots.some(function(r){return r&amp;&amp;r.contains(t)}))return;
+  lastT=t;setTimeout(function(){lastLabel=''},120)},true);
+
+function poll(){var e=editorOn();
+  if(!e){if(on){on=null;sel=null;if(bar)bar.remove();bar=null}return}
+  var first=!on;on=e;var L=labelEl();roots=[fixedRoot(e),L&amp;&amp;fixedRoot(L)];
+  if(L){ensureBar(L);var t=L.textContent;if(t!==lastLabel){lastLabel=t;sel=resolve(L);selKey=sel?cssPath(sel):null;if(!selKey)sel=null;info()}}
+  if(first)place()}
+
+function patchOut(html){if(typeof html!=='string'||html.indexOf('&lt;/body&gt;')&lt;0)return html;
+  var tag='&lt;script type="application/json" id="'+ID+'"&gt;'+json()+'&lt;\/script&gt;',re=/&lt;script type="application\/json" id="ppz-resize-data"&gt;[\s\S]*?&lt;\/script&gt;/;
+  if(re.test(html))return html.replace(re,function(){return tag});var k=html.lastIndexOf('&lt;/body&gt;');return html.slice(0,k)+tag+'\n'+html.slice(k)}
+function wrapFns(){['buildHTML','cleanHTML'].forEach(function(n){var f=window[n];if(typeof f==='function'&amp;&amp;!f.__ppzRs){
+  var w=function(){var parked=[];
+    /* Keep editor-only resize controls out of downloaded/published copies. */
+    if(n==='buildHTML')document.querySelectorAll('[data-ppz-rs-ui]').forEach(function(el){
+      if(el.parentNode){parked.push({el:el,parent:el.parentNode,next:el.nextSibling});el.remove()}
+    });
+    var r;try{r=f.apply(this,arguments)}finally{for(var i=parked.length-1;i&gt;=0;i--){
+      var q=parked[i];if(q.parent&amp;&amp;q.parent.isConnected)q.parent.insertBefore(q.el,q.next&amp;&amp;q.next.parentNode===q.parent?q.next:null)
+    }}
+    return r&amp;&amp;typeof r.then==='function'?r.then(patchOut):patchOut(r)};w.__ppzRs=true;window[n]=w}})}
+
+function init(){document.querySelectorAll('[data-ppz-rs-ui]').forEach(function(n){n.remove()});
+  load();applyCSS();save();mkHandles();wrapFns();setInterval(poll,250);
+  window.addEventListener('load',wrapFns);
+  window.PPZResize={data:function(){return state},clearAll:function(){snap();state.items={};commit()}}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+&lt;/script&gt;
+&lt;!-- ===== end ppz-addon-resize ===== --&gt;
+
+&lt;!-- ===== ProxyPathz v1.5 add-on: Welcome tutorial + Announcements (ppz-addon-welcome) ===== --&gt;
+&lt;script type="application/json" id="ppz-welcome-data"&gt;{"savedAt":0,"tour":{"on":false,"ver":1,"steps":[]},"anns":[]}&lt;/script&gt;
+&lt;style id="ppz-wl-style"&gt;
+#ppz-wl-tour{position:fixed;inset:0;z-index:2147482500;font-family:system-ui,sans-serif}
+#ppz-wl-tour .bg{position:absolute;inset:0;background:rgba(0,0,0,.65)}
+#ppz-wl-tour.spot .bg{background:transparent}
+.ppz-wl-spot{position:fixed;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,.65),0 0 0 3px #a78bfa;transition:all .3s;pointer-events:none}
+.ppz-wl-card{position:fixed;width:min(360px,calc(100vw - 24px));background:#1a1530;color:#eee;border:1px solid #3b3166;border-radius:16px;padding:16px;box-sizing:border-box;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.ppz-wl-card img,.ppz-wl-ban img,.ppz-wl-pop img{max-width:100%;max-height:200px;object-fit:contain;border-radius:10px;display:block;margin:0 auto 10px}
+.ppz-wl-card h3,.ppz-wl-pop h3{margin:0 0 6px;font-size:1.1em}
+.ppz-wl-tx{font-size:.92em;line-height:1.5;max-height:40vh;overflow:auto;overflow-wrap:anywhere}
+.ppz-wl-tx a{color:#c4b5fd}
+.ppz-wl-dots{display:flex;gap:5px;justify-content:center;margin:12px 0 10px}
+.ppz-wl-dots i{width:7px;height:7px;border-radius:50%;background:#3b3166}.ppz-wl-dots i.on{background:#a78bfa}
+.ppz-wl-nav{display:flex;gap:8px;justify-content:space-between;align-items:center}
+.ppz-wl-b{background:#2a2350;color:#eee;border:1px solid #3b3166;border-radius:8px;padding:7px 12px;cursor:pointer;font:inherit;font-size:.88em;text-decoration:none;display:inline-block}
+.ppz-wl-b.pri{background:#7c3aed;border-color:#7c3aed}.ppz-wl-b.dan{background:#7f1d1d;border-color:#991b1b}.ppz-wl-b.ghost{background:none;border-color:transparent;opacity:.75}
+#ppz-wl-banners{position:relative;z-index:60;display:flex;flex-direction:column;gap:6px;padding:8px;font-family:system-ui,sans-serif}
+#ppz-wl-banners:empty{display:none}
+.ppz-wl-ban{display:flex;gap:10px;align-items:flex-start;border-radius:12px;padding:10px 12px;color:#fff;background:var(--c,#7c3aed);box-shadow:0 4px 18px rgba(0,0,0,.3)}
+.ppz-wl-ban .bd{flex:1;min-width:0}.ppz-wl-ban b{display:block}
+.ppz-wl-ban .x{background:rgba(0,0,0,.25);border:0;color:#fff;border-radius:8px;width:30px;height:30px;cursor:pointer;flex:0 0 auto}
+.ppz-wl-ban .ppz-wl-b{margin-top:6px;background:rgba(0,0,0,.25);border-color:rgba(255,255,255,.3)}
+#ppz-wl-modal,#ppz-wl-popwrap{position:fixed;inset:0;z-index:2147482600;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:12px;font-family:system-ui,sans-serif}
+#ppz-wl-modal.open,#ppz-wl-popwrap.open{display:flex}
+.ppz-wl-pop{background:#1a1530;color:#eee;border:1px solid var(--c,#3b3166);border-top:5px solid var(--c,#7c3aed);border-radius:16px;padding:18px;width:min(420px,100%);max-height:88vh;overflow:auto;box-sizing:border-box}
+.ppz-wl-box{background:#1a1530;color:#eee;border:1px solid #3b3166;border-radius:16px;width:min(760px,100%);max-height:92vh;display:flex;flex-direction:column}
+.ppz-wl-head{display:flex;gap:6px;align-items:center;padding:10px 14px;border-bottom:1px solid #3b3166}
+.ppz-wl-head .sp{flex:1}
+.ppz-wl-tab.on{background:#7c3aed;border-color:#7c3aed}
+.ppz-wl-body{padding:14px;overflow:auto}
+.ppz-wl-item{background:#0f0c1f;border:1px solid #3b3166;border-radius:12px;padding:12px;margin-bottom:10px}
+.ppz-wl-item label{display:block;font-size:.78em;opacity:.8;margin:8px 0 3px}
+.ppz-wl-item input[type=text],.ppz-wl-item input[type=date],.ppz-wl-item select,.ppz-wl-item textarea{width:100%;box-sizing:border-box;background:#1a1530;color:#eee;border:1px solid #3b3166;border-radius:8px;padding:7px;font:inherit}
+.ppz-wl-item textarea{min-height:80px;resize:vertical}
+.ppz-wl-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.ppz-wl-thumb{max-height:70px;max-width:120px;border-radius:6px;display:block;margin-top:6px}
+.ppz-wl-hint{font-size:.75em;opacity:.65;line-height:1.4}
+.ppz-wl-pickhl{position:fixed;z-index:2147482700;pointer-events:none;border:3px dashed #facc15;border-radius:8px;background:rgba(250,204,21,.12)}
+.ppz-wl-pickmsg{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:2147482701;background:#facc15;color:#111;padding:8px 14px;border-radius:10px;font:600 14px system-ui}
+&lt;/style&gt;
+&lt;script id="ppz-addon-welcome"&gt;
+(function(){'use strict';
+if(window.__ppzWelcome)return;window.__ppzWelcome=true;
+var ID='ppz-welcome-data',KEY='proxypathz_v15_welcome',SEEN='proxypathz_v15_tour_seen',DISM='proxypathz_v15_ann_dismissed';
+var state;
+
+function esc(s){return String(s==null?'':s).replace(/[&amp;&lt;&gt;"']/g,function(c){return{'&amp;':'&amp;amp;','&lt;':'&amp;lt;','&gt;':'&amp;gt;','"':'&amp;quot;',"'":'&amp;#39;'}[c]})}
+function uid(){return 'w'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function fmt(s){var t=esc(s);var tok=[];function h(x){tok.push(x);return '\u0000'+(tok.length-1)+'\u0000'}
+  t=t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,function(m,a,u){return h('&lt;a href="'+u+'" target="_blank" rel="noopener"&gt;'+a+'&lt;/a&gt;')});
+  t=t.replace(/(^|\s)(https?:\/\/[^\s&lt;]+)/g,function(m,p,u){return p+h('&lt;a href="'+u+'" target="_blank" rel="noopener"&gt;'+u+'&lt;/a&gt;')});
+  t=t.replace(/\*\*(.+?)\*\*/g,'&lt;b&gt;$1&lt;/b&gt;').replace(/\*([^*\n]+)\*/g,'&lt;i&gt;$1&lt;/i&gt;').replace(/\n/g,'&lt;br&gt;');
+  return t.replace(/\u0000(\d+)\u0000/g,function(m,i){return tok[+i]})}
+function okImg(u){return /^(https?:\/\/|data:image\/)/i.test(u||'')}
+function expired(a){if(!a.expires)return false;var d=new Date(a.expires+'T23:59:59');return !isNaN(d)&amp;&amp;Date.now()&gt;d}
+function ls(k,d){try{return JSON.parse(localStorage.getItem(k)||'null')||d}catch(_){return d}}
+function lset(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}}
+function editing(){try{var e=document.evaluate("//*[not(self::script or self::style)][contains(text(),'Editing page')]",document,null,9,null).singleNodeValue;return !!(e&amp;&amp;e.getClientRects().length)}catch(_){return false}}
+
+/* ---------- data ---------- */
+function def(){return{savedAt:0,tour:{on:false,ver:1,steps:[]},anns:[]}}
+function valid(d){return d&amp;&amp;d.tour&amp;&amp;Array.isArray(d.tour.steps)&amp;&amp;Array.isArray(d.anns)}
+function load(){var a=null;try{a=JSON.parse(document.getElementById(ID).textContent)}catch(_){}var b=ls(KEY,null);
+  var p=valid(a)?a:null;if(valid(b)&amp;&amp;(!p||(b.savedAt||0)&gt;(p.savedAt||0)))p=b;state=p||def()}
+function json(){return JSON.stringify(state).replace(/&lt;/g,'\\u003c')}
+function save(){state.savedAt=Date.now();try{localStorage.setItem(KEY,JSON.stringify(state))}catch(_){alert('Could not save — pictures may be too big. Try picture links instead of uploads.')}
+  var t=document.getElementById(ID);if(!t){t=document.createElement('script');t.type='application/json';t.id=ID;document.body.appendChild(t)}t.textContent=json();renderBanners()}
+
+/* ---------- tutorial ---------- */
+var tour=null;
+function startTour(steps){steps=steps||state.tour.steps;if(!steps.length)return;endTour(true);
+  var w=document.createElement('div');w.id='ppz-wl-tour';w.innerHTML='&lt;div class="bg"&gt;&lt;/div&gt;&lt;div class="ppz-wl-spot" hidden&gt;&lt;/div&gt;&lt;div class="ppz-wl-card" role="dialog" aria-modal="true"&gt;&lt;/div&gt;';
+  document.body.appendChild(w);tour={i:0,steps:steps,w:w};showStep();
+  w.addEventListener('click',function(e){var b=e.target.closest('[data-t]');if(!b)return;var a=b.dataset.t;
+    if(a==='next'){if(tour.i&lt;tour.steps.length-1){tour.i++;showStep()}else endTour()}
+    if(a==='back'&amp;&amp;tour.i&gt;0){tour.i--;showStep()}
+    if(a==='skip')endTour()});
+  addEventListener('resize',placeStep);addEventListener('scroll',placeStep,true)}
+function tgt(){var s=tour.steps[tour.i].target;if(!s)return null;try{var el=document.querySelector(s);return el&amp;&amp;el.getClientRects().length?el:null}catch(_){return null}}
+function showStep(){var s=tour.steps[tour.i],n=tour.steps.length,c=tour.w.querySelector('.ppz-wl-card');
+  c.innerHTML=(okImg(s.img)?'&lt;img src="'+esc(s.img)+'" alt=""&gt;':'')+'&lt;h3&gt;'+esc(s.title||'')+'&lt;/h3&gt;&lt;div class="ppz-wl-tx"&gt;'+fmt(s.text)+'&lt;/div&gt;'+
+   (n&gt;1?'&lt;div class="ppz-wl-dots"&gt;'+tour.steps.map(function(_,i){return '&lt;i class="'+(i===tour.i?'on':'')+'"&gt;&lt;/i&gt;'}).join('')+'&lt;/div&gt;':'&lt;div style="height:10px"&gt;&lt;/div&gt;')+
+   '&lt;div class="ppz-wl-nav"&gt;&lt;button class="ppz-wl-b ghost" data-t="skip"&gt;Skip&lt;/button&gt;&lt;span&gt;&lt;button class="ppz-wl-b" data-t="back"'+(tour.i?'':' hidden')+'&gt;Back&lt;/button&gt; '+
+   '&lt;button class="ppz-wl-b pri" data-t="next"&gt;'+(tour.i===n-1?'Finish ✓':'Next →')+'&lt;/button&gt;&lt;/span&gt;&lt;/div&gt;';
+  var el=tgt();if(el)el.scrollIntoView({block:'center',behavior:'smooth'});
+  setTimeout(placeStep,el?350:0);c.querySelector('[data-t=next]').focus()}
+function placeStep(){if(!tour)return;var el=tgt(),sp=tour.w.querySelector('.ppz-wl-spot'),c=tour.w.querySelector('.ppz-wl-card'),cw=c.offsetWidth,ch=c.offsetHeight;
+  tour.w.classList.toggle('spot',!!el);sp.hidden=!el;
+  if(!el){c.style.left=(innerWidth-cw)/2+'px';c.style.top=Math.max(12,(innerHeight-ch)/2)+'px';return}
+  var r=el.getBoundingClientRect(),p=8;
+  sp.style.left=(r.left-p)+'px';sp.style.top=(r.top-p)+'px';sp.style.width=(r.width+p*2)+'px';sp.style.height=(r.height+p*2)+'px';
+  var top=r.bottom+p+12;if(top+ch&gt;innerHeight-8)top=r.top-p-12-ch;if(top&lt;8)top=Math.max(8,innerHeight-ch-8);
+  c.style.top=top+'px';c.style.left=Math.max(12,Math.min(innerWidth-cw-12,r.left+r.width/2-cw/2))+'px'}
+function endTour(silent){if(!tour)return;tour.w.remove();removeEventListener('resize',placeStep);removeEventListener('scroll',placeStep,true);
+  var wasReal=tour.steps===state.tour.steps;tour=null;if(!silent&amp;&amp;wasReal){lset(SEEN,state.tour.ver);showPopups()}}
+document.addEventListener('keydown',function(e){if(!tour)return;
+  if(e.key==='Escape')endTour();if(e.key==='ArrowRight')tour.w.querySelector('[data-t=next]').click();if(e.key==='ArrowLeft'&amp;&amp;tour.i&gt;0){tour.i--;showStep()}});
+
+/* ---------- announcements ---------- */
+function active(){return state.anns.filter(function(a){return a.on&amp;&amp;!expired(a)&amp;&amp;(a.title||a.text)})}
+function dkey(a){return a.id+':'+(a.rev||0)}
+function renderBanners(){var box=document.getElementById('ppz-wl-banners');
+  if(!box){box=document.createElement('div');box.id='ppz-wl-banners';document.body.insertBefore(box,document.body.firstChild)}
+  var dm=ls(DISM,{});
+  box.innerHTML=active().filter(function(a){return a.style!=='popup'&amp;&amp;!dm[dkey(a)]}).map(function(a){
+    return '&lt;div class="ppz-wl-ban" style="--c:'+esc(a.color||'#7c3aed')+'" data-id="'+a.id+'"&gt;&lt;span style="font-size:1.3em"&gt;📢&lt;/span&gt;&lt;div class="bd"&gt;'+
+      (okImg(a.img)?'&lt;img src="'+esc(a.img)+'" alt=""&gt;':'')+(a.title?'&lt;b&gt;'+esc(a.title)+'&lt;/b&gt;':'')+'&lt;div class="ppz-wl-tx"&gt;'+fmt(a.text)+'&lt;/div&gt;'+
+      (a.link?'&lt;a class="ppz-wl-b" href="'+esc(a.link)+'" target="_blank" rel="noopener"&gt;'+esc(a.linkText||'Open')+'&lt;/a&gt;':'')+
+      '&lt;/div&gt;&lt;button class="x" title="Close" aria-label="Close"&gt;✕&lt;/button&gt;&lt;/div&gt;'}).join('')}
+document.addEventListener('click',function(e){var x=e.target.closest('#ppz-wl-banners .x');if(!x)return;
+  var a=state.anns.filter(function(q){return q.id===x.closest('[data-id]').dataset.id})[0];if(!a)return;
+  var dm=ls(DISM,{});dm[dkey(a)]=1;lset(DISM,dm);renderBanners()});
+function popWrap(){var p=document.getElementById('ppz-wl-popwrap');if(!p){p=document.createElement('div');p.id='ppz-wl-popwrap';document.body.appendChild(p);
+  p.addEventListener('click',function(e){if(e.target===p||e.target.closest('[data-close]'))nextPop()})}return p}
+var popQ=[];
+function showPopups(all){var dm=ls(DISM,{});popQ=active().filter(function(a){return all||(a.style==='popup'&amp;&amp;!dm[dkey(a)])});nextPop(true)}
+function nextPop(first){var p=popWrap();
+  if(!first&amp;&amp;p._cur){var dm=ls(DISM,{});dm[dkey(p._cur)]=1;lset(DISM,dm)}
+  var a=popQ.shift();p._cur=a||null;if(!a){p.classList.remove('open');return}
+  p.innerHTML='&lt;div class="ppz-wl-pop" style="--c:'+esc(a.color||'#7c3aed')+'"&gt;'+(okImg(a.img)?'&lt;img src="'+esc(a.img)+'" alt=""&gt;':'')+
+    '&lt;h3&gt;📢 '+esc(a.title||'Announcement')+'&lt;/h3&gt;&lt;div class="ppz-wl-tx"&gt;'+fmt(a.text)+'&lt;/div&gt;&lt;div class="ppz-wl-row" style="justify-content:flex-end;margin-top:14px"&gt;'+
+    (a.link?'&lt;a class="ppz-wl-b" href="'+esc(a.link)+'" target="_blank" rel="noopener"&gt;'+esc(a.linkText||'Open')+'&lt;/a&gt;':'')+
+    '&lt;button class="ppz-wl-b pri" data-close&gt;'+(popQ.length?'Next ('+popQ.length+')':'Got it')+'&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;';
+  p.classList.add('open')}
+
+/* ---------- visitor Settings buttons ---------- */
+function ensureSettings(){if(document.querySelector('[data-ppz-wl-set]'))return;
+  var e;try{e=document.evaluate("//*[not(self::script or self::style)][contains(text(),'Bigger text')]",document,null,9,null).singleNodeValue}catch(_){}
+  if(!e||e.closest('#ppz-wl-modal'))return;var row=e.closest('label,li,.row,.setting')||e.parentElement;
+  var d=document.createElement('div');d.setAttribute('data-ppz-wl-set','');d.className='ppz-wl-row';d.style.margin='8px 0';
+  d.innerHTML='&lt;button type="button" class="ppz-wl-b" data-a="tour"&gt;🎓 Replay tutorial&lt;/button&gt;&lt;button type="button" class="ppz-wl-b" data-a="ann"&gt;📢 Announcements&lt;/button&gt;';
+  d.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;ev.preventDefault();ev.stopPropagation();
+    if(b.dataset.a==='tour'){if(state.tour.steps.length)startTour();else alert('No tutorial yet.')}
+    else{if(active().length)showPopups(true);else alert('No announcements right now.')}});
+  row.insertAdjacentElement('afterend',d)}
+
+/* ---------- owner buttons in Developer settings ---------- */
+function ensureOwner(){if(document.querySelector('[data-ppz-wl-btn]'))return;
+  var els=document.querySelectorAll('button,[role="button"],a'),hit=null;
+  for(var i=0;i&lt;els.length;i++){var t=(els[i].textContent||'').replace(/\s+/g,' ').trim();if(t.length&lt;40&amp;&amp;/add\s+(a\s+)?(new\s+)?proxy/i.test(t)&amp;&amp;!els[i].closest('#ppz-wl-modal')){hit=els[i];break}}
+  if(!hit)return;var after=hit;while(after.nextElementSibling&amp;&amp;after.nextElementSibling.hasAttribute('data-ppz-tp-btn'))after=after.nextElementSibling;
+  [['ann','📢 Announcements'],['tour','🎓 Intro tutorial']].forEach(function(o){var b=document.createElement('button');b.type='button';
+    b.className=typeof hit.className==='string'?hit.className:'';b.setAttribute('data-ppz-wl-btn',o[0]);b.textContent=o[1];
+    b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();openEditor(o[0])});after.insertAdjacentElement('afterend',b)})}
+
+/* ---------- owner editor ---------- */
+var tab='tour',work=null;
+function modal(){var m=document.getElementById('ppz-wl-modal');if(m)return m;m=document.createElement('div');m.id='ppz-wl-modal';
+  m.innerHTML='&lt;div class="ppz-wl-box"&gt;&lt;div class="ppz-wl-head"&gt;&lt;button class="ppz-wl-b ppz-wl-tab" data-tab="tour"&gt;🎓 Tutorial&lt;/button&gt;&lt;button class="ppz-wl-b ppz-wl-tab" data-tab="ann"&gt;📢 Announcements&lt;/button&gt;&lt;span class="sp"&gt;&lt;/span&gt;'+
+   '&lt;button class="ppz-wl-b pri" data-x="save"&gt;💾 Save&lt;/button&gt;&lt;button class="ppz-wl-b" data-x="close"&gt;✕&lt;/button&gt;&lt;/div&gt;&lt;div class="ppz-wl-body"&gt;&lt;/div&gt;&lt;/div&gt;';
+  m.addEventListener('keydown',function(e){e.stopPropagation()});
+  m.querySelector('.ppz-wl-head').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+    if(b.dataset.tab){pull();tab=b.dataset.tab;draw()}
+    if(b.dataset.x==='close'){if(confirm('Close without saving?'))m.classList.remove('open')}
+    if(b.dataset.x==='save'){pull();state=work;save();work=JSON.parse(JSON.stringify(state));b.textContent='✅ Saved';setTimeout(function(){b.textContent='💾 Save'},1200)}});
+  m.querySelector('.ppz-wl-body').addEventListener('click',bodyClick);
+  m.querySelector('.ppz-wl-body').addEventListener('change',function(e){if(e.target.type==='file')upload(e.target)});
+  document.body.appendChild(m);return m}
+function openEditor(t){tab=t||'tour';work=JSON.parse(JSON.stringify(state));modal().classList.add('open');draw()}
+function imgField(v){return '&lt;label&gt;Picture (upload or link)&lt;/label&gt;&lt;div class="ppz-wl-row"&gt;&lt;input type="text" data-f="img" value="'+(v&amp;&amp;!/^data:/.test(v)?esc(v):'')+'" placeholder="https://… or upload →" style="flex:1"&gt;'+
+  '&lt;input type="file" accept="image/*" style="max-width:190px"&gt;&lt;button class="ppz-wl-b" data-a="noimg"&gt;Remove&lt;/button&gt;&lt;/div&gt;'+
+  (okImg(v)?'&lt;img class="ppz-wl-thumb" src="'+esc(v)+'" alt=""&gt;':'')+'&lt;input type="hidden" data-f="imgdata" value="'+(/^data:/.test(v||'')?esc(v):'')+'"&gt;'}
+function draw(){var m=modal(),b=m.querySelector('.ppz-wl-body');
+  m.querySelectorAll('.ppz-wl-tab').forEach(function(x){x.classList.toggle('on',x.dataset.tab===tab)});
+  if(tab==='tour'){var T=work.tour;
+    b.innerHTML='&lt;label class="ppz-wl-row" style="margin-bottom:8px"&gt;&lt;input type="checkbox" data-g="on"'+(T.on?' checked':'')+'&gt; Show the tutorial to new visitors (once)&lt;/label&gt;'+
+     '&lt;div class="ppz-wl-hint" style="margin-bottom:10px"&gt;Version '+T.ver+'. Tip: **bold**, *italic*, [text](https://link). Use 🎯 to make a step point at something on the page.&lt;/div&gt;'+
+     T.steps.map(function(s,i){return '&lt;div class="ppz-wl-item" data-i="'+i+'"&gt;&lt;div class="ppz-wl-row"&gt;&lt;b style="flex:1"&gt;Step '+(i+1)+'&lt;/b&gt;'+
+       '&lt;button class="ppz-wl-b" data-a="up"&gt;↑&lt;/button&gt;&lt;button class="ppz-wl-b" data-a="down"&gt;↓&lt;/button&gt;&lt;button class="ppz-wl-b dan" data-a="del"&gt;🗑&lt;/button&gt;&lt;/div&gt;'+
+       '&lt;label&gt;Title&lt;/label&gt;&lt;input type="text" data-f="title" value="'+esc(s.title)+'"&gt;&lt;label&gt;Text&lt;/label&gt;&lt;textarea data-f="text"&gt;'+esc(s.text)+'&lt;/textarea&gt;'+imgField(s.img)+
+       '&lt;label&gt;Points at&lt;/label&gt;&lt;div class="ppz-wl-row"&gt;&lt;button class="ppz-wl-b" data-a="pick"&gt;🎯 Pick on page&lt;/button&gt;&lt;button class="ppz-wl-b" data-a="nopick"&gt;Middle of screen&lt;/button&gt;'+
+       '&lt;span class="ppz-wl-hint" style="flex:1;overflow-wrap:anywhere"&gt;'+(s.target?esc(s.target):'(middle of screen)')+'&lt;/span&gt;&lt;/div&gt;&lt;input type="hidden" data-f="target" value="'+esc(s.target||'')+'"&gt;&lt;/div&gt;'}).join('')+
+     '&lt;div class="ppz-wl-row"&gt;&lt;button class="ppz-wl-b pri" data-a="addstep"&gt;➕ Add step&lt;/button&gt;&lt;button class="ppz-wl-b" data-a="preview"&gt;▶ Preview&lt;/button&gt;'+
+     '&lt;button class="ppz-wl-b" data-a="reshow"&gt;🔁 Show again to everyone&lt;/button&gt;&lt;/div&gt;'}
+  else{b.innerHTML=work.anns.map(function(a,i){return '&lt;div class="ppz-wl-item" data-i="'+i+'"&gt;&lt;div class="ppz-wl-row"&gt;&lt;b style="flex:1"&gt;'+esc(a.title||'Announcement')+(expired(a)?' (ended)':'')+'&lt;/b&gt;'+
+       '&lt;label class="ppz-wl-row" style="margin:0;font-size:.85em"&gt;&lt;input type="checkbox" data-f="on"'+(a.on?' checked':'')+'&gt; Active&lt;/label&gt;&lt;button class="ppz-wl-b dan" data-a="del"&gt;🗑&lt;/button&gt;&lt;/div&gt;'+
+       '&lt;label&gt;Title&lt;/label&gt;&lt;input type="text" data-f="title" value="'+esc(a.title)+'"&gt;&lt;label&gt;Message&lt;/label&gt;&lt;textarea data-f="text"&gt;'+esc(a.text)+'&lt;/textarea&gt;'+
+       '&lt;div class="ppz-wl-row"&gt;&lt;div style="flex:1"&gt;&lt;label&gt;Style&lt;/label&gt;&lt;select data-f="style"&gt;&lt;option value="banner"'+(a.style!=='popup'?' selected':'')+'&gt;Banner at top&lt;/option&gt;&lt;option value="popup"'+(a.style==='popup'?' selected':'')+'&gt;Popup (once)&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;'+
+       '&lt;div&gt;&lt;label&gt;Color&lt;/label&gt;&lt;input type="color" data-f="color" value="'+esc(a.color||'#7c3aed')+'"&gt;&lt;/div&gt;&lt;div style="flex:1"&gt;&lt;label&gt;End date (optional)&lt;/label&gt;&lt;input type="date" data-f="expires" value="'+esc(a.expires||'')+'"&gt;&lt;/div&gt;&lt;/div&gt;'+
+       '&lt;div class="ppz-wl-row"&gt;&lt;div style="flex:2"&gt;&lt;label&gt;Button link (optional)&lt;/label&gt;&lt;input type="text" data-f="link" value="'+esc(a.link||'')+'" placeholder="https://…"&gt;&lt;/div&gt;&lt;div style="flex:1"&gt;&lt;label&gt;Button text&lt;/label&gt;&lt;input type="text" data-f="linkText" value="'+esc(a.linkText||'')+'" placeholder="Open"&gt;&lt;/div&gt;&lt;/div&gt;'+
+       imgField(a.img)+'&lt;div class="ppz-wl-row" style="margin-top:8px"&gt;&lt;button class="ppz-wl-b" data-a="reann"&gt;🔁 Show again to everyone&lt;/button&gt;&lt;span class="ppz-wl-hint"&gt;'+(a.rev?'Re-shown '+a.rev+'×':'')+'&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;'}).join('')+
+     '&lt;button class="ppz-wl-b pri" data-a="addann"&gt;➕ New announcement&lt;/button&gt;'}}
+function pull(){if(!work)return;var b=modal().querySelector('.ppz-wl-body');
+  var on=b.querySelector('[data-g=on]');if(on)work.tour.on=on.checked;
+  var list=tab==='tour'?work.tour.steps:work.anns;
+  b.querySelectorAll('.ppz-wl-item').forEach(function(it){var o=list[+it.dataset.i];if(!o)return;
+    it.querySelectorAll('[data-f]').forEach(function(f){var k=f.dataset.f;if(k==='imgdata')return;o[k]=f.type==='checkbox'?f.checked:f.value.trim()});
+    var d=it.querySelector('[data-f=imgdata]').value;if(!o.img&amp;&amp;d)o.img=d;if(o.img&amp;&amp;!okImg(o.img))o.img='';
+    if(o.link&amp;&amp;!/^https?:\/\//i.test(o.link))o.link=''})}
+function bodyClick(e){
+  var b=e.target.closest('button');if(!b)return;
+  e.preventDefault();e.stopPropagation();pull();
+  var a=b.dataset.a,it=b.closest('[data-i]'),i=it?+it.dataset.i:-1;
+  var list=tab==='tour'?work.tour.steps:work.anns;
+  if(a==='addstep'){work.tour.steps.push({title:'New step',text:'',img:'',target:''});draw();return}
+  if(a==='addann'){work.anns.push({id:uid(),on:true,title:'New announcement',text:'',style:'banner',color:'#7c3aed',expires:'',link:'',linkText:'Open',img:'',rev:0});draw();return}
+  if(a==='del'&amp;&amp;i&gt;=0){list.splice(i,1);draw();return}
+  if(a==='up'&amp;&amp;i&gt;0){var q=list.splice(i,1)[0];list.splice(i-1,0,q);draw();return}
+  if(a==='down'&amp;&amp;i&gt;=0&amp;&amp;i&lt;list.length-1){var q2=list.splice(i,1)[0];list.splice(i+1,0,q2);draw();return}
+  if(a==='noimg'&amp;&amp;i&gt;=0){list[i].img='';draw();return}
+  if(a==='pick'&amp;&amp;tab==='tour'&amp;&amp;i&gt;=0){startPick(i);return}
+  if(a==='nopick'&amp;&amp;tab==='tour'&amp;&amp;i&gt;=0){work.tour.steps[i].target='';draw();return}
+  if(a==='preview'){startTour(work.tour.steps);return}
+  if(a==='reshow'&amp;&amp;tab==='tour'){
+    work.tour.ver=Math.max(1,+work.tour.ver||1)+1;
+    state=work;save();work=JSON.parse(JSON.stringify(state));
+    startTour(state.tour.steps);return;
+  }
+  if(a==='reann'&amp;&amp;tab==='ann'&amp;&amp;i&gt;=0){work.anns[i].rev=(+work.anns[i].rev||0)+1;work.anns[i].on=true;draw();return}
+}
+
+function upload(input){
+  var file=input.files&amp;&amp;input.files[0],item=input.closest('.ppz-wl-item');if(!file||!item)return;
+  if(!/^image\//i.test(file.type)){alert('Please choose an image file.');input.value='';return}
+  var max=5*1024*1024;if(file.size&gt;max){alert('That image is too large. Choose an image under 5 MB.');input.value='';return}
+  pull();var ix=+item.dataset.i,arr=tab==='tour'?work.tour.steps:work.anns;
+  var fr=new FileReader();fr.onload=function(){
+    var data=String(fr.result||'');
+    function put(v){if(!arr[ix])return;arr[ix].img=v;draw()}
+    if(file.type==='image/gif'||file.size&lt;180*1024){put(data);return}
+    var im=new Image();im.onload=function(){
+      var maxSide=1200,scale=Math.min(1,maxSide/Math.max(im.naturalWidth,im.naturalHeight));
+      var c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.naturalWidth*scale));c.height=Math.max(1,Math.round(im.naturalHeight*scale));
+      var ctx=c.getContext('2d');ctx.drawImage(im,0,0,c.width,c.height);
+      var out=c.toDataURL('image/jpeg',.82);put(out);
+    };im.onerror=function(){put(data)};im.src=data;
+  };fr.onerror=function(){alert('Could not read that image.')};fr.readAsDataURL(file);
+}
+
+function selectorFor(el){
+  if(!el||el===document.body||el===document.documentElement)return '';
+  if(el.id){try{return '#'+CSS.escape(el.id)}catch(_){return '#'+el.id.replace(/[^a-zA-Z0-9_-]/g,'\\$&amp;')}}
+  var parts=[],node=el;
+  while(node&amp;&amp;node.nodeType===1&amp;&amp;node!==document.body&amp;&amp;parts.length&lt;6){
+    var tag=node.tagName.toLowerCase(),part=tag;
+    if(node.classList&amp;&amp;node.classList.length){var cls=Array.from(node.classList).filter(function(c){return /^[a-zA-Z_-][\w-]*$/.test(c)&amp;&amp;!/^ppz-wl-/.test(c)}).slice(0,2);if(cls.length)part+='.'+cls.join('.')}
+    if(node.parentElement){var same=Array.from(node.parentElement.children).filter(function(x){return x.tagName===node.tagName});if(same.length&gt;1)part+=':nth-of-type('+(same.indexOf(node)+1)+')'}
+    parts.unshift(part);var candidate=parts.join(' &gt; ');try{if(document.querySelectorAll(candidate).length===1)return candidate}catch(_){}
+    node=node.parentElement;
+  }
+  return parts.join(' &gt; ')
+}
+
+var pickState=null;
+function startPick(index){
+  cancelPick();modal().classList.remove('open');
+  var hl=document.createElement('div'),msg=document.createElement('div');
+  hl.className='ppz-wl-pickhl';msg.className='ppz-wl-pickmsg';msg.textContent='Tap an item on the page to target this tutorial step · Esc to cancel';
+  document.body.appendChild(hl);document.body.appendChild(msg);pickState={index:index,hl:hl,msg:msg};
+  document.addEventListener('mousemove',pickMove,true);document.addEventListener('click',pickClick,true);document.addEventListener('keydown',pickKey,true);
+}
+function pickMove(e){if(!pickState)return;var el=e.target;if(!el||el===document.body||el.closest('#ppz-wl-modal,#ppz-wl-tour,#ppz-wl-popwrap,.ppz-wl-pickmsg')){pickState.hl.style.display='none';return}
+  var r=el.getBoundingClientRect(),h=pickState.hl;h.style.display='block';h.style.left=r.left+'px';h.style.top=r.top+'px';h.style.width=r.width+'px';h.style.height=r.height+'px'}
+function pickClick(e){
+  if(!pickState)return;var el=e.target;
+  if(!el||el===document.body||el.closest('#ppz-wl-modal,#ppz-wl-tour,#ppz-wl-popwrap,.ppz-wl-pickmsg'))return;
+  e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
+  var css=selectorFor(el),idx=pickState.index;cancelPick();if(work&amp;&amp;work.tour.steps[idx])work.tour.steps[idx].target=css;
+  modal().classList.add('open');tab='tour';draw();
+}
+function pickKey(e){if(e.key==='Escape'){e.preventDefault();e.stopPropagation();cancelPick();modal().classList.add('open');draw()}}
+function cancelPick(){if(!pickState)return;pickState.hl.remove();pickState.msg.remove();pickState=null;
+  document.removeEventListener('mousemove',pickMove,true);document.removeEventListener('click',pickClick,true);document.removeEventListener('keydown',pickKey,true)}
+
+function patchOut(html){
+  if(typeof html!=='string')return html;
+  var tag='&lt;script type="application/json" id="'+ID+'"&gt;'+json()+'&lt;\/script&gt;';
+  var re=/&lt;script type="application\/json" id="ppz-welcome-data"&gt;[\s\S]*?&lt;\/script&gt;/i;
+  if(re.test(html))return html.replace(re,tag);
+  var k=html.toLowerCase().lastIndexOf('&lt;/body&gt;');return k&gt;=0?html.slice(0,k)+tag+'\n'+html.slice(k):html+tag;
+}
+function wrapFns(){['buildHTML','cleanHTML'].forEach(function(n){var f=window[n];if(typeof f==='function'&amp;&amp;!f.__ppzWl){var w=function(){var r=f.apply(this,arguments);return r&amp;&amp;typeof r.then==='function'?r.then(patchOut):patchOut(r)};w.__ppzWl=true;window[n]=w}})}
+
+function autoStart(){
+  renderBanners();
+  if(state.tour.on&amp;&amp;state.tour.steps.length&amp;&amp;String(ls(SEEN,'')||'')!==String(state.tour.ver))startTour();
+  else showPopups();
+}
+function init(){
+  document.querySelectorAll('[data-ppz-wl-ui]').forEach(function(n){n.remove()});
+  load();renderBanners();wrapFns();ensureOwner();ensureSettings();
+  setTimeout(autoStart,900);
+  var tick=function(){ensureOwner();ensureSettings();wrapFns()};
+  setInterval(tick,1500);
+  if(document.body&amp;&amp;window.MutationObserver){var ob=new MutationObserver(function(){tick()});ob.observe(document.body,{childList:true,subtree:true})}
+  window.PPZWelcome={data:function(){return state},start:function(){startTour()},announcements:function(){showPopups(true)},save:function(){save()}};
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+&lt;/script&gt;
+&lt;!-- ===== end ppz-addon-welcome ===== --&gt;
+
+
+&lt;style id="ppz-chat-style"&gt;
+#ppz-chat-launch{position:fixed;right:18px;bottom:18px;z-index:2147481000;border:1px solid #55458b;border-radius:999px;padding:11px 16px;background:#251d43;color:#fff;font:600 14px system-ui;box-shadow:0 8px 28px #0006;cursor:pointer}
+#ppz-chat-launch .badge{display:inline-flex;min-width:18px;height:18px;align-items:center;justify-content:center;margin-left:5px;border-radius:99px;background:#ef4444;color:#fff;font-size:11px}
+#ppz-chat-panel{position:fixed;right:18px;bottom:72px;z-index:2147481001;width:min(360px,calc(100vw - 24px));height:min(540px,calc(100dvh - 110px));display:none;flex-direction:column;background:#171327;color:#eee;border:1px solid #403568;border-radius:16px;box-shadow:0 18px 55px #0009;overflow:hidden;font:14px system-ui}
+#ppz-chat-panel.open{display:flex}#ppz-chat-panel *{box-sizing:border-box}
+#ppz-chat-panel .head{display:flex;align-items:center;gap:8px;padding:11px 13px;background:#211a39;border-bottom:1px solid #403568}
+#ppz-chat-panel .head strong{flex:1}#ppz-chat-panel button{cursor:pointer;font:inherit}
+#ppz-chat-panel .ctl{border:1px solid #514477;background:#30264d;color:#eee;border-radius:8px;padding:5px 8px}
+#ppz-chat-live{padding:8px 11px;background:#39265b;color:#fff;display:none;overflow-wrap:anywhere}
+#ppz-chat-messages{flex:1;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
+#ppz-chat-messages .msg{padding:8px 9px;border:1px solid #342b51;background:#211b34;border-radius:10px;overflow-wrap:anywhere}
+#ppz-chat-messages .meta{display:flex;gap:7px;align-items:center;font-size:11px;opacity:.8;margin-bottom:4px}
+#ppz-chat-messages .meta b{font-size:12px;opacity:1}#ppz-chat-messages .body{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.4}
+#ppz-chat-messages .reply{border-left:2px solid #a78bfa;padding-left:7px;margin:0 0 6px;opacity:.75;font-size:11px}
+#ppz-chat-panel .foot{padding:9px;border-top:1px solid #403568;background:#211a39}
+#ppz-chat-panel form{display:flex;gap:6px}#ppz-chat-panel input{min-width:0;flex:1;background:#0f0c1b;color:#eee;border:1px solid #514477;border-radius:9px;padding:9px;font:inherit}
+#ppz-chat-panel form button{border:0;border-radius:9px;background:#7c3aed;color:#fff;padding:0 12px;font-weight:700}
+#ppz-chat-panel .tools{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+#ppz-chat-panel .status{font-size:11px;opacity:.7;margin-top:6px;min-height:14px}
+@media(max-width:480px){#ppz-chat-launch{right:12px;bottom:12px}#ppz-chat-panel{right:8px;bottom:64px;width:calc(100vw - 16px);height:min(560px,calc(100dvh - 84px))}}
+&lt;/style&gt;
+&lt;script id="ppz-addon-chat" type="module"&gt;
+(()=&gt;{
+'use strict';
+if(window.__ppzChatInit)return;window.__ppzChatInit=true;
+const FIREBASE_CONFIG={
+  apiKey:'PASTE_HERE',authDomain:'PASTE_HERE',databaseURL:'PASTE_HERE',
+  projectId:'PASTE_HERE',storageBucket:'PASTE_HERE',messagingSenderId:'PASTE_HERE',appId:'PASTE_HERE'
+};
+const CFG={title:'ProxyPathz Chat',maxLen:300,history:80,clickableLinks:false,badWords:[]};
+const $=(sel,root=document)=&gt;root.querySelector(sel);
+const escText=v=&gt;String(v==null?'':v);
+const launch=document.createElement('button');launch.id='ppz-chat-launch';launch.type='button';launch.innerHTML='💬 Chat &lt;span class="badge" hidden&gt;0&lt;/span&gt;';
+const panel=document.createElement('section');panel.id='ppz-chat-panel';panel.setAttribute('aria-label','Community chat');
+panel.innerHTML='&lt;div class="head"&gt;&lt;strong&gt;&lt;/strong&gt;&lt;button class="ctl" data-chat="name"&gt;Name&lt;/button&gt;&lt;button class="ctl" data-chat="close" aria-label="Close chat"&gt;✕&lt;/button&gt;&lt;/div&gt;&lt;div id="ppz-chat-live"&gt;&lt;/div&gt;&lt;div id="ppz-chat-messages" aria-live="polite"&gt;&lt;/div&gt;&lt;div class="foot"&gt;&lt;form&gt;&lt;input maxlength="300" autocomplete="off" placeholder="Write a message…" aria-label="Message"&gt;&lt;button type="submit"&gt;Send&lt;/button&gt;&lt;/form&gt;&lt;div class="tools"&gt;&lt;button class="ctl" data-chat="rename"&gt;Change name&lt;/button&gt;&lt;button class="ctl" data-chat="admin" hidden&gt;Admin tools&lt;/button&gt;&lt;/div&gt;&lt;div class="status" role="status"&gt;Connecting…&lt;/div&gt;&lt;div class="admin" hidden&gt;&lt;/div&gt;&lt;/div&gt;';
+document.body.append(launch,panel);
+const badge=$('.badge',launch),messagesEl=$('#ppz-chat-messages',panel),form=$('form',panel),input=$('input',form),statusEl=$('.status',panel),liveEl=$('#ppz-chat-live',panel),adminBtn=$('[data-chat="admin"]',panel),adminBox=$('.admin',panel),titleEl=$('.head strong',panel);
+titleEl.textContent=CFG.title;input.maxLength=CFG.maxLen;
+let auth=null,db=null,ref,push,update,set,remove,get,onValue,onDisconnect,serverTimestamp,query,orderByChild,limitToLast,uid='',name=localStorage.getItem('ppz_chat_name')||'Guest',userColor=localStorage.getItem('ppz_chat_color')||'#a78bfa';
+let isAdmin=false,isBanned=false,isOpen=false,unread=0,slowMs=1700,lastSent=0,replyTo=null,firstMessages=true,known=new Set(),rows=[];
+function say(msg){statusEl.textContent=msg||''}
+function setUnread(n){unread=n;badge.hidden=!n;badge.textContent=n&gt;99?'99+':String(n)}
+function openPanel(){isOpen=true;panel.classList.add('open');setUnread(0);input.focus()}
+function closePanel(){isOpen=false;panel.classList.remove('open')}
+launch.addEventListener('click',()=&gt;isOpen?closePanel():openPanel());
+panel.addEventListener('click',async e=&gt;{
+ const b=e.target.closest('[data-chat]');if(!b)return;const a=b.dataset.chat;
+ if(a==='close')closePanel();
+ if(a==='name'||a==='rename'){const v=prompt('Choose a chat name (2–20 characters):',name);if(v===null)return;const n=v.trim();if(n.length&lt;2||n.length&gt;20){alert('Your name must be 2–20 characters.');return}name=n;localStorage.setItem('ppz_chat_name',name);say('Name updated.');}
+ if(a==='admin')adminBox.hidden=!adminBox.hidden;
+ if(a==='reply'){const id=b.dataset.id;const m=rows.find(x=&gt;x.id===id);if(m){replyTo={id:id,n:m.name||'Guest',t:String(m.text||'').slice(0,80)};input.placeholder='Replying to '+replyTo.n+'…';input.focus()}}
+ if(a==='delete'){const id=b.dataset.id;if((isAdmin||rows.find(x=&gt;x.id===id)?.uid===uid)&amp;&amp;confirm('Delete this message?')){try{await remove(ref(db,'messages/'+id))}catch(err){say('Could not delete: '+err.message)}}}
+ if(a==='ban'){const id=b.dataset.uid;if(isAdmin&amp;&amp;id&amp;&amp;id!==uid&amp;&amp;confirm('Ban this user from posting?')){try{await set(ref(db,'bans/'+id),true);say('User banned.')}catch(err){say('Ban failed: '+err.message)}}}
+ if(a==='live'){if(!isAdmin)return;const text=prompt('Live announcement (up to 300 characters):');if(text&amp;&amp;text.trim())try{await set(ref(db,'settings/live'),{text:text.trim().slice(0,300),ts:serverTimestamp()});say('Announcement posted.')}catch(err){say('Could not post announcement: '+err.message)}}
+ if(a==='clear'){if(isAdmin&amp;&amp;confirm('Clear all chat messages?'))try{await remove(ref(db,'messages'));say('Chat cleared.')}catch(err){say('Could not clear chat: '+err.message)}}
+ if(a==='slow'){if(!isAdmin)return;const v=Number(prompt('Slow mode in seconds (1–600):',String(slowMs/1000)));if(!Number.isFinite(v)||v&lt;1||v&gt;600)return;try{await set(ref(db,'settings/slowMs'),Math.round(v*1000));say('Slow mode updated.')}catch(err){say('Could not update slow mode: '+err.message)}}
+});
+function filterWords(text){let out=text;for(const w of CFG.badWords){if(!w)continue;const escaped=String(w).replace(/[.*+?^${}()|[\]\\]/g,'\\$&amp;');const re=new RegExp('\\b'+escaped+'\\b','ig');out=out.replace(re,x=&gt;'*'.repeat(x.length))}return out}
+function safeLinkify(el,text){
+ if(!CFG.clickableLinks){
+  const mention='@'+name;const re=new RegExp('('+mention.replace(/[.*+?^${}()|[\]\\]/g,'\\$&amp;')+')','ig');
+  text.split(re).forEach(part=&gt;{if(part.toLowerCase()===mention.toLowerCase()){const mark=document.createElement('mark');mark.textContent=part;mark.style.background='#5b438d';mark.style.color='#fff';mark.style.borderRadius='3px';el.append(mark)}else el.append(document.createTextNode(part))});return;
+ }
+ const re=/(https?:\/\/[^\s]+)/g;let at=0,m;
+ while((m=re.exec(text))){el.append(document.createTextNode(text.slice(at,m.index)));try{const u=new URL(m[0]);if(u.protocol==='http:'||u.protocol==='https:'){const a=document.createElement('a');a.href=u.href;a.textContent=m[0];a.target='_blank';a.rel='noopener noreferrer';el.append(a)}else el.append(document.createTextNode(m[0]))}catch(_){el.append(document.createTextNode(m[0]))}at=m.index+m[0].length}
+ el.append(document.createTextNode(text.slice(at)));
+}
+function render(){
+ messagesEl.replaceChildren();
+ rows.forEach(m=&gt;{
+  const wrap=document.createElement('article');wrap.className='msg';
+  const meta=document.createElement('div');meta.className='meta';const who=document.createElement('b');who.textContent=m.uid===uid?'You':(m.name||'Guest');who.style.color=/^#[0-9a-f]{6}$/i.test(m.color||'')?m.color:'#a78bfa';meta.append(who);
+  const when=document.createElement('span');when.textContent=m.ts?new Date(m.ts).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}):'';meta.append(when);wrap.append(meta);
+  if(m.reply&amp;&amp;m.reply.n){const rp=document.createElement('div');rp.className='reply';rp.textContent='Replying to '+m.reply.n+': '+(m.reply.t||'');wrap.append(rp)}
+  const body=document.createElement('div');body.className='body';safeLinkify(body,escText(m.text));wrap.append(body);
+  const tools=document.createElement('div');tools.className='meta';const reply=document.createElement('button');reply.className='ctl';reply.dataset.chat='reply';reply.dataset.id=m.id;reply.textContent='Reply';tools.append(reply);
+  if(m.uid===uid||isAdmin){const del=document.createElement('button');del.className='ctl';del.dataset.chat='delete';del.dataset.id=m.id;del.textContent='Delete';tools.append(del)}
+  if(isAdmin&amp;&amp;m.uid!==uid){const ban=document.createElement('button');ban.className='ctl';ban.dataset.chat='ban';ban.dataset.uid=m.uid;ban.textContent='Ban user';tools.append(ban)}
+  wrap.append(tools);messagesEl.append(wrap);
+ });
+ messagesEl.scrollTop=messagesEl.scrollHeight;
+}
+function drawAdmin(){adminBtn.hidden=!isAdmin;adminBox.replaceChildren();if(!isAdmin)return;
+ const make=(label,action)=&gt;{const b=document.createElement('button');b.className='ctl';b.dataset.chat=action;b.textContent=label;adminBox.append(b)};
+ make('Live announcement','live');make('Slow mode','slow');make('Clear chat','clear');
+}
+function configReady(){return Object.values(FIREBASE_CONFIG).every(v=&gt;v&amp;&amp;v!=='PASTE_HERE')}
+async function boot(){
+ if(!configReady()){say('Firebase setup needed: fill in FIREBASE_CONFIG in this add-on.');input.disabled=true;form.querySelector('button').disabled=true;return}
+ try{
+  const appMod=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+  const authMod=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js');
+  const dbMod=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js');
+  const app=appMod.initializeApp(FIREBASE_CONFIG,'ppz-chat');auth=authMod.getAuth(app);db=dbMod.getDatabase(app);
+  const {signInAnonymously}=authMod;({ref,push,update,set,remove,get,onValue,onDisconnect,serverTimestamp,query,orderByChild,limitToLast}=dbMod);
+  const credential=await signInAnonymously(auth);uid=credential.user.uid;
+  const stored=localStorage.getItem('ppz_chat_name');if(stored&amp;&amp;stored.trim().length&gt;=2&amp;&amp;stored.trim().length&lt;=20)name=stored.trim();
+  const adminSnap=await get(ref(db,'admins/'+uid));isAdmin=adminSnap.val()===true;drawAdmin();
+  const banRef=ref(db,'bans/'+uid);onValue(banRef,s=&gt;{isBanned=!!s.val();input.disabled=isBanned;form.querySelector('button').disabled=isBanned;say(isBanned?'You cannot post in this chat.': 'Connected as '+name)});
+  await set(ref(db,'presence/'+uid),true);onDisconnect(ref(db,'presence/'+uid)).remove();
+  onValue(ref(db,'settings/slowMs'),s=&gt;{const v=Number(s.val());if(Number.isFinite(v)&amp;&amp;v&gt;=1000&amp;&amp;v&lt;=600000)slowMs=v});
+  onValue(ref(db,'settings/live'),s=&gt;{const v=s.val();liveEl.textContent=v&amp;&amp;v.text?String(v.text):'';liveEl.style.display=v&amp;&amp;v.text?'block':'none'});
+  onValue(query(ref(db,'messages'),orderByChild('ts'),limitToLast(CFG.history)),snap=&gt;{
+    const v=snap.val()||{},next=Object.entries(v).map(([id,m])=&gt;({...m,id})).sort((a,b)=&gt;(a.ts||0)-(b.ts||0));
+    if(!firstMessages&amp;&amp;!isOpen){let inc=0;for(const m of next)if(!known.has(m.id)&amp;&amp;m.uid!==uid)inc++;if(inc)setUnread(unread+inc)}
+    known=new Set(next.map(m=&gt;m.id));rows=next;firstMessages=false;render();
+  });
+  say('Connected as '+name);
+ }catch(err){say('Chat connection failed: '+(err&amp;&amp;err.message?err.message:'unknown error'));input.disabled=true;form.querySelector('button').disabled=true}
+}
+form.addEventListener('submit',async e=&gt;{
+ e.preventDefault();if(!db||!uid||isBanned)return;const raw=input.value.trim();if(!raw)return;if(raw.length&gt;CFG.maxLen){say('Message is too long.');return}
+ const wait=slowMs-(Date.now()-lastSent);if(wait&gt;0){say('Please wait '+Math.ceil(wait/1000)+'s before sending again.');return}
+ const text=filterWords(raw);const key=push(ref(db,'messages')).key;const m={uid,name,text,ts:serverTimestamp(),color:userColor};if(replyTo)m.reply={n:replyTo.n,t:replyTo.t};
+ try{await update(ref(db),{['messages/'+key]:m,['lastPost/'+uid]:serverTimestamp()});lastSent=Date.now();input.value='';replyTo=null;input.placeholder='Write a message…';say('Message sent.')}catch(err){say('Message not sent: '+err.message)}
+});
+boot();
+})();
+&lt;/script&gt;
+
+&lt;button id="ppz-chat-launch" type="button"&gt;💬 Chat &lt;span class="badge" hidden=""&gt;0&lt;/span&gt;&lt;/button&gt;&lt;section id="ppz-chat-panel" aria-label="Community chat"&gt;&lt;div class="head"&gt;&lt;strong&gt;ProxyPathz Chat&lt;/strong&gt;&lt;button class="ctl" data-chat="name"&gt;Name&lt;/button&gt;&lt;button class="ctl" data-chat="close" aria-label="Close chat"&gt;✕&lt;/button&gt;&lt;/div&gt;&lt;div id="ppz-chat-live"&gt;&lt;/div&gt;&lt;div id="ppz-chat-messages" aria-live="polite"&gt;&lt;/div&gt;&lt;div class="foot"&gt;&lt;form&gt;&lt;input maxlength="300" autocomplete="off" placeholder="Write a message…" aria-label="Message" disabled=""&gt;&lt;button type="submit" disabled=""&gt;Send&lt;/button&gt;&lt;/form&gt;&lt;div class="tools"&gt;&lt;button class="ctl" data-chat="rename"&gt;Change name&lt;/button&gt;&lt;button class="ctl" data-chat="admin" hidden=""&gt;Admin tools&lt;/button&gt;&lt;/div&gt;&lt;div class="status" role="status"&gt;Firebase setup needed: fill in FIREBASE_CONFIG in this add-on.&lt;/div&gt;&lt;div class="admin" hidden=""&gt;&lt;/div&gt;&lt;/div&gt;&lt;/section&gt;&lt;div id="ppz-wl-popwrap"&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</pre></body></html>
